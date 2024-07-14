@@ -1,4 +1,5 @@
 export interface Product {
+  id: null | string
   name: string
   description: string
   price: number

@@ -1,8 +1,9 @@
 'use client'
-import React, { useState, ChangeEvent, FormEvent } from 'react'
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react'
 import InputFields from './inputfields' // Adjust the import path as needed
 import { Product } from '@/utils/ProductInterface'
 import { CreateProduct } from '@/functions/Product/Create'
+import { getdata } from '@/functions/Product/Fetch'
 
 export default function AddProduct() {
   const [product, setProduct] = useState<Product>({
