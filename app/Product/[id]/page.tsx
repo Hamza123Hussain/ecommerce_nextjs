@@ -1,7 +1,7 @@
 'use client'
 import { getdatabyid } from '@/functions/Product/ProductbyId'
+import { useAppContext } from '@/utils/Context'
 import { Product } from '@/utils/ProductInterface'
-import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -11,31 +11,55 @@ interface PageProps {
   }
 }
 
-const Page: React.FC<PageProps> = ({ params }) => {
+const ProductPage = ({ params }: PageProps) => {
+  const { setCart, cart } = useAppContext()
   const Router = useRouter()
-  const [Productdata, setdata] = useState<Product>()
-  const fetcme = async () => {
-    try {
-      const data: Product = await getdatabyid(params.id)
-      console.log(data)
-      setdata(data)
-    } catch (error) {
-      console.log(error)
+  const [Productdata, setdata] = useState<Product | null>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetcme = async () => {
+      try {
+        const data: Product = await getdatabyid(params.id)
+        console.log(data)
+        setdata(data)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetcme()
+  }, [params.id])
+
+  const Addtocart = () => {
+    if (Productdata) {
+      alert('ADDED TO CART')
+      setCart((prev: Product[]) => [...prev, Productdata])
+      console.log(cart)
     }
   }
-  useEffect(() => {
-    fetcme()
-  }, [])
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
   return (
-    <div className=" flex flex-col gap-10 justify-center items-center p-6 border-2 rounded-lg">
+    <div className="flex flex-col gap-10 justify-center items-center p-6 border-2 rounded-lg">
       <h5 onClick={() => Router.back()}>GO BACK</h5>
-      <img src={Productdata?.image_url} alt={Productdata?.name} />
-      <h1>{Productdata?.name}</h1>
-      <p>{Productdata?.description}</p>
-      <h5>{Productdata?.price}</h5>
-      <button className=" bg-blue-600 p-4">ADD TO CART </button>
+      {Productdata && (
+        <>
+          <img src={Productdata.image_url} alt={Productdata.name} />
+          <h1>{Productdata.name}</h1>
+          <p>{Productdata.description}</p>
+          <h5>{Productdata.price}</h5>
+          <button onClick={Addtocart} className="bg-blue-600 p-4">
+            ADD TO CART
+          </button>
+        </>
+      )}
     </div>
   )
 }
 
-export default Page
+export default ProductPage
