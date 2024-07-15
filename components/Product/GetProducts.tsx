@@ -1,10 +1,12 @@
 'use client'
 import { getdata } from '@/functions/Product/Fetch'
 import { Product } from '@/utils/ProductInterface'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const GetProducts = () => {
   const [productdata, setProduct] = useState<any>([])
+  const Router = useRouter()
   const fetchme = async () => {
     const data: Product = await getdata()
     console.log(data)
@@ -26,6 +28,12 @@ const GetProducts = () => {
 
             <h1>{element.name}</h1>
             <h1>Rs {element.price}</h1>
+            <button
+              className=" bg-blue-600 rounded-lg p-4"
+              onClick={() => Router.push(`/Product/${element.id}`)}
+            >
+              Add To Cart
+            </button>
           </div>
         )
       })}
@@ -34,30 +42,3 @@ const GetProducts = () => {
 }
 
 export default GetProducts
-/**category
-: 
-"Formal Shirt"
-created_at
-: 
-"2024-07-14T22:22:57.242979"
-description
-: 
-"hamjanjnjdbdbybdyb"
-id
-: 
-"ea986ae3-2e71-40ff-8383-2a45e4a7dc7f"
-image_url
-: 
-"https://st1.bollywoodlife.com/wp-content/uploads/2023/12/3-47.png?impolicy=Medium_Widthonly&w=400&h=711"
-name
-: 
-"Hamza Hussain"
-price
-: 
-20
-stock
-: 
-20
-updated_at
-: 
-"2024-07-14T22:22:57.242979" */

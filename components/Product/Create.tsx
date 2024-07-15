@@ -7,6 +7,7 @@ import { getdata } from '@/functions/Product/Fetch'
 
 export default function AddProduct() {
   const [product, setProduct] = useState<Product>({
+    id: null,
     name: '',
     description: '',
     price: 0,
