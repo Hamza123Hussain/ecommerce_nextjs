@@ -11,26 +11,73 @@ import { Product } from '@/utils/ProductInterface'
 interface AppContextProps {
   cart: Product[]
   setCart: React.Dispatch<React.SetStateAction<Product[]>>
+  productData: Product | null
+  setProductData: React.Dispatch<React.SetStateAction<Product | null>>
+  addToCart: () => void
+  increment: () => void
+  decrement: () => void
 }
 
-const AppContext = createContext<AppContextProps | undefined>(undefined)
+export const AppContext = createContext<AppContextProps | any | undefined>(
+  undefined
+)
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<Product[]>(() => {
-    // Retrieve cart from local storage if it exists
     const savedCart = localStorage.getItem('cart')
     return savedCart ? JSON.parse(savedCart) : []
   })
 
+  const [productData, setProductData] = useState<Product | null>(null)
+  const [loading, setLoading] = useState(true)
+
   useEffect(() => {
-    // Save cart to local storage whenever it changes
     if (typeof window !== 'undefined') {
       localStorage.setItem('cart', JSON.stringify(cart))
     }
   }, [cart])
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && productData) {
+      localStorage.setItem(
+        `product-${productData.id}`,
+        JSON.stringify(productData)
+      )
+    }
+  }, [productData])
+
+  const addToCart = () => {
+    if (productData) {
+      setProductData({ ...productData, quantity: 1 })
+    }
+  }
+
+  const increment = () => {
+    if (productData) {
+      setProductData({ ...productData, quantity: productData.quantity + 1 })
+    }
+  }
+
+  const decrement = () => {
+    if (productData && productData.quantity > 1) {
+      setProductData({ ...productData, quantity: productData.quantity - 1 })
+    }
+  }
+
   return (
-    <AppContext.Provider value={{ cart, setCart }}>
+    <AppContext.Provider
+      value={{
+        cart,
+        setCart,
+        productData,
+        setProductData,
+        addToCart,
+        increment,
+        decrement,
+        loading,
+        setLoading,
+      }}
+    >
       {children}
     </AppContext.Provider>
   )
