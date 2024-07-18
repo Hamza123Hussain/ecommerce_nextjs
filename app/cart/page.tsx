@@ -2,11 +2,15 @@
 import React from 'react'
 import { useAppContext } from '@/utils/Context'
 import { Trash } from 'lucide-react'
+import { Product } from '@/utils/ProductInterface'
 
 const CartPage = () => {
-  const { cart, setCart } = useAppContext()
+  const { cart, setCart, setProductData } = useAppContext()
 
-  const removeFromCart = (index: number) => {
+  const removeFromCart = (index: number, id: any) => {
+    setProductData((element: Product) =>
+      element.id === id ? { ...element, quantity: 0 } : element
+    ) // making the element quantity zero as it is removed from the cart
     const newCart = [...cart]
     newCart.splice(index, 1)
     setCart(newCart)
@@ -24,7 +28,7 @@ const CartPage = () => {
           {cart.length === 0 ? (
             <p className="text-lg text-center">Your cart is empty.</p>
           ) : (
-            cart.map((item, index) => (
+            cart.map((item: any, index: number) => (
               <div
                 key={index}
                 className="flex flex-col md:flex-row items-center gap-4 mb-4 p-4 border rounded-lg"
@@ -37,10 +41,11 @@ const CartPage = () => {
                 <div className="flex-1 text-center md:text-left">
                   <h2 className="text-xl font-semibold">{item.name}</h2>
                   {/* <p>Quantity: {item.quantity}</p> */}
-                  <p>Price: ${item.price.toFixed(2)}</p>
+                  <p>Price: ${item.price}</p>
+                  <p>Quantity : ${item.quantity + 1}</p>
                 </div>
                 <button
-                  onClick={() => removeFromCart(index)}
+                  onClick={() => removeFromCart(index, item.id)}
                   className="text-red-600 hover:text-red-800"
                 >
                   <Trash size={20} />
