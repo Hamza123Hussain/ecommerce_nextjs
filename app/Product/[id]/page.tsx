@@ -1,10 +1,9 @@
 'use client'
-import ProductCard from '@/components/Product/ProductCard'
-import { getdatabyid } from '@/functions/Product/ProductbyId'
-import { useAppContext } from '@/utils/Context'
-import { Product } from '@/utils/ProductInterface'
-import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { useAppContext } from '@/utils/Context'
+import { fetchProduct } from '@/functions/Product/GettingAProduct'
+import ProductCard from '@/components/Product/ProductCard'
 
 interface PageProps {
   params: {
@@ -13,32 +12,26 @@ interface PageProps {
 }
 
 const ProductPage = ({ params }: PageProps) => {
-  const { setProductData, loading, setLoading } = useAppContext()
+  const { setProductData, loading, setLoading, productData } = useAppContext()
   const Router = useRouter()
 
+  const GetProduct = async () => {
+    const data = await fetchProduct(params.id)
+    if (data) setProductData(data)
+    setLoading(false)
+  }
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const data: Product = await getdatabyid(params.id)
-        const savedProduct = localStorage.getItem(`product-${params.id}`)
-        if (savedProduct) {
-          const savedData = JSON.parse(savedProduct)
-          data.quantity = savedData.quantity
-        }
-        setProductData(data)
-      } catch (error) {
-        console.log(error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchProduct()
-  }, [params.id, setProductData, setLoading])
+    GetProduct()
+  }, [params.id])
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
 
   return (
     <div className="flex flex-col gap-10 justify-center items-center p-6 border-2 rounded-lg">
       <h5 onClick={() => Router.back()}>GO BACK</h5>
-      {!loading && <ProductCard />}
+      {!loading && <ProductCard productData={productData} />}
     </div>
   )
 }
