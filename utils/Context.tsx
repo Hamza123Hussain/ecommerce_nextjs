@@ -28,7 +28,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     return savedCart ? JSON.parse(savedCart) : []
   })
 
-  const [productData, setProductData] = useState<Product | null>(null)
+  const [productData, setProductData] = useState<Product | null>()
+  const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -49,18 +50,53 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const addToCart = () => {
     if (productData) {
       setProductData({ ...productData, quantity: 1 })
+      setCart((element) => [...element, productData])
+      alert('ADDED TO CART')
     }
   }
 
   const increment = () => {
     if (productData) {
       setProductData({ ...productData, quantity: productData.quantity + 1 })
+
+      setCart((items) => {
+        const existingProduct = items.find((item) => item.id === productData.id)
+        if (existingProduct) {
+          return items.map((item) =>
+            item.id === productData.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          )
+        }
+        return [...items, { ...productData, quantity: 1 }]
+      })
     }
   }
 
   const decrement = () => {
-    if (productData && productData.quantity > 1) {
-      setProductData({ ...productData, quantity: productData.quantity - 1 })
+    if (productData) {
+      if (productData.quantity > 1) {
+        setProductData({ ...productData, quantity: productData.quantity - 1 })
+        setCart((items) => {
+          const existingProduct = items.find(
+            (item) => item.id === productData.id
+          )
+          if (existingProduct) {
+            return items.map((item) =>
+              item.id === productData.id
+                ? { ...item, quantity: item.quantity - 1 }
+                : item
+            )
+          }
+          return [...items, { ...productData, quantity: 1 }]
+        })
+      } else if (productData.quantity == 1) {
+        setProductData({ ...productData, quantity: productData.quantity - 1 })
+
+        setCart((items) =>
+          items.filter((element) => element.id !== productData.id)
+        )
+      }
     }
   }
 
@@ -76,6 +112,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         decrement,
         loading,
         setLoading,
+        products,
+        setProducts,
       }}
     >
       {children}
