@@ -14,6 +14,7 @@ export default function AddProduct() {
     stock: 0,
     category: '',
     image_url: '',
+    quantity: 0,
   })
 
   const handleChange = (

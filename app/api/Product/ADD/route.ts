@@ -13,6 +13,7 @@ export const POST = async (req: any) => {
         stock: parseInt(payload?.Product.stock.toString()),
         category: payload?.Product.category,
         image_url: payload?.Product.image_url,
+        quantity: payload?.Product.quantity,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       },

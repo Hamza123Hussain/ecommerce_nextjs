@@ -1,5 +1,6 @@
 'use client'
 import { getdatabyid } from '@/functions/Product/ProductbyId'
+import { updateqty } from '@/functions/Product/UpdateQty'
 import { useAppContext } from '@/utils/Context'
 import { Product } from '@/utils/ProductInterface'
 import { useRouter } from 'next/navigation'
@@ -32,7 +33,9 @@ const ProductPage = ({ params }: PageProps) => {
     fetcme()
   }, [params.id])
 
-  const Addtocart = () => {
+  const Addtocart = (QTY: number, ID: any) => {
+    updateqty(QTY, ID)
+
     if (Productdata) {
       alert('ADDED TO CART')
       setCart((prev: Product[]) => [...prev, Productdata])
@@ -53,7 +56,11 @@ const ProductPage = ({ params }: PageProps) => {
           <h1>{Productdata.name}</h1>
           <p>{Productdata.description}</p>
           <h5>{Productdata.price}</h5>
-          <button onClick={Addtocart} className="bg-blue-600 p-4">
+          <h3>{Productdata.quantity}</h3>
+          <button
+            onClick={() => Addtocart(Productdata.quantity, Productdata.id)}
+            className="bg-blue-600 p-4"
+          >
             ADD TO CART
           </button>
         </>
