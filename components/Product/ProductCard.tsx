@@ -1,47 +1,33 @@
 'use client'
-import { useAppContext } from '@/utils/Context'
-import { Minus, Plus } from 'lucide-react'
+
 import React from 'react'
+import AddtoCartBtn from './AddtoCartBtn'
+import { useRouter } from 'next/navigation'
 
-const ProductCard = () => {
-  const { productData, addToCart, increment, decrement } = useAppContext()
-
-  if (!productData) return null
-
+const ProductCard = ({ productData }: any) => {
+  const Router = useRouter()
   return (
-    <div>
-      <img src={productData.image_url} alt={productData.name} />
-      <h1>{productData.name}</h1>
-      <p>{productData.description}</p>
-      <h5>{productData.price}</h5>
-      <h3>{productData.quantity}</h3>
+    <div className=" flex flex-col ">
+      <img
+        onClick={() => Router.push(`/Product/${productData.id}`)}
+        src={productData.image_url}
+        alt={productData.name}
+        className=" rounded-lg  hover:shadow-md hover:shadow-black"
+      />
+      <h1 className=" text-xl mt-5 text-slate-800 font-extrabold">
+        {productData.name}
+      </h1>
+      <div className=" flex flex-col p-2">
+        {' '}
+        <h1 className=" text-sm text-gray-700">Description</h1>
+        <p className=" text-gray-500 text-xs p-2">{productData.description}</p>
+      </div>
 
-      {productData.quantity === 0 ? (
-        <button
-          onClick={addToCart}
-          className="bg-blue-600 p-4 text-white rounded-md"
-        >
-          ADD TO CART
-        </button>
-      ) : (
-        <div className="flex items-center justify-center space-x-4 p-4 bg-white border rounded-lg shadow-md">
-          <button
-            className="bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition-colors"
-            onClick={decrement}
-          >
-            <Minus size={16} />
-          </button>
-          <button className="bg-blue-600 text-white p-4 rounded-md flex items-center justify-center">
-            {productData.quantity}
-          </button>
-          <button
-            className="bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition-colors"
-            onClick={increment}
-          >
-            <Plus size={16} />
-          </button>
-        </div>
-      )}
+      <div className=" flex gap-2 justify-end p-2  items-center">
+        <h1 className=" text-gray-700 font-bold text-sm">Price: </h1>
+        <h5 className=" text-gray-950 font-bold">Rs {productData.price}</h5>
+      </div>
+      <AddtoCartBtn quantity={productData.quantity} />
     </div>
   )
 }
