@@ -20,10 +20,10 @@ export default function RootLayout({
   return (
     <AppContextProvider>
       <html lang="en">
-        <body className={inter.className}>
+        <body className=" bg-white">
           <Header />
           {children}
-          {/* <Footer /> */}
+          <Footer />
         </body>
       </html>
     </AppContextProvider>
