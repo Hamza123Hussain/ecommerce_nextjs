@@ -1,28 +1,44 @@
 'use client'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAppContext } from '@/utils/Context'
 import { Trash } from 'lucide-react'
 import { Product } from '@/utils/ProductInterface'
 
 const CartPage = () => {
-  const { cart, setCart, setProductData } = useAppContext()
+  const { cart, setCart, productData } = useAppContext()
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    setLoading(false)
+  }, [])
 
   const removeFromCart = (index: number, id: any) => {
-    setProductData((element: Product) =>
-      element.id === id ? { ...element, quantity: 0 } : element
-    ) // making the element quantity zero as it is removed from the cart
+    console.log(productData)
     const newCart = [...cart]
     newCart.splice(index, 1)
     setCart(newCart)
   }
 
-  const shipping = 5.0 // Flat rate shipping
-  //   const tax = calculateTotal() * 0.1; // 10% tax
-  //   const total = calculateTotal() + shipping + tax;
+  const shipping = 250
+
+  const totalPrice = cart.reduce((total: number, element: Product) => {
+    return total + element.price * element.quantity
+  }, 0)
+
+  console.log('TOTAL PRICE', totalPrice)
+  const totalquantity = cart.reduce((total: number, element: Product) => {
+    return total + element.quantity
+  }, 0)
+
+  const tax = (totalPrice * 16) / 100
+
+  if (loading) {
+    return <div>Loading...</div> // Display loading indicator while fetching data
+  }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4 text-center">Shopping Cart</h1>
+    <div className="container mx-auto mt-5 min-h-screen p-2 bg-gray-200">
+      <h1 className="text-3xl font-bold mb-4 text-center  ">Shopping Cart</h1>
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="flex-1">
           {cart.length === 0 ? (
@@ -30,8 +46,8 @@ const CartPage = () => {
           ) : (
             cart.map((item: any, index: number) => (
               <div
-                key={index}
-                className="flex flex-col md:flex-row items-center gap-4 mb-4 p-4 border rounded-lg"
+                key={item.id}
+                className="flex flex-col md:flex-row items-center border-black hover:shadow-md hover:shadow-blue-100 gap-4 mb-4 p-4 border rounded-lg"
               >
                 <img
                   src={item.image_url}
@@ -40,9 +56,9 @@ const CartPage = () => {
                 />
                 <div className="flex-1 text-center md:text-left">
                   <h2 className="text-xl font-semibold">{item.name}</h2>
-                  {/* <p>Quantity: {item.quantity}</p> */}
-                  <p>Price: ${item.price}</p>
-                  <p>Quantity : ${item.quantity + 1}</p>
+                  <p>Quantity: {item.quantity}</p>
+                  <p>Price: Rs{item.price}</p>
+                  <p>Total Price: Rs{item.price * item.quantity}</p>
                 </div>
                 <button
                   onClick={() => removeFromCart(index, item.id)}
@@ -55,25 +71,25 @@ const CartPage = () => {
           )}
         </div>
         {cart.length > 0 && (
-          <div className="w-full lg:w-1/3 bg-gray-100 p-4 rounded-lg">
+          <div className="w-full lg:w-1/3 bg-gray-100 px-2 py-4 mb-2 rounded-lg">
             <h2 className="text-2xl font-bold mb-4 text-center lg:text-left">
               Order Summary
             </h2>
             <div className="flex justify-between mb-2">
               <span>Subtotal</span>
-              {/* <span>${calculateTotal().toFixed(2)}</span> */}
+              <span>{totalPrice.toFixed(2)}</span>
             </div>
             <div className="flex justify-between mb-2">
               <span>Shipping</span>
-              <span>${shipping.toFixed(2)}</span>
+              <span>Rs {shipping.toFixed(2)}</span>
             </div>
             <div className="flex justify-between mb-2">
               <span>Tax</span>
-              {/* <span>${tax.toFixed(2)}</span> */}
+              <span>Rs {tax.toFixed(2)}</span>
             </div>
             <div className="flex justify-between mb-2 font-bold">
               <span>Total</span>
-              {/* <span>${total.toFixed(2)}</span> */}
+              <span>Rs {(tax + totalPrice).toFixed(2)}</span>
             </div>
             <button className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
               Checkout
