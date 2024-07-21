@@ -1,16 +1,24 @@
 'use client'
-import { useAppContext } from '@/utils/Context'
-import { Minus, Plus } from 'lucide-react'
 import React from 'react'
+import { Minus, Plus } from 'lucide-react'
+import { Product } from '@/utils/ProductInterface'
+import useCartActions from '@/functions/Product/Quantity/CustomQuantityHook'
 
-const AddtoCartBtn = ({ quantity }: any) => {
-  const { addToCart, increment, decrement } = useAppContext()
+interface AddtoCartBtnProps {
+  product: Product
+}
+
+const AddtoCartBtn: React.FC<AddtoCartBtnProps> = ({ product }) => {
+  const { addToCart, increment, decrement } = useCartActions()
 
   return (
     <div>
-      {quantity === 0 ? (
+      {product.quantity === 0 ? (
         <button
-          onClick={addToCart}
+          onClick={() => {
+            console.log('Button clicked: ADD TO CART')
+            addToCart(product)
+          }}
           className="bg-blue-600 p-4 text-white rounded-md"
         >
           ADD TO CART
@@ -19,16 +27,22 @@ const AddtoCartBtn = ({ quantity }: any) => {
         <div className="flex items-center justify-center space-x-4 p-4 bg-white border rounded-lg shadow-md">
           <button
             className="bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition-colors"
-            onClick={decrement}
+            onClick={() => {
+              console.log('Button clicked: DECREMENT')
+              decrement(product.id)
+            }}
           >
             <Minus size={16} />
           </button>
           <button className="bg-blue-600 text-white p-4 rounded-md flex items-center justify-center">
-            {quantity}
+            {product.quantity}
           </button>
           <button
             className="bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition-colors"
-            onClick={increment}
+            onClick={() => {
+              console.log('Button clicked: INCREMENT')
+              increment(product.id)
+            }}
           >
             <Plus size={16} />
           </button>
