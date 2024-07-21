@@ -1,9 +1,10 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAppContext } from '@/utils/Context'
 import { fetchProduct } from '@/functions/Product/GettingAProduct'
 import ProductCard from '@/components/Product/ProductCard'
+import { Product } from '@/utils/ProductInterface'
 
 interface PageProps {
   params: {
@@ -12,12 +13,12 @@ interface PageProps {
 }
 
 const ProductPage = ({ params }: PageProps) => {
-  const { setProductData, loading, setLoading, productData } = useAppContext()
+  const { loading, setLoading, products } = useAppContext()
   const Router = useRouter()
-
+  const [product, setproduct] = useState<Product | any>({})
   const GetProduct = async () => {
     const data = await fetchProduct(params.id)
-    if (data) setProductData(data)
+    if (data) setproduct(data)
     setLoading(false)
   }
   useEffect(() => {
@@ -31,7 +32,7 @@ const ProductPage = ({ params }: PageProps) => {
   return (
     <div className="flex flex-col gap-10 justify-center items-center p-6 border-2 rounded-lg">
       <h5 onClick={() => Router.back()}>GO BACK</h5>
-      {!loading && <ProductCard productData={productData} />}
+      {!loading && <ProductCard productData={product} />}
     </div>
   )
 }
