@@ -5,6 +5,7 @@ import { useAppContext } from '@/utils/Context'
 import { fetchProduct } from '@/functions/Product/GettingAProduct'
 import ProductCard from '@/components/Product/ProductCard'
 import { Product } from '@/utils/ProductInterface'
+import AddtoCartBtn from '@/components/Product/AddtoCartBtn'
 
 interface PageProps {
   params: {
@@ -13,17 +14,31 @@ interface PageProps {
 }
 
 const ProductPage = ({ params }: PageProps) => {
-  const { loading, setLoading, products } = useAppContext()
+  const { loading, setLoading } = useAppContext()
   const Router = useRouter()
-  const [product, setproduct] = useState<Product | any>({})
+  const [product, setProduct] = useState<Product | any>({})
+  const [quantity, setQuantity] = useState<number>(product.quantity | 0)
+
   const GetProduct = async () => {
     const data = await fetchProduct(params.id)
-    if (data) setproduct(data)
+    if (data) {
+      setProduct(data)
+      setQuantity(data.quantity || 0) // Initialize quantity
+    }
     setLoading(false)
   }
+
   useEffect(() => {
     GetProduct()
-  }, [params.id])
+  }, [])
+
+  useEffect(() => {
+    // Update product quantity whenever the quantity state changes
+    setProduct((prevProduct: Product) => ({
+      ...prevProduct,
+      quantity: quantity,
+    }))
+  }, [quantity])
 
   if (loading) {
     return <div>Loading...</div>
@@ -32,7 +47,10 @@ const ProductPage = ({ params }: PageProps) => {
   return (
     <div className="flex flex-col gap-10 justify-center items-center p-6 border-2 rounded-lg">
       <h5 onClick={() => Router.back()}>GO BACK</h5>
-      {!loading && <ProductCard productData={product} />}
+      <div className="flex flex-col">
+        <ProductCard product={product} />
+        <AddtoCartBtn product={product} onQuantityChange={setQuantity} />
+      </div>
     </div>
   )
 }
