@@ -11,11 +11,30 @@ import { Product } from '@/utils/ProductInterface'
 interface AppContextProps {
   cart: Product[]
   setCart: React.Dispatch<React.SetStateAction<Product[]>>
-  productData: Product | null
-  setProductData: React.Dispatch<React.SetStateAction<Product | null>>
-  addToCart: () => void
-  increment: () => void
-  decrement: () => void
+  products: Product[]
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>
+  loading: boolean
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const getCartFromLocalStorage = () => {
+  try {
+    const savedCart = localStorage.getItem('cart')
+    return savedCart ? JSON.parse(savedCart) : []
+  } catch (error) {
+    console.error('Error parsing cart from localStorage', error)
+    return []
+  }
+}
+
+const getProductsFromLocalStorage = () => {
+  try {
+    const savedProducts = localStorage.getItem('products')
+    return savedProducts ? JSON.parse(savedProducts) : []
+  } catch (error) {
+    console.error('Error parsing products from localStorage', error)
+    return []
+  }
 }
 
 export const AppContext = createContext<AppContextProps | any | undefined>(
@@ -23,13 +42,10 @@ export const AppContext = createContext<AppContextProps | any | undefined>(
 )
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<Product[]>(() => {
-    const savedCart = localStorage.getItem('cart')
-    return savedCart ? JSON.parse(savedCart) : []
-  })
-
-  const [productData, setProductData] = useState<Product | null>()
-  const [products, setProducts] = useState<Product[]>([])
+  const [cart, setCart] = useState<Product[]>(getCartFromLocalStorage)
+  const [products, setProducts] = useState<Product[]>(
+    getProductsFromLocalStorage
+  )
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -39,81 +55,20 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   }, [cart])
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && productData) {
-      localStorage.setItem(
-        `product-${productData.id}`,
-        JSON.stringify(productData)
-      )
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('products', JSON.stringify(products))
     }
-  }, [productData])
-
-  const addToCart = () => {
-    if (productData) {
-      setProductData({ ...productData, quantity: 1 })
-      setCart((element) => [...element, productData])
-      alert('ADDED TO CART')
-    }
-  }
-
-  const increment = () => {
-    if (productData) {
-      setProductData({ ...productData, quantity: productData.quantity + 1 })
-
-      setCart((items) => {
-        const existingProduct = items.find((item) => item.id === productData.id)
-        if (existingProduct) {
-          return items.map((item) =>
-            item.id === productData.id
-              ? { ...item, quantity: item.quantity + 1 }
-              : item
-          )
-        }
-        return [...items, { ...productData, quantity: 1 }]
-      })
-    }
-  }
-
-  const decrement = () => {
-    if (productData) {
-      if (productData.quantity > 1) {
-        setProductData({ ...productData, quantity: productData.quantity - 1 })
-        setCart((items) => {
-          const existingProduct = items.find(
-            (item) => item.id === productData.id
-          )
-          if (existingProduct) {
-            return items.map((item) =>
-              item.id === productData.id
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-            )
-          }
-          return [...items, { ...productData, quantity: 1 }]
-        })
-      } else if (productData.quantity == 1) {
-        setProductData({ ...productData, quantity: productData.quantity - 1 })
-
-        setCart((items) =>
-          items.filter((element) => element.id !== productData.id)
-        )
-      }
-    }
-  }
+  }, [products])
 
   return (
     <AppContext.Provider
       value={{
         cart,
         setCart,
-        productData,
-        setProductData,
-        addToCart,
-        increment,
-        decrement,
-        loading,
-        setLoading,
         products,
         setProducts,
+        loading,
+        setLoading,
       }}
     >
       {children}
