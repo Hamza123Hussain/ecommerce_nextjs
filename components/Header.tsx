@@ -8,7 +8,10 @@ const Header = () => {
   const Router = useRouter()
   return (
     <div className=" flex flex-col sm:flex-row sm:justify-between sm:items-center bg-slate-300 shadow-md shadow-slate-800 sm:px-4 py-2 gap-5 sm:gap-0">
-      <div className=" flex gap-2 items-center">
+      <div
+        onClick={() => Router.push('/')}
+        className=" flex gap-2 items-center"
+      >
         {' '}
         <Image
           src={LOGO}
@@ -22,7 +25,11 @@ const Header = () => {
         </h1>
       </div>
       <div className=" flex items-center justify-end gap-10">
-        <ShoppingCart onClick={() => Router.push('/cart')} size={40} />
+        <ShoppingCart
+          className=" cursor-pointer"
+          onClick={() => Router.push('/cart')}
+          size={40}
+        />
         <button className=" rounded-xl px-10 py-2 bg-green-500 hover:brightness-110 text-white border-2">
           Login
         </button>
