@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { Minus, Plus } from 'lucide-react'
+import { Minus, Plus, ShoppingCart } from 'lucide-react'
 import { Product } from '@/utils/ProductInterface'
 import useCartActions from '@/functions/Product/Quantity/CustomQuantityHook'
 
@@ -31,30 +31,31 @@ const AddtoCartBtn: React.FC<AddtoCartBtnProps> = ({
   }
 
   return (
-    <div>
+    <div className="mt-4">
       {product.quantity === 0 ? (
         <button
           onClick={handleAddToCart}
-          className="bg-blue-600 p-4 text-white rounded-md"
+          className="flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-200"
         >
-          ADD TO CART
+          <ShoppingCart className="mr-2" size={20} />
+          <span className="font-semibold">Add to Cart</span>
         </button>
       ) : (
-        <div className="flex items-center justify-center space-x-4 p-4 bg-white border rounded-lg shadow-md">
+        <div className="flex items-center justify-center space-x-4 p-4 bg-white border rounded-lg shadow-md transition-all duration-200">
           <button
-            className="bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition-colors"
+            className="flex items-center justify-center bg-red-600 text-white p-3 rounded-full hover:bg-red-700 transition-all duration-200"
             onClick={handleDecrement}
           >
-            <Minus size={16} />
+            <Minus size={20} />
           </button>
-          <button className="bg-blue-600 text-white p-4 rounded-md flex items-center justify-center">
+          <span className="flex items-center justify-center bg-blue-600 text-white px-4 py-2 rounded-md font-semibold">
             {product.quantity}
-          </button>
+          </span>
           <button
-            className="bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition-colors"
+            className="flex items-center justify-center bg-green-600 text-white p-3 rounded-full hover:bg-green-700 transition-all duration-200"
             onClick={handleIncrement}
           >
-            <Plus size={16} />
+            <Plus size={20} />
           </button>
         </div>
       )}
