@@ -5,7 +5,7 @@ import { Product } from '@/utils/ProductInterface'
 import { useAppContext } from '@/utils/Context'
 
 const useCartActions = () => {
-  const { setCart, setProducts, products } = useAppContext()
+  const { setCart, setProducts, products, cart } = useAppContext()
 
   const increment = useCallback(
     (id: any) => {
@@ -24,7 +24,7 @@ const useCartActions = () => {
         )
       })
     },
-    [setProducts, setCart]
+    [setProducts, products, cart, setCart]
   )
   const addToCart = useCallback(
     (product: Product) => {
@@ -40,7 +40,7 @@ const useCartActions = () => {
         return [...prevCart, { ...product, quantity: product.quantity + 1 }]
       })
     },
-    [setCart]
+    [setProducts, products, cart, setCart]
   )
 
   const decrement = useCallback(
@@ -68,13 +68,24 @@ const useCartActions = () => {
         })
       }
     },
-    [setProducts, setCart]
+    [setProducts, products, cart, setCart]
   )
+  const removeFromCart = (id: any) => {
+    setProducts((Element: Product[]) => {
+      return Element.map((single: Product) =>
+        single.id === id ? { ...single, quantity: 0 } : single
+      )
+    })
 
+    setCart((Prev: Product[]) => {
+      return Prev.filter((item: Product) => item.id !== id)
+    })
+  }
   return {
     addToCart,
     increment,
     decrement,
+    removeFromCart,
   }
 }
 
