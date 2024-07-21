@@ -46,10 +46,8 @@ const ProductPage = ({ params }: PageProps) => {
 
   return (
     <div className="flex flex-col gap-10 justify-center items-center p-6 border-2 rounded-lg">
-      <h5 onClick={() => Router.back()}>GO BACK</h5>
-      <div className="flex flex-col">
-        <ProductCard product={product} />
-        <AddtoCartBtn product={product} onQuantityChange={setQuantity} />
+      <div className="flex flex-col justify-center items-center">
+        <ProductCard product={product} SetQty={setQuantity} />
       </div>
     </div>
   )
