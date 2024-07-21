@@ -3,8 +3,9 @@
 import React from 'react'
 import AddtoCartBtn from './AddtoCartBtn'
 import { useRouter } from 'next/navigation'
+import { Product } from '@/utils/ProductInterface'
 
-const ProductCard = ({ productData }: any) => {
+const ProductCard = ({ productData }: { productData: Product }) => {
   const Router = useRouter()
   return (
     <div className=" flex flex-col ">
@@ -27,7 +28,7 @@ const ProductCard = ({ productData }: any) => {
         <h1 className=" text-gray-700 font-bold text-sm">Price: </h1>
         <h5 className=" text-gray-950 font-bold">Rs {productData.price}</h5>
       </div>
-      <AddtoCartBtn quantity={productData.quantity} />
+      <AddtoCartBtn product={productData} />
     </div>
   )
 }
