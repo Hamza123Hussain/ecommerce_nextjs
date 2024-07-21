@@ -1,10 +1,10 @@
 const Footer = () => {
   return (
-    <div className="flex flex-col items-center border-t-2 w-full bg-gray-50">
+    <div className="flex flex-col items-center border-t-2 w-full bg-gray-50 py-4">
       <h1 className="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent text-2xl font-bold">
         TechTreasure
       </h1>
-      <p className=" text-gray-600">
+      <p className="text-gray-600">
         Your one-stop shop for all mobile accessories
       </p>
 
@@ -23,9 +23,7 @@ const Footer = () => {
         </a>
       </div> */}
 
-      <p className=" text-gray-400">
-        © 2024 TechTreasure. All rights reserved.
-      </p>
+      <p className="text-gray-400">© 2024 TechTreasure. All rights reserved.</p>
     </div>
   )
 }

@@ -21,9 +21,11 @@ export default function RootLayout({
     <AppContextProvider>
       <html lang="en">
         <body className=" bg-white">
-          <Header />
-          {children}
-          <Footer />
+          <div className="flex flex-col min-h-screen">
+            <Header />
+            <div className="flex-grow">{children}</div>
+            <Footer />
+          </div>
         </body>
       </html>
     </AppContextProvider>
