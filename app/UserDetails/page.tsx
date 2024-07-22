@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import GoBackButton from '@/components/User/GoBack'
 import UserInput from '@/components/User/UserInput'
 import { fields } from '@/components/User/UserDetailsArray'
+import { CreateUser } from '@/functions/User/CreateUser'
 
 const UserDetailsForm = () => {
   const [userDetails, setUserDetails] = useState({
@@ -25,9 +26,10 @@ const UserDetailsForm = () => {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission logic
+    const data = await CreateUser(userDetails)
+
     console.log('User Details Submitted:', userDetails)
   }
 
