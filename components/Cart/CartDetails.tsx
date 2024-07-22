@@ -1,5 +1,6 @@
+'use client'
+import { useRouter } from 'next/navigation'
 import React from 'react'
-
 const CartDetails = ({
   totalPrice,
   shipping,
@@ -11,6 +12,7 @@ const CartDetails = ({
   tax: number
   quantity: number
 }) => {
+  const Router = useRouter()
   return (
     <div className="w-full lg:w-1/3 bg-gray-100 p-4  mb-2 rounded-lg">
       <h2 className="text-2xl font-bold mb-4 text-center lg:text-left">
@@ -36,7 +38,10 @@ const CartDetails = ({
         <span>Total</span>
         <span>Rs {(tax + totalPrice + shipping).toFixed(2)}</span>
       </div>
-      <button className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">
+      <button
+        onClick={() => Router.push('/UserDetails')}
+        className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
+      >
         Checkout
       </button>
     </div>
