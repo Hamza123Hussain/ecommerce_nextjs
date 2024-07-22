@@ -7,35 +7,13 @@ import React, {
   ReactNode,
 } from 'react'
 import { Product } from '@/utils/ProductInterface'
-
-interface AppContextProps {
-  cart: Product[]
-  setCart: React.Dispatch<React.SetStateAction<Product[]>>
-  products: Product[]
-  setProducts: React.Dispatch<React.SetStateAction<Product[]>>
-  loading: boolean
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-const getCartFromLocalStorage = () => {
-  try {
-    const savedCart = localStorage.getItem('cart')
-    return savedCart ? JSON.parse(savedCart) : []
-  } catch (error) {
-    console.error('Error parsing cart from localStorage', error)
-    return []
-  }
-}
-
-const getProductsFromLocalStorage = () => {
-  try {
-    const savedProducts = localStorage.getItem('products')
-    return savedProducts ? JSON.parse(savedProducts) : []
-  } catch (error) {
-    console.error('Error parsing products from localStorage', error)
-    return []
-  }
-}
+import {
+  getCartFromLocalStorage,
+  getProductsFromLocalStorage,
+  getUserFromLocalStorage,
+} from './GetLocalStorage'
+import { AppContextProps } from './ContextInterfcae'
+import { UserDetails } from './UserDetailInterface'
 
 export const AppContext = createContext<AppContextProps | any | undefined>(
   undefined
@@ -47,12 +25,20 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     getProductsFromLocalStorage
   )
   const [loading, setLoading] = useState(true)
-
+  const [userDetails, setUserDetails] = useState<UserDetails>(
+    getUserFromLocalStorage
+  )
   useEffect(() => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('cart', JSON.stringify(cart))
     }
   }, [cart])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('users', JSON.stringify(userDetails))
+    }
+  }, [userDetails])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -64,6 +50,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     <AppContext.Provider
       value={{
         cart,
+        userDetails,
+        setUserDetails,
         setCart,
         products,
         setProducts,
