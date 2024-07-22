@@ -4,7 +4,7 @@ export const CreateUser = async (User: any) => {
   try {
     const Response = await axios.post('/api/User/Create', User)
     if (Response.status == 201) {
-      return Response.data
+      return Response.data[0]
     } else {
       console.log('NO USER STORED')
     }
