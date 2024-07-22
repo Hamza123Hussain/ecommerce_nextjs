@@ -22,7 +22,7 @@ export const POST = async (req: any) => {
       ])
       .select()
     if (data) {
-      return NextResponse.json(true, { status: 201 })
+      return NextResponse.json(data, { status: 201 })
     } else {
       console.log(error)
       return NextResponse.json({ error }, { status: 404 })
