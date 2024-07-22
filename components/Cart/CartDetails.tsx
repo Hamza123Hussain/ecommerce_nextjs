@@ -12,7 +12,7 @@ const CartDetails = ({
   quantity: number
 }) => {
   return (
-    <div className="w-full lg:w-1/3 bg-gray-100 px-2 py-4 mb-2 rounded-lg">
+    <div className="w-full lg:w-1/3 bg-gray-100 p-4  mb-2 rounded-lg">
       <h2 className="text-2xl font-bold mb-4 text-center lg:text-left">
         Order Summary
       </h2>
