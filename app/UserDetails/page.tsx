@@ -28,9 +28,11 @@ const UserDetailsForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const data = await CreateUser(userDetails)
+    const data: Boolean = await CreateUser(userDetails)
 
-    console.log('User Details Submitted:', userDetails)
+    if (data) {
+      alert('USER DETAILS STORED')
+    }
   }
 
   return (
