@@ -42,7 +42,7 @@ const CartPage = () => {
             cart.map((item: Product) => (
               <div
                 key={item.id}
-                className="flex flex-col md:flex-row items-center border-black hover:shadow-md hover:shadow-blue-100 gap-4 mb-4 p-4 border rounded-lg"
+                className="flex flex-col md:flex-row items-center border-black hover:shadow-md hover:shadow-blue-100 gap-4 mb-4 p-4 "
               >
                 <Cartitem item={item} />
               </div>
