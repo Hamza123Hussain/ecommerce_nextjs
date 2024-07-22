@@ -25,7 +25,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     getProductsFromLocalStorage
   )
   const [loading, setLoading] = useState(true)
-  const [userDetails, setUserDetails] = useState<UserDetails>(
+  const [userDetail, setUserDetail] = useState<UserDetails>(
     getUserFromLocalStorage
   )
   useEffect(() => {
@@ -36,9 +36,9 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('users', JSON.stringify(userDetails))
+      localStorage.setItem('users', JSON.stringify(userDetail))
     }
-  }, [userDetails])
+  }, [userDetail])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -50,8 +50,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     <AppContext.Provider
       value={{
         cart,
-        userDetails,
-        setUserDetails,
+        userDetail,
+        setUserDetail,
         setCart,
         products,
         setProducts,
