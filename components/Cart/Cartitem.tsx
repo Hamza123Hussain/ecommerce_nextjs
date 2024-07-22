@@ -13,7 +13,7 @@ const CartItems = ({ item }: { item: Product }) => {
         <img
           src={item.image_url}
           alt={item.name}
-          className="   rounded-t-lg md:rounded-xl"
+          className=" w-[30vh]  h-[30vh]   rounded-t-lg md:rounded-xl"
         />
       </div>
       <div className="col-span-6 md:col-span-3">
