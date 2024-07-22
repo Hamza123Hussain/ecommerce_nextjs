@@ -7,7 +7,7 @@ const HomeProduct = ({ product }: { product: Product }) => {
   const Router = useRouter()
   return (
     <div key={product.id} onClick={() => Router.push(`/Product/${product.id}`)}>
-      <div className="relative hover:shadow-md hover:shadow-black flex w-full max-w-xs flex-col overflow-hidden rounded-lg  shadow-md">
+      <div className="relative hover:shadow-md bg-gray-100 hover:shadow-gray-300 flex w-full max-w-xs flex-col overflow-hidden rounded-lg  shadow-md">
         <img
           src={product.image_url}
           alt={product.name}
