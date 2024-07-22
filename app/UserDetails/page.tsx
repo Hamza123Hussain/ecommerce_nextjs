@@ -5,8 +5,14 @@ import GoBackButton from '@/components/User/GoBack'
 import UserInput from '@/components/User/UserInput'
 import { fields } from '@/components/User/UserDetailsArray'
 import { CreateUser } from '@/functions/User/CreateUser'
+import CustomAlert from '@/components/Alert'
 
 const UserDetailsForm = () => {
+  const [alert, setAlert] = useState<{
+    message: string
+    type: 'success' | 'error'
+  } | null>(null)
+
   const [userDetails, setUserDetails] = useState({
     name: '',
     phoneNumber: '',
@@ -31,12 +37,22 @@ const UserDetailsForm = () => {
     const data: Boolean = await CreateUser(userDetails)
 
     if (data) {
-      alert('USER DETAILS STORED')
+      setAlert({
+        message: 'User details submitted successfully!',
+        type: 'success',
+      })
     }
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-r bg-white flex items-center justify-center p-4">
+      {alert && (
+        <CustomAlert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
