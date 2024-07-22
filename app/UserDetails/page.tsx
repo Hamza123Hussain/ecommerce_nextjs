@@ -6,8 +6,10 @@ import UserInput from '@/components/User/UserInput'
 import { fields } from '@/components/User/UserDetailsArray'
 import { CreateUser } from '@/functions/User/CreateUser'
 import CustomAlert from '@/components/Alert'
+import { useAppContext } from '@/utils/Context'
 
 const UserDetailsForm = () => {
+  const { userDetail, setUserDetail } = useAppContext()
   const [alert, setAlert] = useState<{
     message: string
     type: 'success' | 'error'
@@ -23,6 +25,7 @@ const UserDetailsForm = () => {
     zipCode: '',
     country: '',
   })
+  console.log(userDetail)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -42,6 +45,8 @@ const UserDetailsForm = () => {
         type: 'success',
       })
     }
+    setUserDetail(data)
+    console.log(userDetail)
   }
 
   return (
