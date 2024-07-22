@@ -28,9 +28,8 @@ const GetProducts = () => {
 
   if (loading) {
     return (
-      <div className=" flex gap-3 mt-52 justify-center items-center">
-        <div className="loader"></div> <div className="loader"></div>{' '}
-        <div className="loader"></div>{' '}
+      <div className=" flex mt-52 justify-center items-center">
+        <span className="loader"></span>
       </div>
     ) // Display loading indicator while fetching data
   }
