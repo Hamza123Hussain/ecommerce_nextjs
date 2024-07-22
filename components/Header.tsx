@@ -9,7 +9,7 @@ const Header = () => {
   const Router = useRouter()
   const { user } = useUser()
   return (
-    <div className=" flex flex-col sm:flex-row sm:justify-between sm:items-center bg-slate-300 shadow-md shadow-slate-800 sm:px-4 py-2 gap-5 sm:gap-0">
+    <div className=" flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gray-100 shadow-md shadow-gray-400 sm:px-4 gap-5 sm:gap-0">
       <div
         onClick={() => Router.push('/')}
         className=" flex gap-2 items-center"
@@ -17,12 +17,12 @@ const Header = () => {
         {' '}
         <Image
           src={LOGO}
-          width={100}
-          height={100}
-          className=" w-12 sm:w-24  rounded-full cursor-pointer "
+          width={75}
+          height={75}
+          className=" w-12 sm:w-18 rounded-full cursor-pointer "
           alt="logo"
         />
-        <h1 className="bg-gradient-to-r cursor-pointer hover:brightness-110 from-blue-500 to-purple-500 bg-clip-text text-3xl sm:text-6xl font-extrabold text-transparent">
+        <h1 className="bg-gradient-to-r cursor-pointer hover:brightness-110 from-black to-yellow-600 bg-clip-text text-3xl sm:text-3xl font-extrabold text-transparent">
           TechTreasure
         </h1>
       </div>
@@ -30,7 +30,7 @@ const Header = () => {
         <ShoppingCart
           className=" cursor-pointer"
           onClick={() => Router.push('/cart')}
-          size={50}
+          size={25}
         />
         {user ? (
           <div className=" flex items-center gap-3 p-2">
@@ -38,7 +38,7 @@ const Header = () => {
             <h3> {user?.fullName}</h3>
           </div>
         ) : (
-          <button className=" rounded-xl px-10 py-2 bg-green-500 hover:brightness-110 text-white border-2">
+          <button className=" rounded-xl px-10 py-1 bg-green-400 hover:brightness-110 text-white border-2 text-xl">
             Login
           </button>
         )}
