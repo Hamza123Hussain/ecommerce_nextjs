@@ -8,7 +8,12 @@ const useCartActions = () => {
   const { setCart, setProducts, products, cart } = useAppContext()
 
   const increment = useCallback(
-    (id: any) => {
+    async (id: any) => {
+      const Found = products.find((element: Product) => element.id === id)
+      console.log('FOUNDED PRODUCT : ', Found)
+      if (Found) {
+      }
+
       setProducts((prevProducts: Product[]) => {
         return prevProducts.map((product: Product) =>
           product.id === id
