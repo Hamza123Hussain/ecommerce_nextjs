@@ -8,15 +8,17 @@ import { Product } from '@/utils/ProductInterface'
 import { motion } from 'framer-motion'
 import UserDetailsComponent from './UserDetails'
 import GoBackButton from '../User/GoBack'
+import { placeOrder } from '@/functions/Order/Create'
 
 const OrderPage: React.FC = () => {
   const { cart, userDetail, total } = useAppContext()
   const [isClient, setIsClient] = useState(false)
 
-  const SubmitOrder = () => {
+  const SubmitOrder = async () => {
     console.log('CART', cart)
     console.log('User Data', userDetail)
     console.log('TOTAL', total)
+    const Data = await placeOrder(cart)
   }
   useEffect(() => {
     setIsClient(true)
