@@ -9,13 +9,27 @@ import { motion } from 'framer-motion'
 import UserDetailsComponent from './UserDetails'
 import GoBackButton from '../User/GoBack'
 import { placeOrder } from '@/functions/Order/Create'
+import CustomAlert from '../Alert'
+import { useRouter } from 'next/navigation'
 
-const OrderPage: React.FC = () => {
+const OrderPage = () => {
+  const Router = useRouter()
+  const [alert, setAlert] = useState<{
+    message: string
+    type: 'success' | 'error'
+  } | null>(null)
   const { cart, userDetail, total } = useAppContext()
   const [isClient, setIsClient] = useState(false)
 
   const SubmitOrder = async () => {
     const Data = await placeOrder(cart, total, userDetail)
+    if (Data) {
+      setAlert({
+        message: 'Order Placed successfully!',
+        type: 'success',
+      })
+      Router.push('/PostOrder')
+    }
   }
   useEffect(() => {
     setIsClient(true)
@@ -25,11 +39,15 @@ const OrderPage: React.FC = () => {
     return null // Return null until client-side rendering is confirmed
   }
 
-  console.log('User Details:', userDetail)
-  console.log('Cart Items:', cart)
-
   return (
     <div className="min-h-screen bg-gradient-to-r from-purple-500 to-blue-500 flex flex-col items-center p-4">
+      {alert && (
+        <CustomAlert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <GoBackButton />
       <motion.div
         initial={{ opacity: 0, y: 50 }}
