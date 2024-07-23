@@ -1,10 +1,16 @@
 import { Product } from '@/utils/ProductInterface'
 import axios from 'axios'
 
-export const placeOrder = async (cart: Product[]) => {
+export const placeOrder = async (
+  cart: Product[],
+  total: number,
+  userDetail: any
+) => {
   try {
     const response = await axios.post('/api/Order/Create', {
       cart,
+      total,
+      userDetail,
     })
 
     if (response.status === 201) {
