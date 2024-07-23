@@ -7,6 +7,7 @@ import { fields } from '@/components/User/UserDetailsArray'
 import { CreateUser } from '@/functions/User/CreateUser'
 import CustomAlert from '@/components/Alert'
 import { useAppContext } from '@/utils/Context'
+import { useRouter } from 'next/navigation'
 
 const UserDetailsForm = () => {
   const { userDetail, setUserDetail } = useAppContext()
@@ -14,7 +15,7 @@ const UserDetailsForm = () => {
     message: string
     type: 'success' | 'error'
   } | null>(null)
-
+  const Router = useRouter()
   const [userDetails, setUserDetails] = useState({
     name: '',
     phoneNumber: '',
@@ -47,6 +48,7 @@ const UserDetailsForm = () => {
     }
     setUserDetail(data)
     console.log(userDetail)
+    Router.push('/Order')
   }
 
   return (
