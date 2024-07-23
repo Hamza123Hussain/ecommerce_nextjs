@@ -15,10 +15,7 @@ const OrderPage: React.FC = () => {
   const [isClient, setIsClient] = useState(false)
 
   const SubmitOrder = async () => {
-    console.log('CART', cart)
-    console.log('User Data', userDetail)
-    console.log('TOTAL', total)
-    const Data = await placeOrder(cart)
+    const Data = await placeOrder(cart, total, userDetail)
   }
   useEffect(() => {
     setIsClient(true)
