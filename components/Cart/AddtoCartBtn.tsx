@@ -2,7 +2,7 @@
 import React from 'react'
 import { Minus, Plus, ShoppingCart } from 'lucide-react'
 import { Product } from '@/utils/ProductInterface'
-import useCartActions from '@/functions/Product/Quantity/CustomQuantityHook'
+import useCartActions from '@/functions/Quantity/CustomQuantityHook'
 
 interface AddtoCartBtnProps {
   product: Product
