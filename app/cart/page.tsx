@@ -6,7 +6,7 @@ import CartDetails from '@/components/Cart/CartDetails'
 import { Product } from '@/utils/ProductInterface'
 
 const CartPage = () => {
-  const { cart } = useAppContext()
+  const { cart, total } = useAppContext()
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
@@ -23,15 +23,6 @@ const CartPage = () => {
       </div>
     )
   }
-
-  const total = cart.reduce(
-    (total: any, element: Product) => {
-      total.totalprice = total.totalprice + element.price * element.quantity
-      total.totalquantity = total.totalquantity + element.quantity
-      return total
-    },
-    { totalprice: 0, totalquantity: 0 }
-  )
 
   const tax = (total.totalprice * 16) / 100
   const shipping = tax + total.totalprice > 1500 ? 0 : 250
