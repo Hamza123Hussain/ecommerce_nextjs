@@ -10,9 +10,14 @@ import UserDetailsComponent from './UserDetails'
 import GoBackButton from '../User/GoBack'
 
 const OrderPage: React.FC = () => {
-  const { cart, userDetail } = useAppContext()
+  const { cart, userDetail, total } = useAppContext()
   const [isClient, setIsClient] = useState(false)
 
+  const SubmitOrder = () => {
+    console.log('CART', cart)
+    console.log('User Data', userDetail)
+    console.log('TOTAL', total)
+  }
   useEffect(() => {
     setIsClient(true)
   }, [])
@@ -49,6 +54,7 @@ const OrderPage: React.FC = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
+          onClick={SubmitOrder}
           className="mt-6 w-full py-3 bg-purple-600 text-white rounded-lg font-semibold text-lg hover:bg-purple-700 transition-transform duration-200"
         >
           Place Order
