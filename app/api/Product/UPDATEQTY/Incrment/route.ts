@@ -8,7 +8,7 @@ export const PUT = async (req: any) => {
       .from('products')
       .update([
         {
-          quantity: payload?.quantity + 1,
+          stock: payload?.stock - 1,
         },
       ])
       .eq('id', payload?.id)
