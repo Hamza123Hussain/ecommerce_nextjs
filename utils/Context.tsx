@@ -24,9 +24,19 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<Product[]>(
     getProductsFromLocalStorage
   )
+
   const [loading, setLoading] = useState(true)
   const [userDetail, setUserDetail] = useState<UserDetails>(
     getUserFromLocalStorage
+  )
+
+  const total = cart.reduce(
+    (total: any, element: Product) => {
+      total.totalprice = total.totalprice + element.price * element.quantity
+      total.totalquantity = total.totalquantity + element.quantity
+      return total
+    },
+    { totalprice: 0, totalquantity: 0 }
   )
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -57,6 +67,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         setProducts,
         loading,
         setLoading,
+        total,
       }}
     >
       {children}
