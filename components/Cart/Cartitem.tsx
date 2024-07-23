@@ -1,5 +1,5 @@
 'use client'
-import useCartActions from '@/functions/Product/Quantity/CustomQuantityHook'
+import useCartActions from '@/functions/Quantity/CustomQuantityHook'
 import { Product } from '@/utils/ProductInterface'
 import { Minus, Plus, Trash } from 'lucide-react'
 import React from 'react'
