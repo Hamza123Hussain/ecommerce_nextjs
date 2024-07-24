@@ -4,13 +4,15 @@ import axios from 'axios'
 export const placeOrder = async (
   cart: Product[],
   total: number,
-  userDetail: any
+  userDetail: any,
+  userid: any
 ) => {
   try {
     const response = await axios.post('/api/Order/Create', {
       cart,
       total,
       userDetail,
+      userid,
     })
 
     if (response.status === 201) {
