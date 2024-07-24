@@ -30,6 +30,7 @@ export const POST = async (req: any) => {
           State: payload.userDetail.State,
           Country: payload?.userDetail.Country,
           zipcode: payload?.userDetail.zipcode,
+          UserID: payload?.userid,
           created_at: new Date().toISOString(),
         },
       ])
