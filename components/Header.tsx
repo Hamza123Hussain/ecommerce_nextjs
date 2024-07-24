@@ -38,7 +38,10 @@ const Header = () => {
             <h3> {user?.fullName}</h3>
           </div>
         ) : (
-          <button className=" rounded-xl px-10 py-1 bg-green-400 hover:brightness-110 text-white border-2 text-xl">
+          <button
+            onClick={() => Router.push('/sign-in')}
+            className=" rounded-xl px-10 py-1 bg-green-400 hover:brightness-110 text-white border-2 text-xl"
+          >
             Login
           </button>
         )}
