@@ -18,7 +18,7 @@ export const placeOrder = async (
     if (response.status === 201) {
       console.log('Order placed successfully:', response.data)
       // alert('Order placed successfully')
-      return response.data
+      return response.data[0].id
     } else {
       console.log('Error placing order:', response.data)
       alert('Error placing order')
