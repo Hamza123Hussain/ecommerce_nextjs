@@ -11,8 +11,10 @@ import GoBackButton from '../User/GoBack'
 import { placeOrder } from '@/functions/Order/Create'
 import CustomAlert from '../Alert'
 import { useRouter } from 'next/navigation'
+import { useUser } from '@clerk/nextjs'
 
 const OrderPage = () => {
+  const { user } = useUser()
   const Router = useRouter()
   const [alert, setAlert] = useState<{
     message: string
@@ -22,7 +24,7 @@ const OrderPage = () => {
   const [isClient, setIsClient] = useState(false)
 
   const SubmitOrder = async () => {
-    const Data = await placeOrder(cart, total, userDetail)
+    const Data = await placeOrder(cart, total, userDetail, user?.id)
     if (Data) {
       setAlert({
         message: 'Order Placed successfully!',
