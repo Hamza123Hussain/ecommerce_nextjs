@@ -4,7 +4,7 @@ import React from 'react'
 import { ArrowLeft } from 'lucide-react'
 import { Product } from '@/utils/ProductInterface'
 import { useRouter } from 'next/navigation'
-import AddtoCartBtn from '../Cart/AddtoCartBtn'
+import AddtoCartBtn from './AddtoCartBtn'
 
 const ProductCard = ({
   product,
