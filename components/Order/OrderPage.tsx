@@ -30,7 +30,7 @@ const OrderPage = () => {
         message: 'Order Placed successfully!',
         type: 'success',
       })
-      Router.push('/PostOrder')
+      Router.push(`/PostOrder/${Data}`)
     }
   }
   useEffect(() => {
