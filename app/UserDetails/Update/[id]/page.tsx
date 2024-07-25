@@ -23,7 +23,7 @@ const UserDetailsForm = ({ params }: { params: any }) => {
 
   useEffect(() => {
     Getdata()
-  }, [])
+  }, [params?.id])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
