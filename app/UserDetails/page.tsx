@@ -1,15 +1,17 @@
 'use client'
-import React, { useState, useEffect, use } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { GetUserList } from '@/functions/User/GetUserList'
 import AddUserModal from '@/components/User/Modal'
 import UserDetailsForList from '@/components/User/UserDetailsForList'
+import { useRouter } from 'next/navigation'
 
 const UserListPage = () => {
   const [users, setUsers] = useState<any[]>([])
   const [showModal, setShowModal] = useState(false)
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null)
   const { user } = useUser()
+  const Router = useRouter()
 
   const Getdata = async () => {
     const data = await GetUserList(user?.id)
@@ -51,6 +53,14 @@ const UserListPage = () => {
         ))}
       </ul>
       {showModal && <AddUserModal onClose={() => setShowModal(false)} />}
+      <div className="flex justify-center mt-6">
+        <button
+          className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition-all duration-300"
+          onClick={() => Router.push('/Order')}
+        >
+          Go To Order Page
+        </button>
+      </div>
     </div>
   )
 }
