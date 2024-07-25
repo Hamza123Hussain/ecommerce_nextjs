@@ -9,14 +9,15 @@ export const POST = async (req: any) => {
       .from('Users')
       .insert([
         {
-          Name: payload?.name,
-          Email: payload?.email,
-          Phone: payload?.phoneNumber,
-          Address: payload?.address,
-          City: payload?.city,
-          State: payload?.state,
-          Country: payload?.country,
-          zipcode: payload?.zipCode,
+          Name: payload?.User.name,
+          Email: payload?.User.email,
+          Phone: payload?.User.phoneNumber,
+          Address: payload?.User.address,
+          City: payload?.User.city,
+          State: payload?.User.state,
+          Country: payload?.User.country,
+          zipcode: payload?.User.zipCode,
+          userid: payload?.userid,
           created_at: new Date().toISOString(),
         },
       ])
