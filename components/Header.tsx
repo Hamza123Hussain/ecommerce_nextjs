@@ -1,13 +1,23 @@
 'use client'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import LOGO from '../public/LOGO.webp'
 import { ShoppingCart } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { UserButton, useUser } from '@clerk/nextjs'
+import { useAppContext } from '@/utils/Context'
 const Header = () => {
   const Router = useRouter()
+  const { cartcount } = useAppContext()
   const { user } = useUser()
+  const [isClient, setIsClient] = useState(false)
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  if (!isClient) {
+    return null // Return null until client-side rendering is confirmed
+  }
   return (
     <div className=" flex flex-col sm:flex-row sm:justify-between sm:items-center bg-gray-100 shadow-md shadow-gray-400 sm:px-4 gap-5 sm:gap-0">
       <div
@@ -27,11 +37,18 @@ const Header = () => {
         </h1>
       </div>
       <div className=" flex items-center justify-end gap-5">
-        <ShoppingCart
-          className=" cursor-pointer"
-          onClick={() => Router.push('/cart')}
-          size={25}
-        />
+        <div className="relative">
+          <ShoppingCart
+            className="cursor-pointer text-gray-800 hover:text-gray-600"
+            onClick={() => Router.push('/cart')}
+            size={25}
+          />
+          {cartcount > 0 && (
+            <span className="absolute -top-2 -right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+              {cartcount}
+            </span>
+          )}
+        </div>
         {user ? (
           <div className=" flex items-center gap-3 p-2">
             <UserButton />
