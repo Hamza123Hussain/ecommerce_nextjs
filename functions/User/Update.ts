@@ -1,8 +1,8 @@
 import axios from 'axios'
 
-export const UpdateUser = async (User: any, userid: any) => {
+export const UpdateUser = async (User: any) => {
   try {
-    const Response = await axios.put('/api/User/Update', { User, userid })
+    const Response = await axios.put('/api/User/Update', { User })
     if (Response.status == 201) {
       return Response.data[0]
     } else {
