@@ -1,4 +1,5 @@
 import { DeleteUser } from '@/functions/User/DeleteDetail'
+import { useAppContext } from '@/utils/Context'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -13,9 +14,11 @@ const UserDetailsForList = ({
   setSelectedUserId: any
   selectedUserId: any
 }) => {
+  const { userDetail, setUserDetail } = useAppContext()
   const Router = useRouter()
   const handleSelectUser = (userId: string) => {
     setSelectedUserId(userId)
+    setUserDetail(user)
   }
 
   const handleEditUser = (userId: string) => {
