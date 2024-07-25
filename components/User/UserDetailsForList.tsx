@@ -14,7 +14,7 @@ const UserDetailsForList = ({
   setSelectedUserId: any
   selectedUserId: any
 }) => {
-  const { userDetail, setUserDetail } = useAppContext()
+  const { setUserDetail } = useAppContext()
   const Router = useRouter()
   const handleSelectUser = (userId: string) => {
     setSelectedUserId(userId)
