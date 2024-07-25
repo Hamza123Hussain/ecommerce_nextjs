@@ -5,7 +5,7 @@ import { Product } from '@/utils/ProductInterface'
 import { useAppContext } from '@/utils/Context'
 
 const useCartActions = () => {
-  const { setCart, setProducts, products, cart } = useAppContext()
+  const { setCart, setProducts, products, cart, setcartcount } = useAppContext()
 
   const increment = useCallback(
     async (id: any) => {
@@ -42,6 +42,7 @@ const useCartActions = () => {
       })
 
       setCart((prevCart: Product[]) => {
+        // fix here like no
         return [...prevCart, { ...product, quantity: product.quantity + 1 }]
       })
     },
