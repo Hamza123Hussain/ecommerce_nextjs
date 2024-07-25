@@ -8,7 +8,6 @@ import { useAppContext } from '@/utils/Context'
 import CustomAlert from '../Alert'
 import UserInput from './UserInput'
 import { fields } from './UserDetailsArray'
-import GoBackButton from './GoBack'
 
 const AddUserModal = ({ onClose }: { onClose: () => void }) => {
   const { userDetail, setUserDetail } = useAppContext()
