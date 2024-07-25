@@ -12,14 +12,16 @@ export const PUT = async (req: any) => {
         },
       ])
       .eq('id', payload?.id)
-      .select()
-
     if (error) {
       return NextResponse.json({ message: error }, { status: 404 })
     }
 
-    return NextResponse.json(data, { status: 200 })
+    return NextResponse.json(true, { status: 200 })
   } catch (error) {
     console.log('API ERROR', error)
+    return NextResponse.json(
+      { message: `API ERROR: ${error}` },
+      { status: 500 }
+    )
   }
 }
