@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { GetUserList } from '@/functions/User/GetUserList'
 import AddUserModal from '@/components/User/Modal'
+import { useRouter } from 'next/navigation'
 
 const UserListPage = () => {
+  const Router = useRouter()
   const [users, setUsers] = useState<any[]>([])
   const [showModal, setShowModal] = useState(false)
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null)
@@ -17,14 +19,14 @@ const UserListPage = () => {
 
   useEffect(() => {
     Getdata()
-  }, [])
+  }, [users])
 
   const handleSelectUser = (userId: string) => {
     setSelectedUserId(userId)
   }
 
   const handleEditUser = (userId: string) => {
-    console.log(`Edit user: ${userId}`)
+    Router.push(`/UserDetails/Update/${userId}`)
   }
 
   const handleDeleteUser = (userId: string) => {
