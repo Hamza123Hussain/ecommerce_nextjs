@@ -4,6 +4,7 @@ import { useUser } from '@clerk/nextjs'
 import { GetUserList } from '@/functions/User/GetUserList'
 import AddUserModal from '@/components/User/Modal'
 import { useRouter } from 'next/navigation'
+import { DeleteUser } from '@/functions/User/DeleteDetail'
 
 const UserListPage = () => {
   const Router = useRouter()
@@ -18,8 +19,10 @@ const UserListPage = () => {
   }
 
   useEffect(() => {
-    Getdata()
-  }, [users])
+    if (user?.id) {
+      Getdata()
+    }
+  }, [user?.id])
 
   const handleSelectUser = (userId: string) => {
     setSelectedUserId(userId)
@@ -29,8 +32,11 @@ const UserListPage = () => {
     Router.push(`/UserDetails/Update/${userId}`)
   }
 
-  const handleDeleteUser = (userId: string) => {
-    console.log(`Delete user: ${userId}`)
+  const handleDeleteUser = async (userId: string) => {
+    const data = await DeleteUser(userId)
+    if (data) {
+      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId))
+    }
   }
 
   return (
