@@ -8,18 +8,18 @@ export const PUT = async (req: any) => {
       .from('products')
       .update([
         {
-          stock: payload?.stock + payload?.quantity,
+          stock: payload?.stock + payload?.Quantity,
         },
       ])
       .eq('id', payload?.id)
-      .select()
 
     if (error) {
       return NextResponse.json({ message: error }, { status: 404 })
     }
 
-    return NextResponse.json(data, { status: 200 })
+    return NextResponse.json(true, { status: 200 })
   } catch (error) {
     console.log('API ERROR', error)
+    return NextResponse.json({ message: error }, { status: 404 })
   }
 }
