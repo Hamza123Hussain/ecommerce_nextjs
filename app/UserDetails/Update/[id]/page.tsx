@@ -1,14 +1,11 @@
 'use client'
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
-import GoBackButton from '@/components/User/GoBack'
-import UserInput from '@/components/User/UserInput'
-import { fields } from '@/components/User/UserDetailsArray'
-import { CreateUser } from '@/functions/User/CreateUser'
+import React, { useEffect, useState } from 'react'
 import CustomAlert from '@/components/Alert'
-import { useAppContext } from '@/utils/Context'
 import { useRouter } from 'next/navigation'
-import { useUser } from '@clerk/nextjs'
+import { GetUserbyId } from '@/functions/User/GetDataById'
+import UserInput from '@/components/User/UserInput'
+import { fields } from '@/components/User/UpdateArray'
+import { UpdateUser } from '@/functions/User/Update'
 
 const UserDetailsForm = ({ params }: { params: any }) => {
   const [alert, setAlert] = useState<{
@@ -16,21 +13,21 @@ const UserDetailsForm = ({ params }: { params: any }) => {
     type: 'success' | 'error'
   } | null>(null)
   const Router = useRouter()
-  const { user } = useUser()
-  const [userDetails, setUserDetails] = useState({
-    name: '',
-    phoneNumber: '',
-    email: '',
-    address: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    country: '',
-  })
+  const [userDetails, setUserDetails] = useState<any>({})
+
+  const Getdata = async () => {
+    const data = await GetUserbyId(params.id)
+    console.log(data)
+    setUserDetails(data)
+  }
+
+  useEffect(() => {
+    Getdata()
+  }, [])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
-    setUserDetails((prevDetails) => ({
+    setUserDetails((prevDetails: any) => ({
       ...prevDetails,
       [name]: value,
     }))
@@ -38,20 +35,24 @@ const UserDetailsForm = ({ params }: { params: any }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const data: Boolean = await CreateUser(userDetails, user?.id)
+    const data: Boolean = await UpdateUser(userDetails)
 
     if (data) {
       setAlert({
-        message: 'User details submitted successfully!',
+        message: 'User details updated successfully!',
         type: 'success',
       })
+      Router.back()
+    } else {
+      setAlert({
+        message: 'Failed to update user details!',
+        type: 'error',
+      })
     }
-
-    Router.push('/Order')
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r bg-white flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-r from-blue-100 to-purple-200 flex items-center justify-center p-4">
       {alert && (
         <CustomAlert
           message={alert.message}
@@ -59,15 +60,9 @@ const UserDetailsForm = ({ params }: { params: any }) => {
           onClose={() => setAlert(null)}
         />
       )}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6 }}
-        className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-2xl relative"
-      >
-        <GoBackButton />
+      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-2xl">
         <h2 className="text-4xl font-extrabold mb-6 text-center text-gray-800">
-          User Details
+          Edit User Details
         </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           {fields.map((field, index) => (
@@ -76,19 +71,19 @@ const UserDetailsForm = ({ params }: { params: any }) => {
               label={field.label}
               type={field.type}
               name={field.name}
-              value={userDetails[field.name as keyof typeof userDetails]}
+              value={userDetails[field.name as keyof typeof userDetails] || ''}
               onChange={handleChange}
               placeholder={field.placeholder}
             />
           ))}
-          <motion.button
+          <button
             type="submit"
             className="w-full py-3 bg-blue-400 text-white rounded-lg font-semibold text-lg hover:bg-blue-600 transition-transform duration-200"
           >
-            Submit
-          </motion.button>
+            Update
+          </button>
         </form>
-      </motion.div>
+      </div>
     </div>
   )
 }
