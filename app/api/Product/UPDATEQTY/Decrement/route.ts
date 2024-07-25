@@ -6,20 +6,19 @@ export const PUT = async (req: any) => {
     const payload = await req.json()
     const { data, error } = await supabase
       .from('products')
-      .update([
-        {
-          stock: payload?.stock + 1,
-        },
-      ])
-      .eq('id', payload?.id)
-      .select()
+      .update({ stock: payload.stock + 1 })
+      .eq('id', payload.id)
 
     if (error) {
-      return NextResponse.json({ message: error }, { status: 404 })
+      return NextResponse.json({ message: error.message }, { status: 404 })
     }
 
-    return NextResponse.json(data, { status: 200 })
-  } catch (error) {
+    return NextResponse.json(true, { status: 200 })
+  } catch (error: any) {
     console.log('API ERROR', error)
+    return NextResponse.json(
+      { message: `API ERROR: ${error.message}` },
+      { status: 500 }
+    )
   }
 }
