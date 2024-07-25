@@ -4,6 +4,7 @@ import { Minus, Plus, ShoppingCart } from 'lucide-react'
 import { Product } from '@/utils/ProductInterface'
 import useCartActions from '@/functions/Quantity/CustomQuantityHook'
 import { useAppContext } from '@/utils/Context'
+import { updateProductQuantityAndStock } from '@/functions/Quantity/IncrementBackend'
 
 interface AddtoCartBtnProps {
   product: Product
@@ -17,10 +18,11 @@ const AddtoCartBtn: React.FC<AddtoCartBtnProps> = ({
   const { addToCart, increment, decrement } = useCartActions()
   const { setcartcount } = useAppContext()
 
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     addToCart(product)
     setcartcount((prev: any) => prev + 1)
-    onQuantityChange(1) // Set initial quantity to 1 when adding to cart
+
+    onQuantityChange(1) // Set initial quantity to 1 when adding to cart}
   }
 
   const handleIncrement = () => {
