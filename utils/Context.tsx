@@ -9,6 +9,7 @@ import React, {
 import { Product } from '@/utils/ProductInterface'
 import {
   getCartFromLocalStorage,
+  getCountFromLocalStorage,
   getProductsFromLocalStorage,
   getUserFromLocalStorage,
 } from './GetLocalStorage'
@@ -21,6 +22,7 @@ export const AppContext = createContext<AppContextProps | any | undefined>(
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<Product[]>(getCartFromLocalStorage)
+  const [cartcount, setcartcount] = useState(getCountFromLocalStorage)
   const [products, setProducts] = useState<Product[]>(
     getProductsFromLocalStorage
   )
@@ -46,6 +48,12 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      localStorage.setItem('cartcount', JSON.stringify(cartcount))
+    }
+  }, [cartcount])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
       localStorage.setItem('users', JSON.stringify(userDetail))
     }
   }, [userDetail])
@@ -68,6 +76,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         loading,
         setLoading,
         total,
+        cartcount,
+        setcartcount,
       }}
     >
       {children}
