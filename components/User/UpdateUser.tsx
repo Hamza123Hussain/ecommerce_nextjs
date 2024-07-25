@@ -10,7 +10,7 @@ import { useAppContext } from '@/utils/Context'
 import { useRouter } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
 
-const UserDetailsForm = () => {
+const UserDetailsForm = ({ params }: { params: any }) => {
   const { userDetail, setUserDetail } = useAppContext()
   const [alert, setAlert] = useState<{
     message: string
