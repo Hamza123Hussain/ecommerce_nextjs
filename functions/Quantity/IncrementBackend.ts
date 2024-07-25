@@ -8,14 +8,13 @@ export const updateProductQuantityAndStock = async (
   try {
     const response = await axios.put(url, {
       id: product.id,
-      quantity: product.quantity,
+      Quantity: product.quantity,
       stock: product.stock,
     })
 
     if (response.status === 200) {
-      console.log('Product updated successfully:', response.data[0])
       alert('Product updated successfully')
-      return response.data[0]
+      return response.data
     } else {
       console.log('Error updating product:', response.data)
       alert('Error updating product')
