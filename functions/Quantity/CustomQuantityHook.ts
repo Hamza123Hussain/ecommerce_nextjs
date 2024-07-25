@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 
 import { Product } from '@/utils/ProductInterface'
 import { useAppContext } from '@/utils/Context'
+import { updateProductQuantityAndStock } from './IncrementBackend'
 
 const useCartActions = () => {
   const { setCart, setProducts, products, cart, setcartcount } = useAppContext()
@@ -50,31 +51,63 @@ const useCartActions = () => {
   )
 
   const decrement = useCallback(
-    (id: any) => {
-      const Find = products.find((element: Product) => element.id == id)
-      console.log('ELment Found', Find)
-      setProducts((Element: Product[]) => {
-        return Element.map((single) =>
-          single.id == id
-            ? { ...single, quantity: single.quantity - 1 }
-            : single
-        )
-      })
-      if (Find && Find.quantity > 1) {
-        setCart((Prev: Product[]) => {
-          return Prev.map((element: Product) =>
-            element.id === id
-              ? { ...element, quantity: element.quantity - 1 }
-              : element
+    async (id: any) => {
+      try {
+        const product = products.find((element: Product) => element.id === id)
+        if (!product) {
+          console.log('Product not found')
+          return
+        }
+
+        if (product.quantity > 1) {
+          // Decrement quantity in local state
+          setProducts((prevProducts: Product[]) =>
+            prevProducts.map((single) =>
+              single.id === id
+                ? { ...single, quantity: single.quantity - 1 }
+                : single
+            )
           )
+
+          // Update the cart
+          setCart((prevCart: Product[]) =>
+            prevCart.map((element: Product) =>
+              element.id === id
+                ? { ...element, quantity: element.quantity - 1 }
+                : element
+            )
+          )
+        } else {
+          // Remove product from cart if quantity is 1
+          setCart((prevCart: Product[]) =>
+            prevCart.filter((element: Product) => element.id !== id)
+          )
+        }
+
+        // Call the API to update the stock in the backend
+        const response = await fetch('/api/Product/UPDATEQTY/Decrement', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ id: product.id, stock: product.stock }),
         })
-      } else {
-        setCart((Prevcart: Product[]) => {
-          return Prevcart.filter((element: Product) => element.id !== id)
-        })
+
+        if (!response.ok) {
+          throw new Error('Failed to update stock')
+        }
+
+        // Optionally update the product stock in local state if needed
+        setProducts((prevProducts: Product[]) =>
+          prevProducts.map((single) =>
+            single.id === id ? { ...single, stock: single.stock + 1 } : single
+          )
+        )
+      } catch (error) {
+        console.error('Error updating product quantity and stock:', error)
       }
     },
-    [setProducts, products, cart, setCart]
+    [products, setProducts, setCart]
   )
   const removeFromCart = (id: any) => {
     setProducts((Element: Product[]) => {
