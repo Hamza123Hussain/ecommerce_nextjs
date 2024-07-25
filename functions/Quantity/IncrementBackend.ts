@@ -13,7 +13,6 @@ export const updateProductQuantityAndStock = async (
     })
 
     if (response.status === 200) {
-      alert('Product updated successfully')
       return response.data
     } else {
       console.log('Error updating product:', response.data)
