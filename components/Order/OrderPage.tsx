@@ -20,7 +20,7 @@ const OrderPage = () => {
     message: string
     type: 'success' | 'error'
   } | null>(null)
-  const { cart, userDetail, total } = useAppContext()
+  const { cart, userDetail, total, setCart } = useAppContext()
   const [isClient, setIsClient] = useState(false)
 
   const SubmitOrder = async () => {
@@ -30,6 +30,7 @@ const OrderPage = () => {
         message: 'Order Placed successfully!',
         type: 'success',
       })
+      setCart([])
       Router.push(`/PostOrder/${Data}`)
     }
   }
