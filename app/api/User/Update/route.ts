@@ -3,24 +3,24 @@ import { NextResponse } from 'next/server'
 
 export const PUT = async (req: any) => {
   try {
-    const payload = req.json()
+    const payload = await req.json()
 
     const { data, error } = await supabase
       .from('Users')
       .update([
         {
-          Name: payload?.User.name,
-          Email: payload?.User.email,
-          Phone: payload?.User.phoneNumber,
-          Address: payload?.User.address,
-          City: payload?.User.city,
-          State: payload?.User.state,
-          Country: payload?.User.country,
-          zipcode: payload?.User.zipCode,
-          userid: payload?.userid,
+          Name: payload?.User.Name,
+          Email: payload?.User.Email,
+          Phone: payload?.User.Phone,
+          Address: payload?.User.Address,
+          City: payload?.User.City,
+          State: payload?.User.State,
+          Country: payload?.User.Country,
+          zipcode: payload?.User.zipcode,
           updatedAt: new Date().toISOString(),
         },
       ])
+      .eq('id', payload?.User.id)
       .select()
     if (data) {
       return NextResponse.json(data, { status: 201 })
