@@ -1,8 +1,9 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { Minus, Plus, ShoppingCart } from 'lucide-react'
 import { Product } from '@/utils/ProductInterface'
 import useCartActions from '@/functions/Quantity/CustomQuantityHook'
+import { useAppContext } from '@/utils/Context'
 
 interface AddtoCartBtnProps {
   product: Product
@@ -14,19 +15,23 @@ const AddtoCartBtn: React.FC<AddtoCartBtnProps> = ({
   onQuantityChange,
 }) => {
   const { addToCart, increment, decrement } = useCartActions()
+  const { setcartcount } = useAppContext()
 
   const handleAddToCart = () => {
     addToCart(product)
+    setcartcount((prev: any) => prev + 1)
     onQuantityChange(1) // Set initial quantity to 1 when adding to cart
   }
 
   const handleIncrement = () => {
     increment(product.id)
+    setcartcount((prev: any) => prev + 1)
     onQuantityChange(product.quantity + 1)
   }
 
   const handleDecrement = () => {
     decrement(product.id)
+    setcartcount((prev: any) => prev - 1)
     onQuantityChange(product.quantity - 1)
   }
 
