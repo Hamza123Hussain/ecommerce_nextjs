@@ -25,3 +25,13 @@ export const getProductsFromLocalStorage = () => {
     return []
   }
 }
+
+export const getCountFromLocalStorage = () => {
+  try {
+    const savedProducts = localStorage.getItem('cartcount')
+    return savedProducts ? JSON.parse(savedProducts) : []
+  } catch (error) {
+    console.error('Error parsing products from localStorage', error)
+    return 0
+  }
+}
