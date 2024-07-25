@@ -11,8 +11,10 @@ const useCartActions = () => {
   const increment = useCallback(
     async (id: any) => {
       const Found = products.find((element: Product) => element.id === id)
-      console.log('FOUNDED PRODUCT : ', Found)
-      if (Found) {
+
+      if (!Found) {
+        console.error('Product not found')
+        return
       }
 
       setProducts((prevProducts: Product[]) => {
@@ -29,9 +31,30 @@ const useCartActions = () => {
           item.id === id ? { ...item, quantity: item.quantity + 1 } : item
         )
       })
+
+      // Call the API to update the stock in the backend
+      const response = await fetch('/api/Product/UPDATEQTY/Incrment', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: Found.id, stock: Found.stock }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to update stock')
+      }
+
+      // Optionally update the product stock in local state if needed
+      setProducts((prevProducts: Product[]) =>
+        prevProducts.map((single) =>
+          single.id === id ? { ...single, stock: single.stock - 1 } : single
+        )
+      )
     },
     [setProducts, products, cart, setCart]
   )
+
   const addToCart = useCallback(
     (product: Product) => {
       setProducts((prevProducts: Product[]) => {
@@ -109,16 +132,34 @@ const useCartActions = () => {
     },
     [products, setProducts, setCart]
   )
-  const removeFromCart = (id: any) => {
-    setProducts((Element: Product[]) => {
-      return Element.map((single: Product) =>
-        single.id === id ? { ...single, quantity: 0 } : single
-      )
-    })
+  const removeFromCart = async (id: any) => {
+    const product = products.find((element: Product) => element.id === id)
 
-    setCart((Prev: Product[]) => {
-      return Prev.filter((item: Product) => item.id !== id)
-    })
+    const data = await updateProductQuantityAndStock(
+      product,
+      '/api/Product/UPDATEQTY/Reversal'
+    )
+
+    if (data) {
+      setcartcount((prev: number) => prev - product.quantity)
+      setProducts((prevProducts: Product[]) =>
+        prevProducts.map((single) =>
+          single.id === id
+            ? { ...single, stock: single.stock + single.quantity }
+            : single
+        )
+      )
+      setProducts((Element: Product[]) => {
+        return Element.map((single: Product) =>
+          single.id === id ? { ...single, quantity: 0 } : single
+        )
+      })
+
+      setCart((Prev: Product[]) => {
+        return Prev.filter((item: Product) => item.id !== id)
+      })
+    } else throw new Error('Failed to update stock')
+    // Optionally update the product stock in local state if needed
   }
   return {
     addToCart,
