@@ -29,7 +29,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     getProductsFromLocalStorage
   )
 
-  const [loading, setLoading] = useState(true)
   const [userDetail, setUserDetail] = useState<UserDetails>(
     getUserFromLocalStorage
   )
@@ -74,6 +73,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
       localStorage.setItem('products', JSON.stringify(products))
     }
   }, [products])
+  const [loading, setLoading] = useState(true)
 
   return (
     <AppContext.Provider
