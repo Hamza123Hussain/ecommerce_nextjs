@@ -58,7 +58,7 @@ const UserList = () => {
           className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition-all duration-300"
           onClick={() => Router.push('/Order')}
         >
-          Go To Order Page
+          Go To Payment
         </button>
       </div>
     </div>
