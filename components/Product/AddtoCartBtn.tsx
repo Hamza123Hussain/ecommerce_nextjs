@@ -4,7 +4,6 @@ import { Minus, Plus, ShoppingCart } from 'lucide-react'
 import { Product } from '@/utils/ProductInterface'
 import useCartActions from '@/functions/Quantity/CustomQuantityHook'
 import { useAppContext } from '@/utils/Context'
-import { updateProductQuantityAndStock } from '@/functions/Quantity/IncrementBackend'
 
 interface AddtoCartBtnProps {
   product: Product
