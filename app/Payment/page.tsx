@@ -6,19 +6,12 @@ import { useRouter } from 'next/navigation'
 import { placeOrder } from '@/functions/Order/Create'
 import { useUser } from '@clerk/nextjs'
 import CustomAlert from '@/components/Alert'
+import CardDetails from '@/components/Payment/CardDetails'
+import CostDetails from '@/components/Payment/CostDetails'
 
 const PaymentPage = () => {
-  const {
-    total,
-    tax,
-    shipping,
-    sum,
-    paymentMethod,
-    setPaymentMethod,
-    setCart,
-    cart,
-    userDetail,
-  } = useAppContext()
+  const { total, paymentMethod, setPaymentMethod, setCart, cart, userDetail } =
+    useAppContext()
   const { user } = useUser()
   const [alert, setAlert] = useState<{
     message: string
@@ -41,23 +34,7 @@ const PaymentPage = () => {
       Router.push(`/PostOrder/${Data}`)
     }
   }
-  const [isClient, setIsClient] = useState(false)
   const Router = useRouter()
-
-  useEffect(() => {
-    // This ensures that the component is only rendered on the client side
-    setIsClient(true)
-  }, [])
-
-  if (!isClient) {
-    // Return an empty div or loading state during server-side rendering
-    return (
-      <div className=" flex gap-3 mt-52 justify-center items-center">
-        <div className="loader"></div> <div className="loader"></div>{' '}
-        <div className="loader"></div>{' '}
-      </div>
-    )
-  }
   return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-100 to-purple-100 flex items-center justify-center p-6">
       {alert && (
@@ -100,32 +77,7 @@ const PaymentPage = () => {
                 Pay by Cash
               </button>
             </div>
-            {paymentMethod === 'card' && (
-              <div className="space-y-4">
-                <input
-                  type="text"
-                  placeholder="Card Number"
-                  className="w-full p-3 border border-gray-300 rounded-lg"
-                />
-                <div className="flex space-x-4">
-                  <input
-                    type="text"
-                    placeholder="Expiry Date"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                  />
-                  <input
-                    type="text"
-                    placeholder="CVV"
-                    className="w-full p-3 border border-gray-300 rounded-lg"
-                  />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Cardholder Name"
-                  className="w-full p-3 border border-gray-300 rounded-lg"
-                />
-              </div>
-            )}
+            {paymentMethod === 'card' && <CardDetails />}
             {paymentMethod === 'cash' && (
               <div className="text-lg text-gray-700">
                 You have selected to pay by cash. Please prepare the exact
@@ -134,28 +86,8 @@ const PaymentPage = () => {
             )}
           </div>
           <div>
-            <h3 className="text-2xl font-bold mb-4 text-gray-800">
-              Order Summary
-            </h3>
-            <div className="bg-gray-100 p-6 rounded-lg space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-gray-700">Subtotal</span>
-                <span className="text-gray-900">Rs {total.totalprice}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-700">Tax</span>
-                <span className="text-gray-900">Rs{tax}</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-700">Shipping</span>
-                <span className="text-gray-900">Rs {shipping}</span>
-              </div>
-              <div className="border-t border-gray-300 mt-4"></div>
-              <div className="flex justify-between items-center font-bold text-lg">
-                <span className="text-gray-800">Total</span>
-                <span className="text-gray-900">{sum}</span>
-              </div>
-            </div>
+            {' '}
+            <CostDetails />{' '}
             <button
               onClick={SubmitOrder}
               className="w-full py-3 mt-6 bg-green-500 text-white rounded-lg font-semibold text-lg hover:bg-green-600 transition-transform duration-200"
