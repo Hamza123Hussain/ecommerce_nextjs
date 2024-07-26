@@ -8,32 +8,18 @@ import { Product } from '@/utils/ProductInterface'
 import { motion } from 'framer-motion'
 import UserDetailsComponent from './UserDetails'
 import GoBackButton from '../User/GoBack'
-import { placeOrder } from '@/functions/Order/Create'
 import CustomAlert from '../Alert'
 import { useRouter } from 'next/navigation'
-import { useUser } from '@clerk/nextjs'
 
 const OrderPage = () => {
-  const { user } = useUser()
   const Router = useRouter()
   const [alert, setAlert] = useState<{
     message: string
     type: 'success' | 'error'
   } | null>(null)
-  const { cart, userDetail, total, setCart } = useAppContext()
+  const { cart, userDetail } = useAppContext()
   const [isClient, setIsClient] = useState(false)
 
-  const SubmitOrder = async () => {
-    const Data = await placeOrder(cart, total, userDetail, user?.id)
-    if (Data) {
-      setAlert({
-        message: 'Order Placed successfully!',
-        type: 'success',
-      })
-      setCart([])
-      Router.push(`/PostOrder/${Data}`)
-    }
-  }
   useEffect(() => {
     setIsClient(true)
   }, [])
@@ -74,7 +60,7 @@ const OrderPage = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={SubmitOrder}
+          onClick={() => Router.push('/Payment')}
           className="mt-6 w-full py-3 bg-purple-600 text-white rounded-lg font-semibold text-lg hover:bg-purple-700 transition-transform duration-200"
         >
           Place Order
