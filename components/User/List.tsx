@@ -12,10 +12,12 @@ const UserList = () => {
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null)
   const { user } = useUser()
   const Router = useRouter()
+  const [loading, setLoading] = useState(true)
 
   const Getdata = async () => {
     const data = await GetUserList(user?.id)
     setUsers(data)
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -24,6 +26,13 @@ const UserList = () => {
     }
   }, [user?.id])
 
+  if (loading) {
+    return (
+      <div className=" flex min-h-screen justify-center items-center">
+        <span className="loader"></span>
+      </div>
+    ) // Display loading indicator while fetching data
+  }
   return (
     <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-4">

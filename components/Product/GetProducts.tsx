@@ -8,7 +8,7 @@ import HomeProduct from './HomeProduct'
 
 const GetProducts = () => {
   const [products, setProducts] = useState([])
-  const [loading, setLoading] = useState(true)
+  const { loading, setLoading } = useAppContext()
 
   const fetchme = async () => {
     try {
@@ -27,7 +27,7 @@ const GetProducts = () => {
 
   if (loading) {
     return (
-      <div className=" flex mt-52 justify-center items-center">
+      <div className=" flex min-h-screen justify-center items-center">
         <span className="loader"></span>
       </div>
     ) // Display loading indicator while fetching data
