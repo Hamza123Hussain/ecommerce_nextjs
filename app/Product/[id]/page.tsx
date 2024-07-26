@@ -1,11 +1,9 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useAppContext } from '@/utils/Context'
 import { fetchProduct } from '@/functions/Product/GettingAProduct'
 import ProductCard from '@/components/Product/ProductCard'
 import { Product } from '@/utils/ProductInterface'
-import AddtoCartBtn from '@/components/Product/AddtoCartBtn'
 
 interface PageProps {
   params: {
@@ -15,7 +13,6 @@ interface PageProps {
 
 const ProductPage = ({ params }: PageProps) => {
   const { loading, setLoading } = useAppContext()
-  const Router = useRouter()
   const [product, setProduct] = useState<Product | any>({})
   const [quantity, setQuantity] = useState<number>(product.quantity | 0)
 
@@ -41,7 +38,11 @@ const ProductPage = ({ params }: PageProps) => {
   }, [quantity])
 
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <div className=" min-h-screen justify-center items-center flex">
+        <div className="loader"></div>
+      </div>
+    )
   }
 
   return (
