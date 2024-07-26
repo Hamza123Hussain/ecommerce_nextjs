@@ -10,6 +10,7 @@ import { Product } from '@/utils/ProductInterface'
 import {
   getCartFromLocalStorage,
   getCountFromLocalStorage,
+  getPaymentFromLocalStorage,
   getProductsFromLocalStorage,
   getUserFromLocalStorage,
 } from './GetLocalStorage'
@@ -21,6 +22,7 @@ export const AppContext = createContext<AppContextProps | any | undefined>(
 )
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
+  const [paymentMethod, setPaymentMethod] = useState(getPaymentFromLocalStorage)
   const [cart, setCart] = useState<Product[]>(getCartFromLocalStorage)
   const [cartcount, setcartcount] = useState<number>(getCountFromLocalStorage)
   const [products, setProducts] = useState<Product[]>(
@@ -40,11 +42,20 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     },
     { totalprice: 0, totalquantity: 0 }
   )
+
+  const tax = (total.totalprice * 0.16).toFixed(2)
+  const shipping = total.totalprice > 1000 ? 0 : 250
+  const sum = (total.totalprice + parseFloat(tax) + shipping).toFixed(2)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('cart', JSON.stringify(cart))
     }
   }, [cart])
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('payment', JSON.stringify(paymentMethod))
+    }
+  }, [paymentMethod])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -78,6 +89,11 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         total,
         cartcount,
         setcartcount,
+        tax,
+        shipping,
+        sum,
+        paymentMethod,
+        setPaymentMethod,
       }}
     >
       {children}
