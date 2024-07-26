@@ -68,16 +68,7 @@ const PostOrder = ({ params }: { params: any }) => {
             tax={orderData.tax}
           />
         </div>
-        <UserDetails
-          name={orderData.name}
-          email={orderData.email}
-          city={orderData.city}
-          state={orderData.state}
-          country={orderData.country}
-          address={orderData.address}
-          zipcode={orderData.zipcode}
-          phone={orderData.phone}
-        />
+        <UserDetails />
       </div>
     </div>
   )
