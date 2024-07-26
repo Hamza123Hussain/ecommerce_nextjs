@@ -5,7 +5,7 @@ import React from 'react'
 const UserDetails = () => {
   const { userDetail } = useAppContext()
   return (
-    <div className="bg-white w-full xl:w-96 p-8 md:p-10 xl:p-12 flex flex-col rounded-3xl shadow-lg transition-all duration-500 hover:shadow-2xl">
+    <div className="bg-white w-full p-8 md:p-10 xl:p-12 flex flex-col rounded-3xl shadow-lg transition-all duration-500 hover:shadow-2xl">
       <h3 className="text-2xl font-bold leading-7 text-gray-900 mb-6">
         Customer Details
       </h3>
