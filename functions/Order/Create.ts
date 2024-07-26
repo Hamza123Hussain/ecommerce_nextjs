@@ -5,6 +5,7 @@ export const placeOrder = async (
   cart: Product[],
   total: number,
   userDetail: any,
+  paymentMethod: string,
   userid: any
 ) => {
   try {
@@ -12,6 +13,7 @@ export const placeOrder = async (
       cart,
       total,
       userDetail,
+      paymentMethod,
       userid,
     })
 
