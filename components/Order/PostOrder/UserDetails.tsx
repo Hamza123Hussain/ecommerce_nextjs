@@ -2,25 +2,8 @@
 import { useAppContext } from '@/utils/Context'
 import React from 'react'
 
-const UserDetails = ({
-  name,
-  email,
-  address,
-  city,
-  state,
-  country,
-  zipcode,
-  phone,
-}: {
-  name: string
-  email: string
-  address: string
-  city: string
-  state: string
-  country: string
-  zipcode: string
-  phone: string
-}) => {
+const UserDetails = () => {
+  const { userDetail } = useAppContext()
   return (
     <div className="bg-white w-full xl:w-96 p-8 md:p-10 xl:p-12 flex flex-col rounded-3xl shadow-lg transition-all duration-500 hover:shadow-2xl">
       <h3 className="text-2xl font-bold leading-7 text-gray-900 mb-6">
@@ -29,7 +12,9 @@ const UserDetails = ({
       <div className="flex flex-col space-y-8">
         <div className="flex items-center space-x-4">
           <div>
-            <p className="text-xl font-semibold text-gray-800">{name}</p>
+            <p className="text-xl font-semibold text-gray-800">
+              {userDetail.Name}
+            </p>
           </div>
         </div>
         <div className="border-t border-gray-200 pt-4">
@@ -55,7 +40,7 @@ const UserDetails = ({
                 strokeLinejoin="round"
               />
             </svg>
-            <p className="text-sm text-gray-700">{email}</p>
+            <p className="text-sm text-gray-700">{userDetail.Email}</p>
           </div>
         </div>
         <div className="border-t border-gray-200 pt-4">
@@ -64,30 +49,30 @@ const UserDetails = ({
               src="https://img.icons8.com/?size=100&id=9659&format=png&color=000000"
               width={24}
             />
-            <p className="text-sm text-gray-700">{phone}</p>
+            <p className="text-sm text-gray-700">{userDetail.Phone}</p>
           </div>
         </div>
         <div className="border-t border-gray-200 pt-4">
           <p className="text-xl font-semibold text-gray-900">
             Shipping Address
           </p>
-          <p className="text-sm text-gray-700 mt-2">{address}</p>
+          <p className="text-sm text-gray-700 mt-2">{userDetail.Address}</p>
           <div className="grid grid-cols-2 gap-4 mt-4">
             <div>
               <p className="text-lg font-semibold text-gray-800">Country</p>
-              <p className="text-sm text-gray-600">{country}</p>
+              <p className="text-sm text-gray-600">{userDetail.Country}</p>
             </div>
             <div>
               <p className="text-lg font-semibold text-gray-800">City</p>
-              <p className="text-sm text-gray-600">{city}</p>
+              <p className="text-sm text-gray-600">{userDetail.City}</p>
             </div>
             <div>
               <p className="text-lg font-semibold text-gray-800">State</p>
-              <p className="text-sm text-gray-600">{state}</p>
+              <p className="text-sm text-gray-600">{userDetail.State}</p>
             </div>
             <div>
               <p className="text-lg font-semibold text-gray-800">Zipcode</p>
-              <p className="text-sm text-gray-600">{zipcode}</p>
+              <p className="text-sm text-gray-600">{userDetail.Zipcode}</p>
             </div>
           </div>
         </div>
