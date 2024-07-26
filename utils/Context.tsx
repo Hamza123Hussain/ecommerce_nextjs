@@ -24,7 +24,7 @@ export const AppContext = createContext<AppContextProps | any | undefined>(
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [paymentMethod, setPaymentMethod] = useState(getPaymentFromLocalStorage)
   const [cart, setCart] = useState<Product[]>(getCartFromLocalStorage)
-  const [cartcount, setcartcount] = useState<number>(getCountFromLocalStorage)
+  const [cartcount, setcartcount] = useState(getCountFromLocalStorage)
   const [products, setProducts] = useState<Product[]>(
     getProductsFromLocalStorage
   )
