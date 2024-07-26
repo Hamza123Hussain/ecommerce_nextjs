@@ -17,8 +17,7 @@ const CartPage = () => {
   if (!isClient) {
     // Return an empty div or loading state during server-side rendering
     return (
-      <div className=" flex gap-3 mt-52 justify-center items-center">
-        <div className="loader"></div> <div className="loader"></div>{' '}
+      <div className=" flex min-h-screen justify-center items-center">
         <div className="loader"></div>{' '}
       </div>
     )
