@@ -1,12 +1,72 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { useAppContext } from '@/utils/Context'
+import { useRouter } from 'next/navigation'
+import { placeOrder } from '@/functions/Order/Create'
+import { useUser } from '@clerk/nextjs'
+import CustomAlert from '@/components/Alert'
 
 const PaymentPage = () => {
-  const [paymentMethod, setPaymentMethod] = useState('card')
+  const {
+    total,
+    tax,
+    shipping,
+    sum,
+    paymentMethod,
+    setPaymentMethod,
+    setCart,
+    cart,
+    userDetail,
+  } = useAppContext()
+  const { user } = useUser()
+  const [alert, setAlert] = useState<{
+    message: string
+    type: 'success' | 'error'
+  } | null>(null)
+  const SubmitOrder = async () => {
+    const Data = await placeOrder(
+      cart,
+      total,
+      userDetail,
+      paymentMethod,
+      user?.id
+    )
+    if (Data) {
+      setAlert({
+        message: 'Payment successfull !',
+        type: 'success',
+      })
+      setCart([])
+      Router.push(`/PostOrder/${Data}`)
+    }
+  }
+  const [isClient, setIsClient] = useState(false)
+  const Router = useRouter()
 
+  useEffect(() => {
+    // This ensures that the component is only rendered on the client side
+    setIsClient(true)
+  }, [])
+
+  if (!isClient) {
+    // Return an empty div or loading state during server-side rendering
+    return (
+      <div className=" flex gap-3 mt-52 justify-center items-center">
+        <div className="loader"></div> <div className="loader"></div>{' '}
+        <div className="loader"></div>{' '}
+      </div>
+    )
+  }
   return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-100 to-purple-100 flex items-center justify-center p-6">
+      {alert && (
+        <CustomAlert
+          message={alert.message}
+          type={alert.type}
+          onClose={() => setAlert(null)}
+        />
+      )}
       <motion.div
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -80,23 +140,26 @@ const PaymentPage = () => {
             <div className="bg-gray-100 p-6 rounded-lg space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-gray-700">Subtotal</span>
-                <span className="text-gray-900">$100.00</span>
+                <span className="text-gray-900">Rs {total.totalprice}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-gray-700">Tax</span>
-                <span className="text-gray-900">$8.00</span>
+                <span className="text-gray-900">Rs{tax}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-gray-700">Shipping</span>
-                <span className="text-gray-900">$5.00</span>
+                <span className="text-gray-900">Rs {shipping}</span>
               </div>
               <div className="border-t border-gray-300 mt-4"></div>
               <div className="flex justify-between items-center font-bold text-lg">
                 <span className="text-gray-800">Total</span>
-                <span className="text-gray-900">$113.00</span>
+                <span className="text-gray-900">{sum}</span>
               </div>
             </div>
-            <button className="w-full py-3 mt-6 bg-green-500 text-white rounded-lg font-semibold text-lg hover:bg-green-600 transition-transform duration-200">
+            <button
+              onClick={SubmitOrder}
+              className="w-full py-3 mt-6 bg-green-500 text-white rounded-lg font-semibold text-lg hover:bg-green-600 transition-transform duration-200"
+            >
               Confirm Payment
             </button>
           </div>
