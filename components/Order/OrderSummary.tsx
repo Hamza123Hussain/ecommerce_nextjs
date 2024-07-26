@@ -22,7 +22,7 @@ const OrderSummary: React.FC = () => {
       </div>
       <div className="flex justify-between mb-2">
         <span>Tax</span>
-        <span>Rs{tax.toFixed(2)}</span>
+        <span>Rs{tax}</span>
       </div>
       <div className="flex justify-between mb-2 font-bold">
         <span>Grand Total</span>
