@@ -45,14 +45,7 @@ const CartPage = () => {
             ))
           )}
         </div>
-        {cart.length > 0 && (
-          <CartDetails
-            totalPrice={total.totalprice}
-            tax={tax}
-            shipping={shipping}
-            quantity={total.totalquantity}
-          />
-        )}
+        {cart.length > 0 && <CartDetails />}
       </div>
     </div>
   )
