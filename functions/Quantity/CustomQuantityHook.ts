@@ -28,7 +28,7 @@ const useCartActions = () => {
               : product
           )
         })
-
+        setcartcount((prev: number) => prev + 1)
         setCart((prevCart: Product[]) => {
           if (!prevCart) return [] // Initialize prevCart if undefined
           return prevCart.map((item: Product) =>
@@ -62,7 +62,7 @@ const useCartActions = () => {
               : single
           )
         })
-
+        setcartcount((prev: number) => prev + 1)
         setCart((prevCart: Product[]) => {
           // fix here like no
           return [...prevCart, { ...product, quantity: product.quantity + 1 }]
@@ -100,6 +100,7 @@ const useCartActions = () => {
                 : single
             )
           )
+          setcartcount((prev: number) => prev - 1)
           if (product.quantity > 1) {
             // Update the cart
             setCart((prevCart: Product[]) =>
@@ -144,6 +145,7 @@ const useCartActions = () => {
         )
       })
 
+      setcartcount((prev: number) => prev - product.quantity)
       setCart((Prev: Product[]) => {
         return Prev.filter((item: Product) => item.id !== id)
       })
