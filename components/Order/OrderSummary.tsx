@@ -3,11 +3,7 @@ import { useAppContext } from '@/utils/Context'
 import React from 'react'
 
 const OrderSummary: React.FC = () => {
-  const { total } = useAppContext()
-
-  const shipping = 250
-  const tax = (total.totalprice * 16) / 100
-  const grandTotal = total.totalquantity + shipping + tax
+  const { total, sum, tax, shipping } = useAppContext()
 
   return (
     <div className="p-4 bg-gray-100 rounded-lg shadow-md mt-6">
@@ -22,7 +18,7 @@ const OrderSummary: React.FC = () => {
       </div>
       <div className="flex justify-between mb-2">
         <span>Shipping</span>
-        <span>Rs{shipping.toFixed(2)}</span>
+        <span>Rs{shipping}</span>
       </div>
       <div className="flex justify-between mb-2">
         <span>Tax</span>
@@ -30,7 +26,7 @@ const OrderSummary: React.FC = () => {
       </div>
       <div className="flex justify-between mb-2 font-bold">
         <span>Grand Total</span>
-        <span>Rs{grandTotal.toFixed(2)}</span>
+        <span>Rs{sum}</span>
       </div>
     </div>
   )
