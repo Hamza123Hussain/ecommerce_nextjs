@@ -19,20 +19,17 @@ const AddtoCartBtn: React.FC<AddtoCartBtnProps> = ({
 
   const handleAddToCart = async () => {
     addToCart(product)
-    setcartcount((prev: any) => prev + 1)
 
     onQuantityChange(1) // Set initial quantity to 1 when adding to cart}
   }
 
   const handleIncrement = () => {
     increment(product.id)
-    setcartcount((prev: any) => prev + 1)
     onQuantityChange(product.quantity + 1)
   }
 
   const handleDecrement = () => {
     decrement(product.id)
-    setcartcount((prev: any) => prev - 1)
     onQuantityChange(product.quantity - 1)
   }
 
