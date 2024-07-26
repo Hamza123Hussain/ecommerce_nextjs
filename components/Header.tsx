@@ -6,8 +6,10 @@ import { ShoppingCart } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { UserButton, useUser } from '@clerk/nextjs'
 import { useAppContext } from '@/utils/Context'
+import DropDown from './DropDown'
 const Header = () => {
   const Router = useRouter()
+  const [isHovered, setIsHovered] = useState(false)
   const { cartcount } = useAppContext()
   const { user } = useUser()
   const [isClient, setIsClient] = useState(false)
@@ -50,9 +52,14 @@ const Header = () => {
           )}
         </div>
         {user ? (
-          <div className=" flex items-center gap-3 p-2">
+          <div
+            className="relative flex items-center gap-3 p-2"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
             <UserButton />
-            <h3> {user?.fullName}</h3>
+            <h3>{user?.fullName}</h3>
+            {isHovered && <DropDown />}
           </div>
         ) : (
           <button
