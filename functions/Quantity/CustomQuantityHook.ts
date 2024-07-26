@@ -11,7 +11,7 @@ const useCartActions = () => {
   const increment = useCallback(
     async (id: any) => {
       const Found = products.find((element: Product) => element.id === id)
-      setcartcount((prev: number) => prev + 1)
+
       if (!Found) {
         console.error('Product not found')
         return
@@ -37,11 +37,11 @@ const useCartActions = () => {
         })
 
         // Optionally update the product stock in local state if needed
-        setProducts((prevProducts: Product[]) =>
-          prevProducts.map((single) =>
-            single.id === id ? { ...single, stock: single.stock - 1 } : single
-          )
-        )
+        // setProducts((prevProducts: Product[]) =>
+        // //   prevProducts.map((single) =>
+        // //     single.id === id ? { ...single, stock: single.stock - 1 } : single
+        // //   )
+        // // )
       }
     },
     [setProducts, products, cart, setCart]
@@ -49,7 +49,7 @@ const useCartActions = () => {
 
   const addToCart = useCallback(
     async (product: Product) => {
-      setcartcount((prev: number) => prev + 1)
+      // setcartcount((prev: number) => prev + 1)
       const data = await updateProductQuantityAndStock(
         product,
         '/api/Product/UPDATEQTY/Incrment'
@@ -81,7 +81,7 @@ const useCartActions = () => {
           console.log('Product not found')
           return
         }
-        setcartcount((prev: number) => prev - 1)
+        // setcartcount((prev: number) => prev - 1)
         const data = await updateProductQuantityAndStock(
           product,
           '/api/Product/UPDATEQTY/Decrement'
@@ -124,7 +124,7 @@ const useCartActions = () => {
   )
   const removeFromCart = async (id: any) => {
     const product = products.find((element: Product) => element.id === id)
-    setcartcount((prev: number) => prev - product.quantity)
+    // setcartcount((prev: number) => prev - product.quantity)
     const data = await updateProductQuantityAndStock(
       product,
       '/api/Product/UPDATEQTY/Reversal'
