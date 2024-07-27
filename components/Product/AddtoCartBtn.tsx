@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { Minus, Plus, ShoppingCart } from 'lucide-react'
 import { Product } from '@/utils/ProductInterface'
 import useCartActions from '@/functions/Quantity/CustomQuantityHook'
-import { useAppContext } from '@/utils/Context'
 
 interface AddtoCartBtnProps {
   product: Product
@@ -17,8 +16,6 @@ const AddtoCartBtn: React.FC<AddtoCartBtnProps> = ({
   onstock,
 }) => {
   const { addToCart, increment, decrement } = useCartActions()
-  const { setcartcount } = useAppContext()
-
   const handleAddToCart = async () => {
     addToCart(product)
 
