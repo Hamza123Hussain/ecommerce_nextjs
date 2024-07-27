@@ -15,12 +15,13 @@ const ProductPage = ({ params }: PageProps) => {
   const { loading, setLoading } = useAppContext()
   const [product, setProduct] = useState<Product | any>({})
   const [quantity, setQuantity] = useState<number>(product.quantity | 0)
-
+  const [stock, setstock] = useState<number>(product.stock | 0)
   const GetProduct = async () => {
     const data = await fetchProduct(params.id)
     if (data) {
       setProduct(data)
       setQuantity(data.quantity || 0) // Initialize quantity
+      setstock(data.stock)
     }
     setLoading(false)
   }
@@ -37,6 +38,14 @@ const ProductPage = ({ params }: PageProps) => {
     }))
   }, [quantity])
 
+  useEffect(() => {
+    // Update product quantity whenever the quantity state changes
+    setProduct((prevProduct: Product) => ({
+      ...prevProduct,
+      stock: stock,
+    }))
+  }, [stock])
+
   if (loading) {
     return (
       <div className=" min-h-screen justify-center items-center flex">
@@ -48,7 +57,11 @@ const ProductPage = ({ params }: PageProps) => {
   return (
     <div className="flex flex-col gap-10 justify-center items-center p-6 border-2 rounded-lg">
       <div className="flex flex-col justify-center items-center">
-        <ProductCard product={product} SetQty={setQuantity} />
+        <ProductCard
+          product={product}
+          SetQty={setQuantity}
+          setStock={setstock}
+        />
       </div>
     </div>
   )
