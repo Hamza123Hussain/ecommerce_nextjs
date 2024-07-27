@@ -38,7 +38,9 @@ const useCartActions = () => {
         setCart((prevCart: Product[]) => {
           if (!prevCart) return [] // Initialize prevCart if undefined
           return prevCart.map((item: Product) =>
-            item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+            item.id === id
+              ? { ...item, quantity: item.quantity + 1, stock: item.stock - 1 }
+              : item
           )
         })
       }
@@ -72,7 +74,14 @@ const useCartActions = () => {
         )
         setCart((prevCart: Product[]) => {
           // fix here like no
-          return [...prevCart, { ...product, quantity: product.quantity + 1 }]
+          return [
+            ...prevCart,
+            {
+              ...product,
+              quantity: product.quantity + 1,
+              stock: product.stock - 1,
+            },
+          ]
         })
       }
     },
@@ -114,7 +123,11 @@ const useCartActions = () => {
             setCart((prevCart: Product[]) =>
               prevCart.map((element: Product) =>
                 element.id === id
-                  ? { ...element, quantity: element.quantity - 1 }
+                  ? {
+                      ...element,
+                      quantity: element.quantity - 1,
+                      stock: product.stock + 1,
+                    }
                   : element
               )
             )
