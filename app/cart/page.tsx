@@ -24,8 +24,6 @@ const CartPage = () => {
     )
   }
 
-  const tax = (total.totalprice * 16) / 100
-
   return (
     <div className="container mx-auto mt-5 min-h-screen p-2 bg-gray-200">
       <h1 className="text-3xl font-bold mb-4 text-center">Shopping Cart</h1>
