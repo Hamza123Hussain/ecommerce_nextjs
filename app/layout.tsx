@@ -11,6 +11,7 @@ import {
   SignedOut,
   UserButton,
 } from '@clerk/nextjs'
+import { Toaster } from 'react-hot-toast'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -29,7 +30,10 @@ export default function RootLayout({
           <body className=" bg-white">
             <div className="flex flex-col min-h-screen">
               <Header />
-              <div className="flex-grow">{children}</div>
+              <div className="flex-grow">
+                {children}
+                <Toaster />
+              </div>
               <Footer />
             </div>
           </body>
