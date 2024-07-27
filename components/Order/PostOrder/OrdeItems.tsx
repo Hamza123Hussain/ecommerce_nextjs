@@ -2,11 +2,6 @@
 import { Product } from '@/utils/ProductInterface'
 import React from 'react'
 
-interface OrderDetailsProps {
-  label: string
-  value: string
-}
-
 const OrderDetails = ({ item }: { item: Product }) => {
   return (
     <>
@@ -25,10 +20,7 @@ const OrderDetails = ({ item }: { item: Product }) => {
           </h3>
         </div>
         <div className="flex justify-between space-x-8 items-start w-full">
-          <p className="text-base xl:text-lg leading-6">
-            Rs{item.price}
-            <span className="text-red-300 line-through"> $45.00</span>
-          </p>
+          <p className="text-base xl:text-lg leading-6">Rs{item.price}</p>
           <p className="text-base xl:text-lg leading-6 text-gray-800">
             {item.quantity}
           </p>
