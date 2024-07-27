@@ -4,6 +4,7 @@ import { useUser } from '@clerk/nextjs'
 import React, { useEffect, useState } from 'react'
 import UserOrder from '@/components/Order/UserOrder'
 import { useAppContext } from '@/utils/Context'
+import { Order } from '@/utils/OrderInterface'
 
 const MyOrders = () => {
   const { user } = useUser()
@@ -41,7 +42,7 @@ const MyOrders = () => {
       </h1>
       {orders.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {orders.map((order: any) => (
+          {orders.map((order: Order) => (
             <UserOrder key={order.id} order={order} />
           ))}
         </div>
