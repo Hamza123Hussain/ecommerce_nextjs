@@ -1,12 +1,12 @@
 export interface User {
-  name: string
-  email: string
-  phoneNumber: string
-  address: string
-  city: string
-  state: string
-  country: string
-  zipCode: string
+  Name: string
+  Email: string
+  Phone: string
+  Address: string
+  City: string
+  State: string
+  Country: string
+  Zipcode: string
   userid: string
   createdAt: string
 }
