@@ -8,11 +8,13 @@ import { useAppContext } from '@/utils/Context'
 interface AddtoCartBtnProps {
   product: Product
   onQuantityChange: (newQuantity: number) => void
+  onstock: (newQuantity: number) => void
 }
 
 const AddtoCartBtn: React.FC<AddtoCartBtnProps> = ({
   product,
   onQuantityChange,
+  onstock,
 }) => {
   const { addToCart, increment, decrement } = useCartActions()
   const { setcartcount } = useAppContext()
@@ -21,16 +23,19 @@ const AddtoCartBtn: React.FC<AddtoCartBtnProps> = ({
     addToCart(product)
 
     onQuantityChange(1) // Set initial quantity to 1 when adding to cart}
+    onstock(product.stock - 1)
   }
 
   const handleIncrement = () => {
     increment(product.id)
     onQuantityChange(product.quantity + 1)
+    onstock(product.stock - 1)
   }
 
   const handleDecrement = () => {
     decrement(product.id)
     onQuantityChange(product.quantity - 1)
+    onstock(product.stock + 1)
   }
 
   return (
