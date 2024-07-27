@@ -35,16 +35,9 @@ const ProductPage = ({ params }: PageProps) => {
     setProduct((prevProduct: Product) => ({
       ...prevProduct,
       quantity: quantity,
-    }))
-  }, [quantity])
-
-  useEffect(() => {
-    // Update product quantity whenever the quantity state changes
-    setProduct((prevProduct: Product) => ({
-      ...prevProduct,
       stock: stock,
     }))
-  }, [stock])
+  }, [quantity])
 
   if (loading) {
     return (
