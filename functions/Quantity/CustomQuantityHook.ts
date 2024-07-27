@@ -29,19 +29,18 @@ const useCartActions = () => {
           )
         })
         setcartcount((prev: number) => prev + 1)
+
+        setProducts((prevProducts: Product[]) =>
+          prevProducts.map((single) =>
+            single.id === id ? { ...single, stock: single.stock - 1 } : single
+          )
+        )
         setCart((prevCart: Product[]) => {
           if (!prevCart) return [] // Initialize prevCart if undefined
           return prevCart.map((item: Product) =>
             item.id === id ? { ...item, quantity: item.quantity + 1 } : item
           )
         })
-
-        // Optionally update the product stock in local state if needed
-        // setProducts((prevProducts: Product[]) =>
-        // //   prevProducts.map((single) =>
-        // //     single.id === id ? { ...single, stock: single.stock - 1 } : single
-        // //   )
-        // // )
       }
     },
     [setProducts, products, cart, setCart]
@@ -63,6 +62,13 @@ const useCartActions = () => {
           )
         })
         setcartcount((prev: number) => prev + 1)
+        setProducts((prevProducts: Product[]) =>
+          prevProducts.map((single) =>
+            single.id == product.id
+              ? { ...single, stock: single.stock - 1 }
+              : single
+          )
+        )
         setCart((prevCart: Product[]) => {
           // fix here like no
           return [...prevCart, { ...product, quantity: product.quantity + 1 }]
