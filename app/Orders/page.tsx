@@ -27,6 +27,13 @@ const MyOrders = () => {
     GetData()
   }, [user?.id])
 
+  if (loading) {
+    return (
+      <div className=" min-h-screen flex justify-center items-center">
+        <div className="loader"></div>
+      </div>
+    )
+  }
   return (
     <div className="min-h-screen p-6 bg-white">
       <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">
