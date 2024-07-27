@@ -18,7 +18,12 @@ const ProductCard = ({
   const router = useRouter()
 
   return (
-    <section className="py-12 sm:py-16 bg-gray-50" key={product.id}>
+    <section
+      className={`py-12 sm:py-16 ${
+        product.stock <= 0 ? 'bg-gray-200' : 'bg-gray-50'
+      }`}
+      key={product.id}
+    >
       <div className="container mx-auto px-4">
         <button
           onClick={() => router.back()}
@@ -43,7 +48,6 @@ const ProductCard = ({
               <h1 className="text-2xl md:text-4xl font-bold text-gray-900 sm:text-5xl">
                 {product.name}
               </h1>
-              <h1 className="text-2xl md:text-4xl font-bold text-gray-900 sm:text-5xl"></h1>
               <div className="mt-4 md:mt-6 flex items-center gap-4 md:gap-10">
                 <h1 className="text-2xl md:text-4xl font-bold text-gray-900">
                   Rs {product.price}
@@ -55,13 +59,14 @@ const ProductCard = ({
                     onstock={setStock}
                   />
                 ) : (
-                  ''
+                  <span className="text-red-500 font-bold text-lg">
+                    Sold Out
+                  </span>
                 )}
               </div>
             </div>
           </div>
         </div>
-        <p>{product.stock}</p>
 
         <div className="mt-12 lg:col-span-3">
           <div className="border-b border-gray-300">
