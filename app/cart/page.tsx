@@ -8,13 +8,14 @@ import { Product } from '@/utils/ProductInterface'
 const CartPage = () => {
   const { cart, total } = useAppContext()
   const [isClient, setIsClient] = useState(false)
-
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     // This ensures that the component is only rendered on the client side
     setIsClient(true)
+    setLoading(false)
   }, [])
 
-  if (!isClient) {
+  if (!isClient || loading) {
     // Return an empty div or loading state during server-side rendering
     return (
       <div className=" flex min-h-screen justify-center items-center">
@@ -24,7 +25,6 @@ const CartPage = () => {
   }
 
   const tax = (total.totalprice * 16) / 100
-  const shipping = tax + total.totalprice > 1500 ? 0 : 250
 
   return (
     <div className="container mx-auto mt-5 min-h-screen p-2 bg-gray-200">
