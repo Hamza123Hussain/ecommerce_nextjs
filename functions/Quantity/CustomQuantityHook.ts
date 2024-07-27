@@ -21,6 +21,7 @@ const useCartActions = () => {
         '/api/Product/UPDATEQTY/Incrment'
       )
       if (data) {
+        setcartcount((prev: number) => prev + 1)
         setProducts((prevProducts: Product[]) => {
           return prevProducts.map((product: Product) =>
             product.id === id
@@ -28,7 +29,6 @@ const useCartActions = () => {
               : product
           )
         })
-        setcartcount((prev: number) => prev + 1)
 
         setProducts((prevProducts: Product[]) =>
           prevProducts.map((single) =>
@@ -54,6 +54,7 @@ const useCartActions = () => {
         '/api/Product/UPDATEQTY/Incrment'
       )
       if (data) {
+        setcartcount((prev: number) => prev + 1)
         setProducts((prevProducts: Product[]) => {
           return prevProducts.map((single: Product) =>
             single.id === product.id
@@ -61,7 +62,7 @@ const useCartActions = () => {
               : single
           )
         })
-        setcartcount((prev: number) => prev + 1)
+
         setProducts((prevProducts: Product[]) =>
           prevProducts.map((single) =>
             single.id == product.id
@@ -93,6 +94,7 @@ const useCartActions = () => {
           '/api/Product/UPDATEQTY/Decrement'
         )
         if (data) {
+          setcartcount((prev: number) => prev - 1)
           setProducts((prevProducts: Product[]) =>
             prevProducts.map((single) =>
               single.id === id ? { ...single, stock: single.stock + 1 } : single
@@ -106,7 +108,7 @@ const useCartActions = () => {
                 : single
             )
           )
-          setcartcount((prev: number) => prev - 1)
+
           if (product.quantity > 1) {
             // Update the cart
             setCart((prevCart: Product[]) =>
@@ -138,6 +140,7 @@ const useCartActions = () => {
     )
 
     if (data) {
+      setcartcount((prev: number) => prev - product.quantity)
       setProducts((prevProducts: Product[]) =>
         prevProducts.map((single) =>
           single.id === id
@@ -151,7 +154,6 @@ const useCartActions = () => {
         )
       })
 
-      setcartcount((prev: number) => prev - product.quantity)
       setCart((Prev: Product[]) => {
         return Prev.filter((item: Product) => item.id !== id)
       })
