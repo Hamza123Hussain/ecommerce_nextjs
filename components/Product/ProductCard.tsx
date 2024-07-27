@@ -9,9 +9,11 @@ import AddtoCartBtn from './AddtoCartBtn'
 const ProductCard = ({
   product,
   SetQty,
+  setStock,
 }: {
   product: Product
   SetQty: any
+  setStock: any
 }) => {
   const router = useRouter()
 
@@ -41,17 +43,25 @@ const ProductCard = ({
               <h1 className="text-2xl md:text-4xl font-bold text-gray-900 sm:text-5xl">
                 {product.name}
               </h1>
-
+              <h1 className="text-2xl md:text-4xl font-bold text-gray-900 sm:text-5xl"></h1>
               <div className="mt-4 md:mt-6 flex items-center gap-4 md:gap-10">
                 <h1 className="text-2xl md:text-4xl font-bold text-gray-900">
                   Rs {product.price}
                 </h1>
-
-                <AddtoCartBtn product={product} onQuantityChange={SetQty} />
+                {product.stock > 0 ? (
+                  <AddtoCartBtn
+                    product={product}
+                    onQuantityChange={SetQty}
+                    onstock={setStock}
+                  />
+                ) : (
+                  ''
+                )}
               </div>
             </div>
           </div>
         </div>
+        <p>{product.stock}</p>
 
         <div className="mt-12 lg:col-span-3">
           <div className="border-b border-gray-300">
