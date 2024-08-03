@@ -10,6 +10,6 @@ export const CreateProduct = async (Product: Product) => {
       console.log('NO DATA')
     }
   } catch (error) {
-    alert('DATA HAS BEEN INSERTED')
+    // alert('DATA HAS BEEN INSERTED')
   }
 }
