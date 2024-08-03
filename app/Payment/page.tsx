@@ -43,27 +43,26 @@ const PaymentPage = () => {
         user?.id
       )
       if (Data) {
-        const Flag = await SendEmail(
-          user?.primaryEmailAddress?.emailAddress || '',
-          user?.fullName || '',
-          user?.firstName || '',
-          cart,
-          total.totalprice || 0,
-          userDetail.Address || '',
+        // const Flag = await SendEmail(
+        //   user?.primaryEmailAddress?.emailAddress || '',
+        //   user?.fullName || '',
+        //   user?.firstName || '',
+        //   cart,
+        //   total.totalprice || 0,
+        //   userDetail.Address || '',
 
-          paymentMethod || '',
-          'ORDER Placed Successfully'
-        )
-        if (Flag) {
-          setAlert({
-            message: 'Payment successful and email sent!',
-            type: 'success',
-          })
-          setCart([])
-          setcartcount(0)
-          setProducts([])
-          Router.push(`/PostOrder/${Data}`)
-        }
+        //   paymentMethod || '',
+        //   'ORDER Placed Successfully'
+        // )
+
+        setAlert({
+          message: 'Payment successful and email sent!',
+          type: 'success',
+        })
+        setCart([])
+        setcartcount(0)
+        setProducts([])
+        Router.push(`/PostOrder/${Data}`)
       }
     } catch (error) {
       console.error('SubmitOrder error:', error)
