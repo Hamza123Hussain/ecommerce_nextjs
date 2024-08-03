@@ -6,7 +6,7 @@ import { getdata } from '@/functions/Product/Fetch'
 import HomeProduct from './HomeProduct'
 
 const GetProducts = () => {
-  const { products, setProducts } = useAppContext()
+  const [products, setProducts] = useState([])
   const { loading, setLoading } = useAppContext()
 
   const fetchme = async () => {
