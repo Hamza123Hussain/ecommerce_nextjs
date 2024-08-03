@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useAppContext } from '@/utils/Context'
 import { useRouter } from 'next/navigation'
@@ -13,20 +13,25 @@ import { SendEmail } from '@/functions/SendOrderEmail'
 const PaymentPage = () => {
   const {
     total,
-    paymentMethod,
     setPaymentMethod,
     setCart,
     cart,
     userDetail,
     setProducts,
     setcartcount,
+    paymentMethod,
   } = useAppContext()
   const { user } = useUser()
   const [alert, setAlert] = useState<{
     message: string
     type: 'success' | 'error'
   } | null>(null)
+  const [isClient, setIsClient] = useState(false) // Add this state
   const Router = useRouter()
+
+  useEffect(() => {
+    setIsClient(true) // Set isClient to true after component mounts
+  }, [])
 
   const SubmitOrder = async () => {
     try {
@@ -39,9 +44,15 @@ const PaymentPage = () => {
       )
       if (Data) {
         const Flag = await SendEmail(
-          user?.primaryEmailAddress?.emailAddress,
-          'ORDER',
-          'HI SIR'
+          user?.primaryEmailAddress?.emailAddress || '',
+          user?.fullName || '',
+          user?.firstName || '',
+          cart,
+          total.totalprice || 0,
+          userDetail.Address || '',
+
+          paymentMethod || '',
+          'ORDER Placed Successfully'
         )
         if (Flag) {
           setAlert({
@@ -51,15 +62,20 @@ const PaymentPage = () => {
           setCart([])
           setcartcount(0)
           setProducts([])
-          // Router.push(`/PostOrder/${Data}`)
+          Router.push(`/PostOrder/${Data}`)
         }
       }
     } catch (error) {
+      console.error('SubmitOrder error:', error)
       setAlert({
         message: 'Failed to place order',
         type: 'error',
       })
     }
+  }
+
+  if (!isClient) {
+    return null // Render nothing or a loading state until client-side logic runs
   }
 
   return (
