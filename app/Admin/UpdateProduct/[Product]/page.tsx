@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { getdatabyid } from '@/functions/Product/ProductbyId'
 import { ClipLoader } from 'react-spinners'
+import { UpdateProduct } from '@/functions/Product/Update'
 
 export default function UpdateFunction({ params }: { params: any }) {
   console.log('IDDDDD', params.Product)
@@ -36,10 +37,10 @@ export default function UpdateFunction({ params }: { params: any }) {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault() // Prevent default form submission
     setLoading(true)
-    const data: any = await CreateProduct(product)
+    const data: any = await UpdateProduct(product)
     setLoading(false)
     if (data) {
-      toast.success('Product added successfully!')
+      toast.success('Product Updated successfully!')
       Router.push('/')
     } else {
       toast.error('Failed to add product')
@@ -120,10 +121,10 @@ export default function UpdateFunction({ params }: { params: any }) {
           </div>
           <button
             type="submit"
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition"
             disabled={loading}
           >
-            {loading ? 'Adding...' : 'Add Product'}
+            {loading ? 'updating...' : 'Update Product'}
           </button>
         </form>
       )}
