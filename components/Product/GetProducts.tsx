@@ -6,12 +6,14 @@ import { getdata } from '@/functions/Product/Fetch'
 import HomeProduct from './HomeProduct'
 
 const GetProducts = () => {
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState<Product[]>([])
   const { loading, setLoading } = useAppContext()
 
   const fetchme = async () => {
+    setLoading(true)
     try {
       const data = await getdata()
+      console.log('Fetched products:', data)
       setProducts(data)
     } catch (error) {
       console.error('Failed to fetch products:', error)
@@ -19,17 +21,17 @@ const GetProducts = () => {
       setLoading(false)
     }
   }
-  console.log(products)
+
   useEffect(() => {
     fetchme()
   }, [])
 
   if (loading) {
     return (
-      <div className=" flex min-h-screen justify-center items-center">
+      <div className="flex min-h-screen justify-center items-center">
         <span className="loader"></span>
       </div>
-    ) // Display loading indicator while fetching data
+    )
   }
 
   return (
