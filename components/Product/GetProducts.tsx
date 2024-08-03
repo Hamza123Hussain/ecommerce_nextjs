@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useAppContext } from '@/utils/Context'
 import { Product } from '@/utils/ProductInterface'
 import { getdata } from '@/functions/Product/Fetch'
-import ProductCard from './ProductCard'
 import HomeProduct from './HomeProduct'
 
 const GetProducts = () => {
-  const [products, setProducts] = useState([])
+  const { products, setProducts } = useAppContext()
   const { loading, setLoading } = useAppContext()
 
   const fetchme = async () => {
@@ -20,7 +19,7 @@ const GetProducts = () => {
       setLoading(false)
     }
   }
-
+  console.log(products)
   useEffect(() => {
     fetchme()
   }, [])
