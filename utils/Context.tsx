@@ -11,7 +11,6 @@ import {
   getCartFromLocalStorage,
   getCountFromLocalStorage,
   getPaymentFromLocalStorage,
-  getProductsFromLocalStorage,
   getUserFromLocalStorage,
 } from './GetLocalStorage'
 import { AppContextProps } from './ContextInterfcae'
@@ -25,9 +24,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [paymentMethod, setPaymentMethod] = useState(getPaymentFromLocalStorage)
   const [cart, setCart] = useState<Product[]>(getCartFromLocalStorage)
   const [cartcount, setcartcount] = useState(getCountFromLocalStorage)
-  const [products, setProducts] = useState<Product[]>(
-    getProductsFromLocalStorage
-  )
 
   const [userDetail, setUserDetail] = useState<UserDetails>(
     getUserFromLocalStorage
@@ -68,11 +64,6 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [userDetail])
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('products', JSON.stringify(products))
-    }
-  }, [products])
   const [loading, setLoading] = useState(true)
 
   return (
@@ -82,8 +73,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         userDetail,
         setUserDetail,
         setCart,
-        products,
-        setProducts,
+
         loading,
         setLoading,
         total,
