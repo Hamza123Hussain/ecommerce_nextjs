@@ -5,7 +5,7 @@ export const CreateProduct = async (Product: Product) => {
   try {
     const Response = await axios.post('/api/Product/ADD', { Product })
     if (Response.status === 201) {
-      return true
+      return Response.data[0]
     } else {
       console.log('NO DATA')
     }
