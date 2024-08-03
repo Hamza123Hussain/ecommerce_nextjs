@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useAppContext } from '@/utils/Context'
 import { useRouter } from 'next/navigation'
@@ -10,31 +10,78 @@ import CardDetails from '@/components/Payment/CardDetails'
 import CostDetails from '@/components/Payment/CostDetails'
 
 const PaymentPage = () => {
-  const { total, paymentMethod, setPaymentMethod, setCart, cart, userDetail } =
-    useAppContext()
+  const {
+    total,
+    paymentMethod,
+    setPaymentMethod,
+    setCart,
+    cart,
+    userDetail,
+    setProducts,
+    setcartcount,
+  } = useAppContext()
   const { user } = useUser()
   const [alert, setAlert] = useState<{
     message: string
     type: 'success' | 'error'
   } | null>(null)
-  const SubmitOrder = async () => {
-    const Data = await placeOrder(
-      cart,
-      total,
-      userDetail,
-      paymentMethod,
-      user?.id
-    )
-    if (Data) {
+  const Router = useRouter()
+
+  const sendEmail = async (orderId: string) => {
+    try {
+      const response = await fetch('/api/Email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: user?.primaryEmailAddress?.emailAddress, // Assumes userDetail contains email
+          subject: 'Order Confirmation',
+          text: `Your order has been placed successfully! Order ID: ${orderId}`,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to send email')
+      }
+
+      const data = await response.json()
       setAlert({
-        message: 'Payment successfull !',
+        message: 'Payment successful and email sent!',
         type: 'success',
       })
-      setCart([])
-      Router.push(`/PostOrder/${Data}`)
+    } catch (error: any) {
+      setAlert({
+        message: error.message || 'Failed to send email',
+        type: 'error',
+      })
     }
   }
-  const Router = useRouter()
+
+  const SubmitOrder = async () => {
+    try {
+      const Data = await placeOrder(
+        cart,
+        total,
+        userDetail,
+        paymentMethod,
+        user?.id
+      )
+      if (Data) {
+        await sendEmail(Data) // Send email after successful order placement
+        setCart([])
+        setcartcount(0)
+        setProducts([])
+        // Router.push(`/PostOrder/${Data}`)
+      }
+    } catch (error) {
+      setAlert({
+        message: 'Failed to place order',
+        type: 'error',
+      })
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-100 to-purple-100 flex items-center justify-center p-6">
       {alert && (
@@ -86,8 +133,7 @@ const PaymentPage = () => {
             )}
           </div>
           <div>
-            {' '}
-            <CostDetails />{' '}
+            <CostDetails />
             <button
               onClick={SubmitOrder}
               className="w-full py-3 mt-6 bg-green-500 text-white rounded-lg font-semibold text-lg hover:bg-green-600 transition-transform duration-200"
