@@ -6,8 +6,10 @@ import { CreateProduct } from '@/functions/Product/Create'
 import InputFields from '@/components/Product/inputfields'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import { useAppContext } from '@/utils/Context'
 
 export default function AddProduct() {
+  const { products, setProducts } = useAppContext()
   const Router = useRouter()
   const [product, setProduct] = useState<Product>({
     id: null,
@@ -31,6 +33,7 @@ export default function AddProduct() {
     e.preventDefault() // Prevent default form submission
     const data: any = await CreateProduct(product)
     if (data) {
+      setProducts((element: Product[]) => [...element, { ...data }])
       toast.success('Product added successfully!')
       setProduct({
         id: null,
@@ -42,7 +45,7 @@ export default function AddProduct() {
         image_url: '',
         quantity: 0,
       }) // Reset form after submission
-      Router.push('/')
+      // Router.push('/')
     } else {
       // Router.push('/')
     }
