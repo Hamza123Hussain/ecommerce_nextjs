@@ -3,9 +3,9 @@ import axios from 'axios'
 
 export const CreateProduct = async (Product: Product) => {
   try {
-    const response = await axios.post('/api/Product/ADD', { Product })
-    if (response.status === 201) {
-      console.log(response)
+    const Response = await axios.post('/api/Product/ADD', { Product })
+    if (Response.status === 201) {
+      return true
     } else {
       console.log('NO DATA')
     }
