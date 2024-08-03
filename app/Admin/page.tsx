@@ -14,10 +14,14 @@ const Admin = () => {
         {AdminArray.map((element) => (
           <div
             key={element.id}
-            className=" w-[40vw] h-[40vh] rounded-lg border-2 border-black text-slate-800 "
+            className={` p-10   rounded-lg border-2 border-black  `}
+            style={{
+              backgroundColor: `${element.bgColor}`,
+              color: `${element.textColor}`,
+            }}
           >
             <h3
-              className=" text-center text-3xl p-20 cursor-pointer"
+              className=" text-center sm:text-3xl  cursor-pointer"
               onClick={() => router.push(`/Admin/${element.Href}`)}
             >
               {element.Name}
