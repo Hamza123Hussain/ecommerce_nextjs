@@ -5,9 +5,9 @@ export const getdatabyid = async (id: any) => {
     const Response = await axios.get('/api/Product/Getbyid', {
       params: { id },
     })
-    if (Response.status === 201) {
-      console.log(Response.data[0])
-      return Response.data[0]
+    if (Response.status === 200) {
+      console.log('dATAS ::', Response.data)
+      return Response.data
     }
   } catch (error) {
     console.log('FUNCTION ERROR:', error)
