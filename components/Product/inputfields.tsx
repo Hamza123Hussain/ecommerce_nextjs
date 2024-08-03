@@ -8,10 +8,10 @@ interface InputFieldsProps {
 
 const InputFields: React.FC<InputFieldsProps> = ({ Name, value, onChange }) => {
   return (
-    <div className=" flex gap-2 justify-center items-center order-2 rounded-lg border-2 border-gray-600 p-4">
+    <div className=" flex flex-col gap-2 justify-center items-center order-2 rounded-lg border-2 border-gray-600 p-4">
       <label className=" text-2xl font-bold w-32 ">{Name}</label>
       <input
-        className=" w-[80vw]"
+        className=" border-none p-5 rounded-lg"
         type={Name == 'price' || Name == 'stock' ? 'number' : 'text'}
         name={Name}
         value={value}
