@@ -5,8 +5,10 @@ import { Product } from '@/utils/ProductInterface'
 import { CreateProduct } from '@/functions/Product/Create'
 import InputFields from '@/components/Product/inputfields'
 import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
 export default function AddProduct() {
+  const Router = useRouter()
   const [product, setProduct] = useState<Product>({
     id: null,
     name: '',
@@ -40,8 +42,9 @@ export default function AddProduct() {
         image_url: '',
         quantity: 0,
       }) // Reset form after submission
+      Router.push('/')
     } else {
-      //   alert('Failed to add product. Please try again.')
+      // Router.push('/')
     }
   }
 
