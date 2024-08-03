@@ -8,6 +8,7 @@ import { useUser } from '@clerk/nextjs'
 import CustomAlert from '@/components/Alert'
 import CardDetails from '@/components/Payment/CardDetails'
 import CostDetails from '@/components/Payment/CostDetails'
+import { SendEmail } from '@/functions/SendOrderEmail'
 
 const PaymentPage = () => {
   const {
@@ -27,37 +28,6 @@ const PaymentPage = () => {
   } | null>(null)
   const Router = useRouter()
 
-  const sendEmail = async (orderId: string) => {
-    try {
-      const response = await fetch('/api/Email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          to: user?.primaryEmailAddress?.emailAddress, // Assumes userDetail contains email
-          subject: 'Order Confirmation',
-          text: `Your order has been placed successfully! Order ID: ${orderId}`,
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Failed to send email')
-      }
-
-      const data = await response.json()
-      setAlert({
-        message: 'Payment successful and email sent!',
-        type: 'success',
-      })
-    } catch (error: any) {
-      setAlert({
-        message: error.message || 'Failed to send email',
-        type: 'error',
-      })
-    }
-  }
-
   const SubmitOrder = async () => {
     try {
       const Data = await placeOrder(
@@ -68,11 +38,21 @@ const PaymentPage = () => {
         user?.id
       )
       if (Data) {
-        await sendEmail(Data) // Send email after successful order placement
-        setCart([])
-        setcartcount(0)
-        setProducts([])
-        // Router.push(`/PostOrder/${Data}`)
+        const Flag = await SendEmail(
+          user?.primaryEmailAddress?.emailAddress,
+          'ORDER',
+          'HI SIR'
+        )
+        if (Flag) {
+          setAlert({
+            message: 'Payment successful and email sent!',
+            type: 'success',
+          })
+          setCart([])
+          setcartcount(0)
+          setProducts([])
+          // Router.push(`/PostOrder/${Data}`)
+        }
       }
     } catch (error) {
       setAlert({
