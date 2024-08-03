@@ -1,5 +1,7 @@
 export interface Admin {
-  id: any
-  Name: String
-  Href: String
+  id: number
+  Name: string
+  Href: string
+  bgColor: string
+  textColor: string
 }
