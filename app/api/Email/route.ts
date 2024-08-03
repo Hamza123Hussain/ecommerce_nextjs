@@ -9,7 +9,7 @@ interface EmailRequestBody {
 
 export const POST = async (req: any) => {
   try {
-    const { to, subject, text }: EmailRequestBody = await req.body
+    const payload = await req.json()
 
     // Create a transporter
     const transporter = nodemailer.createTransport({
@@ -23,10 +23,10 @@ export const POST = async (req: any) => {
     // Email options
     const mailOptions = {
       from: process.env.EMAIL,
-      to: to,
+      to: payload?.Email,
       cc: process.env.EMAIL, // Send a copy to yourself
-      subject: subject,
-      text: text,
+      subject: payload?.Subject,
+      text: payload?.Text,
     }
     const info = await transporter.sendMail(mailOptions)
     return NextResponse.json({ message: 'Email sent', info }, { status: 200 })
