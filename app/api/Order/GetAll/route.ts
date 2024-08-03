@@ -3,8 +3,10 @@ import { NextResponse } from 'next/server'
 
 export const GET = async (req: any) => {
   try {
-    const { data, error } = await supabase.from('orders').select('*')
-
+    const { data, error } = await supabase
+      .from('orders')
+      .select('*')
+      .order('created_at', { ascending: false })
     if (data) {
       return NextResponse.json(data, { status: 201 })
     }
