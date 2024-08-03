@@ -53,7 +53,11 @@ const AdminProduct = ({ product }: { product: Product }) => {
           />
         </button>{' '}
         <button>
-          <Pencil className="text-blue-500" size={25} />
+          <Pencil
+            onClick={() => Router.push(`UpdateProduct/${product.id}`)}
+            className="text-blue-500"
+            size={25}
+          />
         </button>
       </div>
     </div>
