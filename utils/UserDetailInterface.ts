@@ -7,4 +7,6 @@ export interface UserDetails {
   State: string
   zipcode: string
   Country: string
+  id: any
+  created_at: any
 }
