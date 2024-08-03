@@ -2,8 +2,10 @@
 import { useAppContext } from '@/utils/Context'
 import React from 'react'
 import UserAddress from './UserAddres'
+import { useUser } from '@clerk/nextjs'
 
 const UserDetails = () => {
+  const { user } = useUser()
   const { userDetail } = useAppContext()
   return (
     <div className="bg-white w-full p-8 md:p-10 xl:p-12 flex flex-col rounded-3xl shadow-lg transition-all duration-500 hover:shadow-2xl">
@@ -41,7 +43,9 @@ const UserDetails = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <p className="text-sm text-gray-700">{userDetail.Email}</p>
+            <p className="text-sm text-gray-700">
+              {user?.primaryEmailAddress?.emailAddress}
+            </p>
           </div>
         </div>
         <div className="border-t border-gray-200 pt-4">
