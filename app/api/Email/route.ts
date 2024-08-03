@@ -1,13 +1,7 @@
+import EmailTemplate from '@/components/Email/EmailTemplate'
 import { NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
-
-interface EmailRequestBody {
-  to: string
-  subject: string
-  text: string
-}
-
-export const POST = async (req: any) => {
+export const POST = async (req: Request) => {
   try {
     const payload = await req.json()
 
@@ -20,19 +14,31 @@ export const POST = async (req: any) => {
       },
     })
 
+    // Generate the HTML content for the email
+    const htmlContent = EmailTemplate({
+      Fullname: payload?.Fullname || '',
+      userName: payload?.Name || '',
+      userEmail: payload?.Email || '',
+      cart: payload?.cart || [],
+      total: payload?.total || 0,
+      address: payload?.address || '',
+      paymentMethod: payload?.paymentMethod || '',
+    })
+
     // Email options
     const mailOptions = {
       from: process.env.EMAIL,
-      to: payload?.Email,
+      to: payload?.Email || '',
       cc: process.env.EMAIL, // Send a copy to yourself
-      subject: payload?.Subject,
-      text: payload?.Text,
+      subject: payload?.Subject || 'No Subject',
+      html: htmlContent,
     }
+
+    // Send the email
     const info = await transporter.sendMail(mailOptions)
     return NextResponse.json({ message: 'Email sent', info }, { status: 200 })
   } catch (error) {
-    // Send the email
-
+    console.error('Error sending email:', error) // Log the error for debugging
     return NextResponse.json(
       { message: 'Error sending email', error },
       { status: 500 }
