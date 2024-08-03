@@ -9,9 +9,15 @@ export const GET = async () => {
       return NextResponse.json({ error: error.message }, { status: 404 })
     }
     console.log('Fetched data from Supabase:', data)
-    return NextResponse.json(data, { status: 200 })
+    return NextResponse.json(data, {
+      status: 200,
+      headers: {
+        'Cache-Control':
+          'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+      },
+    })
   } catch (error) {
-    console.log('database error', error)
+    console.log('Database error:', error)
     return NextResponse.json({ error: 'Database error' }, { status: 500 })
   }
 }
