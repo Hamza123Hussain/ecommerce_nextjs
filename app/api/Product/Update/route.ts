@@ -1,7 +1,7 @@
 import { supabase } from '@/utils/Supabase'
 import { NextResponse } from 'next/server'
 
-export const POST = async (req: any) => {
+export const PUT = async (req: any) => {
   try {
     const payload = await req.json()
 
@@ -16,7 +16,6 @@ export const POST = async (req: any) => {
           category: payload?.Product.category,
           image_url: payload?.Product.image_url,
           quantity: payload?.Product.quantity,
-
           updated_at: new Date().toISOString(),
         },
       ])
