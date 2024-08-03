@@ -2,13 +2,15 @@ import axios from 'axios'
 
 export const getdata = async () => {
   try {
-    const Response = await axios.get('/api/Product/Get')
-    if (Response.status == 201) {
-      return Response.data
+    const response = await axios.get('/api/Product/Get')
+    if (response.status === 200) {
+      return response.data
     } else {
-      console.log('ERROR')
+      console.log('ERROR: Unexpected response status:', response.status)
+      return []
     }
   } catch (error) {
     console.log('FUNCTION ERROR:', error)
+    return []
   }
 }
