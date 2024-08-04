@@ -12,7 +12,7 @@ const UserList = () => {
   const [showModal, setShowModal] = useState(false)
   const [selectedUserId, setSelectedUserId] = useState<string | null>(null)
   const { user } = useUser()
-  const Router = useRouter()
+  const router = useRouter()
   const [loading, setLoading] = useState(true)
 
   const Getdata = async () => {
@@ -29,19 +29,20 @@ const UserList = () => {
 
   if (loading) {
     return (
-      <div className=" flex min-h-screen justify-center items-center">
+      <div className="flex min-h-screen justify-center items-center">
         <span className="loader"></span>
       </div>
     ) // Display loading indicator while fetching data
   }
 
-  if (users.length == 0) {
+  if (users.length === 0) {
     return <UserDetailsForm />
   }
+
   return (
     <div className="container mx-auto p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold text-blue-700">User List</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-blue-700">User List</h1>
         <button
           className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-lg shadow-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300"
           onClick={() => setShowModal(true)}
@@ -49,11 +50,11 @@ const UserList = () => {
           Add New
         </button>
       </div>
-      <ul className="space-y-6">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {users.map((user) => (
           <li
             key={user.id}
-            className={`flex flex-col md:flex-row md:items-center justify-between p-6 border rounded-lg shadow-lg ${
+            className={`p-6 border rounded-lg shadow-lg ${
               selectedUserId === user.id ? 'bg-blue-100' : 'bg-white'
             } transition-all duration-300`}
           >
@@ -69,8 +70,11 @@ const UserList = () => {
       {showModal && <AddUserModal onClose={() => setShowModal(false)} />}
       <div className="flex justify-center mt-6">
         <button
-          className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition-all duration-300"
-          onClick={() => Router.push('/Order')}
+          disabled={selectedUserId === null}
+          className={`${
+            selectedUserId === null ? 'bg-blue-300' : 'bg-blue-500'
+          }  text-white px-6 py-2 rounded-lg shadow-lg  transition-all duration-300`}
+          onClick={() => router.push('/Order')}
         >
           Go To Order
         </button>
