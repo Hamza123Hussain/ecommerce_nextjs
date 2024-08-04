@@ -7,10 +7,10 @@ export const getdata = async () => {
       return response.data
     } else {
       console.log('ERROR: Unexpected response status:', response.status)
-      return []
+      return response.data
     }
   } catch (error) {
     console.log('FUNCTION ERROR:', error)
-    return []
+    return error
   }
 }
