@@ -56,7 +56,7 @@ const GetProducts = () => {
   }
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 p-10 min-h-screen">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 p-10 min-h-screen dark:bg-white">
       {products?.map((productData: Product) => (
         <div key={productData.id}>
           <HomeProduct product={productData} />

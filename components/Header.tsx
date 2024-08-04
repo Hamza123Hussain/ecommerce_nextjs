@@ -55,6 +55,7 @@ const Header = () => {
           <div className="relative flex items-center gap-3 p-2">
             <UserButton />
             <h3
+              className="dark:text-black"
               onDoubleClick={() => setIsHovered(false)}
               onClick={() => setIsHovered(true)}
             >

@@ -48,7 +48,7 @@ const ProductPage = ({ params }: PageProps) => {
   }
 
   return (
-    <div className="flex flex-col gap-10 justify-center items-center p-6 border-2 rounded-lg">
+    <div className="flex flex-col gap-10 justify-center items-center p-6 border-2 rounded-lg dark:bg-white">
       <div className="flex flex-col justify-center items-center">
         <ProductCard
           product={product}

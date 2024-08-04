@@ -1,6 +1,26 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* globals.css */
+/* globals.css */
+html {
+  --bg-color: white; /* Set default light mode background color */
+  --text-color: black; /* Set default light mode text color */
+}
+
+/* Override dark mode variables */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: white;
+    --text-color: black;
+    /* Add more overrides as needed */
+  }
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;

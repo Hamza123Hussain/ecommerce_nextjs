@@ -62,7 +62,7 @@ const PostOrder = ({ params }: { params: any }) => {
   }
 
   return (
-    <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
+    <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto dark:bg-white">
       {alert && (
         <CustomAlert
           message={alert.message}
@@ -80,7 +80,7 @@ const PostOrder = ({ params }: { params: any }) => {
       </div>
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         <div className="col-span-2">
-          <div className="bg-white p-6 rounded-lg shadow-lg transition-all duration-500 hover:shadow-2xl">
+          <div className=" p-6 rounded-lg shadow-lg transition-all duration-500 hover:shadow-2xl">
             <p className="text-lg md:text-xl font-semibold leading-6 xl:leading-5 text-gray-800 mb-6">
               Customer’s Cart
             </p>
@@ -93,7 +93,7 @@ const PostOrder = ({ params }: { params: any }) => {
               </div>
             ))}
           </div>
-          <div className="bg-white p-6 rounded-lg shadow-lg transition-all duration-500 hover:shadow-2xl mt-10">
+          <div className=" p-6 rounded-lg shadow-lg transition-all duration-500 hover:shadow-2xl mt-10">
             <h3 className="text-lg md:text-xl font-semibold leading-6 xl:leading-5 text-gray-800 mb-4">
               Payment Method
             </h3>

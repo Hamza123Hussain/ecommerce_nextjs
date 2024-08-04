@@ -52,7 +52,7 @@ const UserDetailsForm = ({ params }: { params: any }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-100 to-purple-200 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-r dark:bg-white from-blue-100 to-purple-200 flex items-center justify-center p-4">
       {alert && (
         <CustomAlert
           message={alert.message}
