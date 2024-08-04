@@ -52,7 +52,6 @@ export default function AddProduct() {
     if (data) {
       console.log('NEW DATA', data)
 
-      setProducts((prev: Product[]) => [...prev, { ...data }])
       toast.success('Product added successfully!')
 
       console.log('PRODUCTSS', products)
