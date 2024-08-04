@@ -4,8 +4,10 @@ import OrderDetails from '@/components/Order/PostOrder/OrdeItems'
 import OrderSum from '@/components/Order/PostOrder/Ordersummary'
 import UserDetails from '@/components/Order/PostOrder/UserDetails'
 import { GetOrder } from '@/functions/Order/GetOrder'
+import { SendEmail } from '@/functions/SendOrderEmail'
 import { Product } from '@/utils/ProductInterface'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 
 const PostOrder = ({ params }: { params: any }) => {
   const [orderData, setOrderData] = useState<any>(null)
@@ -20,6 +22,56 @@ const PostOrder = ({ params }: { params: any }) => {
       const data = await GetOrder(params.id)
       setOrderData(data)
       setIsLoading(false)
+      console.log('post order ', data)
+      if (data) {
+        const Flag = await SendEmail(
+          data.email || '',
+          data.name || '',
+          data.name || '',
+          data.cart,
+          data.total || 0,
+          data.address || '',
+          data.paymentmethod || '',
+          'ORDER Placed Successfully'
+        )
+
+        if (Flag) {
+          toast.success('EMAIL SENT')
+        }
+      }
+      /***{
+    "id": "fba5fdf0-7e2d-4874-91b4-4fe2d7600baf",
+    "cart": [
+        {
+            "id": "d91f39c9-1ff7-449f-a4dd-d8e5b0740a82",
+            "name": "phone",
+            "price": 200,
+            "stock": 205,
+            "category": "cutie",
+            "quantity": 1,
+            "image_url": "https://images.samsung.com/is/image/samsung/p6pim/pk/sm-a155fzygpkd/gallery/pk-galaxy-a15-sm-a155-sm-a155fzygpkd-thumb-539360539",
+            "created_at": "2024-07-21T22:43:50.563",
+            "updated_at": "2024-08-03T15:40:35.448",
+            "description": "phone"
+        }
+    ],
+    "totalprice": 200,
+    "totalquantity": 1,
+    "tax": 32,
+    "shipping": 250,
+    "total": 482,
+    "name": "Hamza Hussain",
+    "email": "zain2007@gmail.com",
+    "address": "street 31 phase 3 43-w dha lahore",
+    "city": "lahore",
+    "state": "punjab",
+    "country": "Pakistan",
+    "zipcode": "54000",
+    "created_at": "2024-08-04T10:18:15.007+00:00",
+    "userid": "user_2k9C1tBEIXnBMAsjEgVHHrIxvRi",
+    "phone": null,
+    "paymentmethod": "cash"
+} */
     } catch (error) {
       console.log('Error at front', error)
       setAlert({
