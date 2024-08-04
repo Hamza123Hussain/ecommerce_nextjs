@@ -1,13 +1,16 @@
 export const getUserFromLocalStorage = () => {
+  if (typeof window === 'undefined') return []
   try {
     const savedCart = localStorage.getItem('users')
     return savedCart ? JSON.parse(savedCart) : []
   } catch (error) {
-    console.error('Error parsing cart from localStorage', error)
+    console.error('Error parsing users from localStorage', error)
     return []
   }
 }
+
 export const getCartFromLocalStorage = () => {
+  if (typeof window === 'undefined') return []
   try {
     const savedCart = localStorage.getItem('cart')
     return savedCart ? JSON.parse(savedCart) : []
@@ -16,7 +19,9 @@ export const getCartFromLocalStorage = () => {
     return []
   }
 }
+
 export const getProductsFromLocalStorage = () => {
+  if (typeof window === 'undefined') return []
   try {
     const savedProducts = localStorage.getItem('products')
     return savedProducts ? JSON.parse(savedProducts) : []
@@ -27,6 +32,8 @@ export const getProductsFromLocalStorage = () => {
 }
 
 export const getCountFromLocalStorage = () => {
+  if (typeof window === 'undefined') return 0
+
   try {
     const savedProducts: any = localStorage.getItem('cartcount')
     return savedProducts !== null && savedProducts >= 1
@@ -39,21 +46,23 @@ export const getCountFromLocalStorage = () => {
 }
 
 export const getPaymentFromLocalStorage = () => {
+  if (typeof window === 'undefined') return 'cash'
   try {
-    const savedProducts = localStorage.getItem('payment')
-    return savedProducts ? JSON.parse(savedProducts) : 'cash'
+    const savedPayment = localStorage.getItem('payment')
+    return savedPayment ? JSON.parse(savedPayment) : 'cash'
   } catch (error) {
-    console.error('Error parsing products from localStorage', error)
+    console.error('Error parsing payment from localStorage', error)
     return 'cash'
   }
 }
 
-export const getindexFromLocalStorage = () => {
+export const getIndexFromLocalStorage = () => {
+  if (typeof window === 'undefined') return 0
   try {
-    const savedProducts = localStorage.getItem('indexofadmin')
-    return savedProducts ? JSON.parse(savedProducts) : 0
+    const savedIndex = localStorage.getItem('indexofadmin')
+    return savedIndex ? JSON.parse(savedIndex) : 0
   } catch (error) {
-    console.error('Error parsing products from localStorage', error)
-    return 'cash'
+    console.error('Error parsing index from localStorage', error)
+    return 0
   }
 }
