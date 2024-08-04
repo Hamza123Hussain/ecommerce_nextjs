@@ -52,13 +52,14 @@ const Header = () => {
           )}
         </div>
         {user ? (
-          <div
-            className="relative flex items-center gap-3 p-2"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
+          <div className="relative flex items-center gap-3 p-2">
             <UserButton />
-            <h3>{user?.fullName}</h3>
+            <h3
+              onDoubleClick={() => setIsHovered(false)}
+              onClick={() => setIsHovered(true)}
+            >
+              {user?.fullName}
+            </h3>
             {isHovered && <DropDown />}
           </div>
         ) : (
