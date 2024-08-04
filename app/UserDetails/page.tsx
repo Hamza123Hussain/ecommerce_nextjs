@@ -6,11 +6,9 @@ import UserList from '@/components/User/List'
 import { useAppContext } from '@/utils/Context'
 
 const UserListPage = () => {
-  const { userDetail } = useAppContext()
-
   const { user } = useUser()
 
-  return <div>{user || userDetail ? <UserList /> : <UserDetailsForm />}</div>
+  return <div>{user ? <UserList /> : <UserDetailsForm />}</div>
 }
 
 export default UserListPage
