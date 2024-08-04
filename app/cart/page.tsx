@@ -25,7 +25,7 @@ const CartPage = () => {
   }
 
   return (
-    <div className="container mx-auto mt-5 min-h-screen p-2 bg-gray-200">
+    <div className="container mx-auto mt-5 min-h-screen p-2 bg-white">
       <h1 className="text-3xl font-bold mb-4 text-center">Shopping Cart</h1>
       <div className="flex flex-col lg:flex-row gap-4">
         <div className="flex-1">
@@ -35,7 +35,7 @@ const CartPage = () => {
             cart.map((item: Product) => (
               <div
                 key={item.id}
-                className="flex flex-col md:flex-row items-center border-black hover:shadow-md hover:shadow-blue-100 gap-4 mb-4 p-4 "
+                className="flex flex-col md:flex-row items-center  bg-white gap-4 mb-4 p-4 "
               >
                 <Cartitem item={item} />
               </div>

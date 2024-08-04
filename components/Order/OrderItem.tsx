@@ -8,7 +8,7 @@ interface OrderItemProps {
 
 const OrderItem: React.FC<OrderItemProps> = ({ item }) => {
   return (
-    <div className="flex flex-col md:flex-row items-center border p-6 rounded-lg mb-4 bg-gray-50 shadow-md hover:shadow-lg transition-shadow duration-300 ease-in-out">
+    <div className="flex flex-col md:flex-row items-center border p-6 rounded-lg mb-4 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 ease-in-out">
       <div className="w-full md:w-1/4 flex justify-center mb-4 md:mb-0">
         <img
           src={item.image_url}

@@ -71,7 +71,7 @@ const PostOrder = ({ params }: { params: any }) => {
         />
       )}
       <div className="flex justify-start items-start space-y-2 flex-col mb-8">
-        <h1 className="text-3xl lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
+        <h1 className="text-sm lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
           Order #{params.id}
         </h1>
         <p className="text-2xl leading-6 pl-2 text-gray-600">
@@ -80,7 +80,7 @@ const PostOrder = ({ params }: { params: any }) => {
       </div>
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         <div className="col-span-2">
-          <div className="bg-gray-50 p-6 rounded-lg shadow">
+          <div className="bg-white p-6 rounded-lg shadow-lg transition-all duration-500 hover:shadow-2xl">
             <p className="text-lg md:text-xl font-semibold leading-6 xl:leading-5 text-gray-800 mb-6">
               Customer’s Cart
             </p>
@@ -93,14 +93,16 @@ const PostOrder = ({ params }: { params: any }) => {
               </div>
             ))}
           </div>
-          <div className="mt-8 bg-gray-50 p-6 rounded-lg shadow">
+          <div className="bg-white p-6 rounded-lg shadow-lg transition-all duration-500 hover:shadow-2xl mt-10">
             <h3 className="text-lg md:text-xl font-semibold leading-6 xl:leading-5 text-gray-800 mb-4">
               Payment Method
             </h3>
-            <p className="text-gray-700">{orderData.paymentmethod}</p>
+            <p className="text-gray-700 text-xl capitalize">
+              {orderData.paymentmethod}
+            </p>
           </div>
         </div>
-        <div className="col-span-1 space-y-6">
+        <div className="col-span-1 space-y-6 ml-10">
           <UserDetails />
           <OrderSum
             shipping={orderData.shipping}

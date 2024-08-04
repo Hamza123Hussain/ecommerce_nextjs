@@ -6,8 +6,8 @@ const OrderSummary: React.FC = () => {
   const { total, sum, tax, shipping } = useAppContext()
 
   return (
-    <div className="p-4 bg-gray-100 rounded-lg shadow-md mt-6">
-      <h3 className="text-2xl font-bold mb-4 text-gray-700">Order Summary</h3>
+    <div className="p-4 bg-white rounded-lg shadow-sm mt-6">
+      <h3 className="text-xl font-bold mb-4 text-gray-700">Order Summary</h3>
       <div className="flex justify-between mb-2">
         <span>Total Quantity</span>
         <span>{total.totalquantity}</span>

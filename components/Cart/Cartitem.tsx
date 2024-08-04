@@ -17,7 +17,7 @@ const CartItems = ({ item }: { item: Product }) => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center border p-4 rounded-lg mb-4 bg-white shadow-md">
+    <div className="grid lg:w-[70vw] md:w-[100vw] grid-cols-1 md:grid-cols-12 gap-6 items-center border p-4 rounded-lg mb-4 bg-white hover:shadow-md hover:shadow-blue-100">
       <div className="col-span-6 md:col-span-4 flex justify-center">
         <img
           src={item.image_url}

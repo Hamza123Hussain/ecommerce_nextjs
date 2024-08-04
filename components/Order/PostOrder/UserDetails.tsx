@@ -9,16 +9,16 @@ const UserDetails = () => {
   const { userDetail } = useAppContext()
   return (
     <div className="bg-white w-full p-8 md:p-10 xl:p-12 flex flex-col rounded-3xl shadow-lg transition-all duration-500 hover:shadow-2xl">
-      <h3 className="text-2xl font-bold leading-7 text-gray-900 mb-6">
+      <h3 className="sm:text-2xl text-xl font-bold leading-7  text-gray-900 mb-6">
         Customer Details
       </h3>
       <div className="flex flex-col space-y-8">
         <div className="flex items-center space-x-4">
-          <div>
-            <p className="text-xl font-semibold text-gray-800">
-              {userDetail.Name}
-            </p>
-          </div>
+          {' '}
+          <p className="text-xl  text-gray-700">Name</p>
+          <p className="text-xl font-semibold text-gray-800">
+            {userDetail.Name}
+          </p>
         </div>
         <div className="border-t border-gray-200 pt-4">
           <div className="flex items-center space-x-4">
