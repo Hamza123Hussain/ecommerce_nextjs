@@ -50,38 +50,60 @@ const useCartActions = () => {
 
   const addToCart = useCallback(
     async (product: Product) => {
-      // setcartcount((prev: number) => prev + 1)
+      // Update product quantity and stock in the database
       const data = await updateProductQuantityAndStock(
         product,
         '/api/Product/UPDATEQTY/Incrment'
       )
       if (data) {
         setcartcount((prev: number) => prev + 1)
-        setProducts((prevProducts: Product[]) => {
-          return prevProducts.map((single: Product) =>
+
+        // Update products state
+        setProducts((prevProducts: Product[]) =>
+          prevProducts.map((single: Product) =>
             single.id === product.id
-              ? { ...single, quantity: single.quantity + 1 } // Properly returning the updated object
+              ? { ...single, quantity: single.quantity + 1 }
               : single
           )
-        })
+        )
 
         setProducts((prevProducts: Product[]) =>
           prevProducts.map((single) =>
-            single.id == product.id
+            single.id === product.id
               ? { ...single, stock: single.stock - 1 }
               : single
           )
         )
+
+        // Update cart state
         setCart((prevCart: Product[]) => {
-          // fix here like no
-          return [
-            ...prevCart,
-            {
-              ...product,
-              quantity: product.quantity + 1,
-              stock: product.stock - 1,
-            },
-          ]
+          // Check if the product already exists in the cart
+          const existingProductIndex = prevCart.findIndex(
+            (item) => item.id === product.id
+          )
+
+          if (existingProductIndex > -1) {
+            // Product exists in the cart, update its quantity and stock
+            return prevCart.map((item, index) =>
+              index === existingProductIndex
+                ? {
+                    ...item,
+                    quantity: item.quantity + 1,
+                    stock: item.stock - 1,
+                  }
+                : item
+            )
+          } else {
+            // Product doesn't exist in the cart, add it
+            return [
+              ...prevCart,
+              {
+                ...product,
+                quantity: 1, // Initialize with 1 as it's the first time it's added to the cart
+                stock: product.stock - 1,
+              },
+            ]
+          }
         })
       }
     },
