@@ -47,3 +47,13 @@ export const getPaymentFromLocalStorage = () => {
     return 'cash'
   }
 }
+
+export const getindexFromLocalStorage = () => {
+  try {
+    const savedProducts = localStorage.getItem('indexofadmin')
+    return savedProducts ? JSON.parse(savedProducts) : 0
+  } catch (error) {
+    console.error('Error parsing products from localStorage', error)
+    return 'cash'
+  }
+}
