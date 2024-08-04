@@ -1,3 +1,4 @@
+// src/functions/Product/Fetch.ts
 import axios from 'axios'
 
 export const getdata = async () => {
@@ -6,11 +7,11 @@ export const getdata = async () => {
     if (response.status === 200) {
       return response.data
     } else {
-      console.log('ERROR: Unexpected response status:', response.status)
-      return response.data
+      console.error('Unexpected response status:', response.status)
+      return [] // Return an empty array or handle the error as needed
     }
   } catch (error) {
-    console.log('FUNCTION ERROR:', error)
-    return error
+    console.error('Failed to fetch data:', error)
+    return [] // Return an empty array or handle the error as needed
   }
 }
