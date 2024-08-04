@@ -7,8 +7,10 @@ import InputFields from '@/components/Product/inputfields'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
+import { useAppContext } from '@/utils/Context'
 
 export default function AddProduct() {
+  const { products, setProducts, loading, setLoading } = useAppContext()
   const { user, isLoaded, isSignedIn } = useUser()
   useEffect(() => {
     if (isLoaded && isSignedIn) {
@@ -48,7 +50,12 @@ export default function AddProduct() {
     e.preventDefault() // Prevent default form submission
     const data: any = await CreateProduct(product)
     if (data) {
+      console.log('NEW DATA', data)
+
+      setProducts((prev: Product[]) => [...prev, { ...data }])
       toast.success('Product added successfully!')
+
+      console.log('PRODUCTSS', products)
       setProduct({
         id: null,
         name: '',
@@ -59,7 +66,7 @@ export default function AddProduct() {
         image_url: '',
         quantity: 0,
       }) // Reset form after submission
-      Router.push('/')
+      // Router.push('/')
     } else {
       // Router.push('/')
     }
