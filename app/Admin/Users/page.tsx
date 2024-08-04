@@ -2,10 +2,27 @@
 import UserCardForAdmin from '@/components/User/UserCardForAdmin'
 import { GetAllUsers } from '@/functions/User/GetAllUser'
 import { UserDetails } from '@/utils/UserDetailInterface'
+import { useUser } from '@clerk/nextjs'
 import React, { use, useEffect, useState } from 'react'
 import { ClipLoader } from 'react-spinners'
 
 const Page = () => {
+  const { user, isLoaded, isSignedIn } = useUser()
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      if (
+        user?.primaryEmailAddress?.emailAddress ===
+        'hamzahussain14.hh@gmail.com'
+      ) {
+        // User is allowed
+      } else {
+        // Redirect or show an error message
+        window.location.href = '/no-access'
+      }
+    } else if (!isSignedIn) {
+      window.location.href = '/sign-in'
+    }
+  }, [isLoaded, isSignedIn, user])
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
 

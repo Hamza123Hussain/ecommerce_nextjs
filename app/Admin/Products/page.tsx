@@ -4,8 +4,25 @@ import { useAppContext } from '@/utils/Context'
 import { Product } from '@/utils/ProductInterface'
 import { getdata } from '@/functions/Product/Fetch'
 import AdminProduct from '@/components/Product/AdminProduct'
+import { useUser } from '@clerk/nextjs'
 
 const GetProducts = () => {
+  const { user, isLoaded, isSignedIn } = useUser()
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      if (
+        user?.primaryEmailAddress?.emailAddress ===
+        'hamzahussain14.hh@gmail.com'
+      ) {
+        // User is allowed
+      } else {
+        // Redirect or show an error message
+        window.location.href = '/no-access'
+      }
+    } else if (!isSignedIn) {
+      window.location.href = '/sign-in'
+    }
+  }, [isLoaded, isSignedIn, user])
   const [products, setProducts] = useState([])
   const { loading, setLoading } = useAppContext()
 

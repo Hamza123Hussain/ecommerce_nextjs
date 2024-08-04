@@ -9,10 +9,26 @@ import { useRouter } from 'next/navigation'
 import { getdatabyid } from '@/functions/Product/ProductbyId'
 import { ClipLoader } from 'react-spinners'
 import { UpdateProduct } from '@/functions/Product/Update'
+import { useUser } from '@clerk/nextjs'
 
 export default function UpdateFunction({ params }: { params: any }) {
   console.log('IDDDDD', params.Product)
-
+  const { user, isLoaded, isSignedIn } = useUser()
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      if (
+        user?.primaryEmailAddress?.emailAddress ===
+        'hamzahussain14.hh@gmail.com'
+      ) {
+        // User is allowed
+      } else {
+        // Redirect or show an error message
+        window.location.href = '/no-access'
+      }
+    } else if (!isSignedIn) {
+      window.location.href = '/sign-in'
+    }
+  }, [isLoaded, isSignedIn, user])
   const Router = useRouter()
   const [product, setProduct] = useState<Product>({
     id: null,

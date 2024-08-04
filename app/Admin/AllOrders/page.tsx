@@ -5,8 +5,25 @@ import UserOrder from '@/components/Order/UserOrder'
 import { useAppContext } from '@/utils/Context'
 import { Order } from '@/utils/OrderInterface'
 import { GetAllOrders } from '@/functions/Order/GetAllOrders'
+import { useUser } from '@clerk/nextjs'
 
 const MyOrders = () => {
+  const { user, isLoaded, isSignedIn } = useUser()
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      if (
+        user?.primaryEmailAddress?.emailAddress ===
+        'hamzahussain14.hh@gmail.com'
+      ) {
+        // User is allowed
+      } else {
+        // Redirect or show an error message
+        window.location.href = '/no-access'
+      }
+    } else if (!isSignedIn) {
+      window.location.href = '/sign-in'
+    }
+  }, [isLoaded, isSignedIn, user])
   const [orders, setOrders] = useState([])
   const { loading, setLoading } = useAppContext()
   const GetData = async () => {

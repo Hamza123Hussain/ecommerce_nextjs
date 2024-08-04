@@ -1,13 +1,30 @@
 'use client'
-import React, { useState, ChangeEvent, FormEvent } from 'react'
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react'
 
 import { Product } from '@/utils/ProductInterface'
 import { CreateProduct } from '@/functions/Product/Create'
 import InputFields from '@/components/Product/inputfields'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import { useUser } from '@clerk/nextjs'
 
 export default function AddProduct() {
+  const { user, isLoaded, isSignedIn } = useUser()
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      if (
+        user?.primaryEmailAddress?.emailAddress ===
+        'hamzahussain14.hh@gmail.com'
+      ) {
+        // User is allowed
+      } else {
+        // Redirect or show an error message
+        window.location.href = '/no-access'
+      }
+    } else if (!isSignedIn) {
+      window.location.href = '/sign-in'
+    }
+  }, [isLoaded, isSignedIn, user])
   const Router = useRouter()
   const [product, setProduct] = useState<Product>({
     id: null,

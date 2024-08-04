@@ -1,10 +1,27 @@
 'use client'
 import TotalMoney from '@/components/Order/TotalRevenue'
 import { GetALLRevenue } from '@/functions/Order/GettingRevenue'
+import { useUser } from '@clerk/nextjs'
 import React, { useEffect, useState } from 'react'
 import { ClipLoader } from 'react-spinners'
 
 const TotalRevenue = () => {
+  const { user, isLoaded, isSignedIn } = useUser()
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      if (
+        user?.primaryEmailAddress?.emailAddress ===
+        'hamzahussain14.hh@gmail.com'
+      ) {
+        // User is allowed
+      } else {
+        // Redirect or show an error message
+        window.location.href = '/no-access'
+      }
+    } else if (!isSignedIn) {
+      window.location.href = '/sign-in'
+    }
+  }, [isLoaded, isSignedIn, user])
   const [Revenue, setRevenue] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [totalRevenue, setTotalRevenue] = useState({
