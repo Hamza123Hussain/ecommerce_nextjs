@@ -10,6 +10,7 @@ import { Product } from '@/utils/ProductInterface'
 import {
   getCartFromLocalStorage,
   getCountFromLocalStorage,
+  getindexFromLocalStorage,
   getPaymentFromLocalStorage,
   getProductsFromLocalStorage,
   getUserFromLocalStorage,
@@ -26,6 +27,7 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<Product[]>(getCartFromLocalStorage)
   const [cartcount, setcartcount] = useState(getCountFromLocalStorage)
   const [products, setProducts] = useState(getProductsFromLocalStorage)
+  const [index, setindex] = useState(getindexFromLocalStorage)
   const [userDetail, setUserDetail] = useState<UserDetails>(
     getUserFromLocalStorage
   )
@@ -71,6 +73,12 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [products])
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('indexofadmin', JSON.stringify(index))
+    }
+  }, [index])
+
   const [loading, setLoading] = useState(true)
 
   return (
@@ -92,6 +100,8 @@ export const AppContextProvider = ({ children }: { children: ReactNode }) => {
         sum,
         paymentMethod,
         setPaymentMethod,
+        index,
+        setindex,
       }}
     >
       {children}
