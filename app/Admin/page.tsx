@@ -15,8 +15,7 @@ const Admin = () => {
   useEffect(() => {
     if (isLoaded && isSignedIn) {
       if (
-        user?.primaryEmailAddress?.emailAddress ===
-        'hamzahussain14.hh@gmail.com'
+        user?.primaryEmailAddress?.emailAddress == 'hamzahussain14.hh@gmail.com'
       ) {
         // User is allowed
       } else {
