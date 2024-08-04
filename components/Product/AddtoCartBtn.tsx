@@ -40,13 +40,13 @@ const AddtoCartBtn: React.FC<AddtoCartBtnProps> = ({
       {product.quantity === 0 ? (
         <button
           onClick={handleAddToCart}
-          className="flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-200"
+          className="flex items-center justify-center bg-blue-600 text-white px-3 w-full py-3 rounded-lg shadow-md hover:bg-blue-700 transition-all duration-200"
         >
           <ShoppingCart className="mr-2" size={20} />
           <span className="font-semibold">Add to Cart</span>
         </button>
       ) : (
-        <div className="flex items-center justify-center space-x-4 p-4 bg-white border rounded-lg shadow-md transition-all duration-200">
+        <div className="flex items-center justify-center space-x-4 p-3 w-full bg-white border rounded-lg shadow-md transition-all duration-200">
           <button
             className="flex items-center justify-center bg-red-600 text-white p-3 rounded-full hover:bg-red-700 transition-all duration-200"
             onClick={handleDecrement}
