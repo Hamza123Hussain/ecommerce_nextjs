@@ -8,7 +8,6 @@ import { useUser } from '@clerk/nextjs'
 import CustomAlert from '@/components/Alert'
 import CardDetails from '@/components/Payment/CardDetails'
 import CostDetails from '@/components/Payment/CostDetails'
-import { SendEmail } from '@/functions/SendOrderEmail'
 
 const PaymentPage = () => {
   const {
@@ -43,20 +42,8 @@ const PaymentPage = () => {
         user?.id
       )
       if (Data) {
-        // const Flag = await SendEmail(
-        //   user?.primaryEmailAddress?.emailAddress || '',
-        //   user?.fullName || '',
-        //   user?.firstName || '',
-        //   cart,
-        //   total.totalprice || 0,
-        //   userDetail.Address || '',
-
-        //   paymentMethod || '',
-        //   'ORDER Placed Successfully'
-        // )
-
         setAlert({
-          message: 'Payment successful and email sent!',
+          message: 'Payment successful!',
           type: 'success',
         })
         setCart([])
