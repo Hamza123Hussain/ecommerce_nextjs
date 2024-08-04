@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 export const SendEmail = async (
+  id: any,
   Email: any,
   Fullname: any,
   Name: any,
@@ -12,6 +13,7 @@ export const SendEmail = async (
 ) => {
   try {
     const response = await axios.post('/api/Email', {
+      id,
       Email,
       Fullname,
       Name,
