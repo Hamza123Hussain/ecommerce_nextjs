@@ -43,9 +43,7 @@ const UserDetails = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <p className="text-sm text-gray-700">
-              {user?.primaryEmailAddress?.emailAddress}
-            </p>
+            <p className="text-sm text-gray-700">{userDetail.Email}</p>
           </div>
         </div>
         <div className="border-t border-gray-200 pt-4">
