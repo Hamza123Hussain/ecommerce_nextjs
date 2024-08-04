@@ -1,3 +1,4 @@
+// src/components/GetProducts.tsx
 'use client'
 import React, { useEffect } from 'react'
 import { useAppContext } from '@/utils/Context'
@@ -14,31 +15,27 @@ const GetProducts = () => {
     const fetchProducts = async () => {
       setLoading(true)
       try {
-        if (isLoaded) {
-          if (isSignedIn) {
-            const userMetadata = user?.publicMetadata || {}
-            const userRole = userMetadata.role || 'Not assigned'
-            console.log('User public metadata:', userMetadata)
-            console.log('User role:', userRole)
+        // Fetch products data
+        const data = await getdata()
+        console.log('Fetched products:', data)
 
-            // Fetch products data
-            const data = await getdata()
-            console.log('Fetched products:', data)
+        // Update products state
+        setProducts(data)
 
-            // Update products state
-            setProducts(data)
+        // Store products in localStorage
+        localStorage.setItem('products', JSON.stringify(data))
 
-            // Store products in localStorage
-            localStorage.setItem('products', JSON.stringify(data))
+        if (isLoaded && isSignedIn) {
+          const userMetadata = user?.publicMetadata || {}
+          const userRole = userMetadata.role || 'Not assigned'
+          console.log('User public metadata:', userMetadata)
+          console.log('User role:', userRole)
 
-            // Log user information
-            console.log('User is signed in:', user)
-            console.log('User email:', user?.primaryEmailAddress?.emailAddress)
-          } else {
-            console.log('User is not signed in')
-          }
+          // Log user information
+          console.log('User is signed in:', user)
+          console.log('User email:', user?.primaryEmailAddress?.emailAddress)
         } else {
-          console.log('User is not loaded yet')
+          console.log('User is not signed in or not loaded yet')
         }
       } catch (error) {
         console.error('Failed to fetch products:', error)
