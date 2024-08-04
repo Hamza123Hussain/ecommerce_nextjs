@@ -1,19 +1,28 @@
-import { supabase } from '@/utils/Supabase'
+// src/pages/api/Product/GET.ts
 import { NextResponse } from 'next/server'
+import { db } from '@/utils/FireBaseConfig' // Adjust the path if necessary
+import { collection, getDocs } from 'firebase/firestore'
 
 export const GET = async () => {
   try {
-    const { data, error } = await supabase.from('products').select('*')
-    if (error) {
-      console.log('Supabase error:', error)
-      return NextResponse.json({ error: error.message }, { status: 404 })
-    }
-    console.log('Fetched data from Supabase:', data)
-    return NextResponse.json(data, {
+    // Reference to the 'products' collection
+    const productsCollection = collection(db, 'products')
+
+    // Fetch all documents in the collection
+    const productSnapshot = await getDocs(productsCollection)
+
+    // Map over the documents to get the data
+    const products = productSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }))
+
+    // Respond with the fetched data
+    return NextResponse.json(products, {
       status: 200,
     })
   } catch (error) {
-    console.log('Database error:', error)
+    console.error('Database error:', error)
     return NextResponse.json({ error: 'Database error' }, { status: 500 })
   }
 }
