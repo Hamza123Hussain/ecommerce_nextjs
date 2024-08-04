@@ -6,7 +6,7 @@ import { getdata } from '@/functions/Product/Fetch'
 import HomeProduct from './HomeProduct'
 
 const GetProducts = () => {
-  const [products, setProducts] = useState<Product[]>([])
+  const { products, setProducts } = useAppContext()
   const { loading, setLoading } = useAppContext()
 
   const fetchme = async () => {
@@ -15,6 +15,7 @@ const GetProducts = () => {
       const data = await getdata()
       console.log('Fetched products:', data)
       setProducts(data)
+      localStorage.setItem('products', JSON.stringify(products))
     } catch (error) {
       console.error('Failed to fetch products:', error)
     } finally {
