@@ -1,8 +1,12 @@
 'use client'
-import { AdminArray } from '@/utils/AdminArray'
+import MyOrders from '@/components/Admin/AllOrders'
+import GetProducts from '@/components/Admin/AllProducts'
+import Allusers from '@/components/Admin/AllUsers'
+import AddProduct from '@/components/Admin/CreateProduct'
+import MainAdmin from '@/components/Admin/Mainpage'
+import TotalRevenue from '@/components/Admin/TotalRevenue'
+import { useAppContext } from '@/utils/Context'
 import { useUser } from '@clerk/nextjs'
-
-import { useRouter } from 'next/navigation'
 
 import React, { useEffect } from 'react'
 
@@ -23,31 +27,26 @@ const Admin = () => {
       window.location.href = '/sign-in'
     }
   }, [isLoaded, isSignedIn, user])
-  const router = useRouter()
+  const { index, setindex } = useAppContext()
 
   return (
-    <div className=" flex flex-col my-5 ">
-      <h1 className=" text-center text-3xl text-slate-400">Admin DashBoard</h1>
-      <div className=" grid grid-cols-1 sm:grid-cols-2 justify-center mx-auto items-center gap-10 my-5">
-        {AdminArray.map((element) => (
-          <div
-            key={element.id}
-            className={` p-10   rounded-lg border-2 border-black  `}
-            style={{
-              backgroundColor: `${element.bgColor}`,
-              color: `${element.textColor}`,
-            }}
-          >
-            <h3
-              className=" text-center sm:text-3xl  cursor-pointer"
-              onClick={() => router.push(`/Admin/${element.Href}`)}
-            >
-              {element.Name}
-            </h3>
-          </div>
-        ))}
-      </div>
-    </div>
+    <>
+      {index == 0 ? (
+        <MainAdmin />
+      ) : index == 1 ? (
+        <GetProducts />
+      ) : index == 2 ? (
+        <AddProduct />
+      ) : index == 3 ? (
+        <MyOrders />
+      ) : index == 4 ? (
+        <TotalRevenue />
+      ) : index == 5 ? (
+        <Allusers />
+      ) : (
+        ''
+      )}
+    </>
   )
 }
 
