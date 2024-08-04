@@ -15,14 +15,15 @@ const UserDetailsForList = ({
   selectedUserId: any
 }) => {
   const { setUserDetail } = useAppContext()
-  const Router = useRouter()
+  const router = useRouter()
+
   const handleSelectUser = (userId: string) => {
     setSelectedUserId(userId)
     setUserDetail(user)
   }
 
   const handleEditUser = (userId: string) => {
-    Router.push(`/UserDetails/Update/${userId}`)
+    router.push(`/UserDetails/Update/${userId}`)
   }
 
   const handleDeleteUser = async (userId: string) => {
@@ -33,43 +34,44 @@ const UserDetailsForList = ({
       )
     }
   }
+
   return (
-    <>
-      <div className="flex items-center space-x-6 w-full md:w-auto">
-        <input
-          type="checkbox"
-          className="form-checkbox h-5 w-5 text-blue-600"
-          checked={selectedUserId === user.id}
-          onChange={() => handleSelectUser(user.id)}
-        />
-        <div className="flex flex-col md:flex-row md:items-center space-x-4">
-          <span className="font-medium text-lg text-gray-800">{user.Name}</span>
-          <span className="text-gray-600">{user.Email}</span>
-          <span className="text-gray-600">{user.Phone}</span>
+    <div className="p-6 bg-gradient-to-r from-white to-blue-50 border border-gray-200 rounded-lg shadow-lg transition-shadow hover:shadow-2xl">
+      <input
+        type="checkbox"
+        className="form-checkbox h-5 w-5 text-blue-600"
+        checked={selectedUserId === user.id}
+        onChange={() => handleSelectUser(user.id)}
+      />{' '}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col space-y-1">
+          <h2 className="text-2xl font-bold text-blue-800">{user.Name}</h2>
+          <span className="text-blue-600">Email: {user.Email}</span>
+          <span className="text-blue-600">Phone: {user.Phone}</span>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 md:mt-0 w-full md:w-auto">
-        <span className="text-gray-700">{user.Address}</span>
-        <span className="text-gray-700">{user.City}</span>
-        <span className="text-gray-700">{user.State}</span>
-        <span className="text-gray-700">{user.Country}</span>
-        <span className="text-gray-700">{user.zipcode}</span>
+      <div className="grid grid-cols-1 gap-2 text-gray-700">
+        <span>Address: {user.Address}</span>
+        <span>City: {user.City}</span>
+        <span>State: {user.State}</span>
+        <span>Country: {user.Country}</span>
+        <span>Zipcode: {user.zipcode}</span>
       </div>
-      <div className="flex space-x-4 mt-4 md:mt-0">
+      <div className="flex flex-col justify-center items-center gap-2 mt-4">
         <button
-          className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 transition-all duration-300"
+          className="bg-gradient-to-r from-green-500 to-green-600 w-full text-white px-4 py-2 rounded-lg shadow-md hover:from-green-600 hover:to-green-700 transition-all duration-300"
           onClick={() => handleEditUser(user.id)}
         >
           Edit
         </button>
         <button
-          className="bg-red-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-600 transition-all duration-300"
+          className="bg-gradient-to-r from-red-500 to-red-600 w-full text-white px-4 py-2 rounded-lg shadow-md hover:from-red-600 hover:to-red-700 transition-all duration-300"
           onClick={() => handleDeleteUser(user.id)}
         >
           Trash
         </button>
       </div>
-    </>
+    </div>
   )
 }
 
