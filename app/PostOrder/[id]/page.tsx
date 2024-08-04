@@ -25,6 +25,7 @@ const PostOrder = ({ params }: { params: any }) => {
       console.log('post order ', data)
       if (data) {
         const Flag = await SendEmail(
+          data.id || '',
           data.email || '',
           data.name || '',
           data.name || '',
