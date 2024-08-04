@@ -16,6 +16,7 @@ export const POST = async (req: Request) => {
 
     // Generate the HTML content for the email
     const htmlContent = EmailTemplate({
+      id: payload?.id || '',
       Fullname: payload?.Fullname || '',
       userName: payload?.Name || '',
       userEmail: payload?.Email || '',
