@@ -24,7 +24,7 @@ const MainAdmin = () => {
   }, [isLoaded, isSignedIn, user])
 
   return (
-    <div className=" flex flex-col my-5 ">
+    <div className=" flex flex-col my-5 dark:bg-white dark:text-black ">
       <h1 className=" text-center text-3xl text-slate-400">Admin DashBoard</h1>
       <div className=" grid grid-cols-1 sm:grid-cols-2 justify-center mx-auto items-center gap-10 my-5">
         {AdminArray.map((element) => (

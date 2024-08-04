@@ -30,7 +30,7 @@ const Admin = () => {
   const { index, setindex } = useAppContext()
 
   return (
-    <>
+    <div className="dark:bg-white dark:text-black">
       {index == 0 ? (
         <MainAdmin />
       ) : index == 1 ? (
@@ -46,7 +46,7 @@ const Admin = () => {
       ) : (
         ''
       )}
-    </>
+    </div>
   )
 }
 

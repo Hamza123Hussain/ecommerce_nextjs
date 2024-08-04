@@ -33,7 +33,7 @@ const Allusers = () => {
   return (
     <>
       {' '}
-      <div className="mt-10 flex justify-between items-center">
+      <div className="mt-10 flex justify-between items-center dark:bg-white dark:text-black">
         <ArrowLeftCircle
           onClick={() => setindex(0)}
           size={35}
