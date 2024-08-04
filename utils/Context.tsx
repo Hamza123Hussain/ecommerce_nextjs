@@ -10,9 +10,9 @@ import { Product } from '@/utils/ProductInterface'
 import {
   getCartFromLocalStorage,
   getCountFromLocalStorage,
-  getindexFromLocalStorage,
   getPaymentFromLocalStorage,
   getProductsFromLocalStorage,
+  getIndexFromLocalStorage,
   getUserFromLocalStorage,
 } from './GetLocalStorage'
 import { AppContextProps } from './ContextInterfcae'
@@ -23,14 +23,20 @@ export const AppContext = createContext<AppContextProps | any | undefined>(
 )
 
 export const AppContextProvider = ({ children }: { children: ReactNode }) => {
-  const [paymentMethod, setPaymentMethod] = useState(getPaymentFromLocalStorage)
+  const [paymentMethod, setPaymentMethod] = useState('cash')
   const [cart, setCart] = useState<Product[]>(getCartFromLocalStorage)
-  const [cartcount, setcartcount] = useState(getCountFromLocalStorage)
+  const [cartcount, setcartcount] = useState(0)
   const [products, setProducts] = useState(getProductsFromLocalStorage)
-  const [index, setindex] = useState(getindexFromLocalStorage)
-  const [userDetail, setUserDetail] = useState<UserDetails>(
-    getUserFromLocalStorage
-  )
+  const [index, setindex] = useState(0)
+  const [userDetail, setUserDetail] = useState([])
+  useEffect(() => {
+    setUserDetail(getUserFromLocalStorage())
+    setCart(getCartFromLocalStorage())
+    setProducts(getProductsFromLocalStorage())
+    setcartcount(getCountFromLocalStorage())
+    setPaymentMethod(getPaymentFromLocalStorage())
+    setindex(getIndexFromLocalStorage())
+  }, [])
 
   const total = cart.reduce(
     (total: any, element: Product) => {
