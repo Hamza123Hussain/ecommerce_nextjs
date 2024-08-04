@@ -5,6 +5,7 @@ import { GetUserList } from '@/functions/User/GetUserList'
 import AddUserModal from '@/components/User/Modal'
 import UserDetailsForList from '@/components/User/UserDetailsForList'
 import { useRouter } from 'next/navigation'
+import UserDetailsForm from './WithoutLogin'
 
 const UserList = () => {
   const [users, setUsers] = useState<any[]>([])
@@ -32,6 +33,10 @@ const UserList = () => {
         <span className="loader"></span>
       </div>
     ) // Display loading indicator while fetching data
+  }
+
+  if (users.length == 0) {
+    return <UserDetailsForm />
   }
   return (
     <div className="container mx-auto p-6">
@@ -67,7 +72,7 @@ const UserList = () => {
           className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-blue-600 transition-all duration-300"
           onClick={() => Router.push('/Order')}
         >
-          Go To Payment
+          Go To Order
         </button>
       </div>
     </div>
