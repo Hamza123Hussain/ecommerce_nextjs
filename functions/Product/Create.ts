@@ -1,15 +1,18 @@
+// src/functions/Product/Create.js
 import { Product } from '@/utils/ProductInterface'
 import axios from 'axios'
 
-export const CreateProduct = async (Product: Product) => {
+export const CreateProduct = async (product: Product) => {
   try {
-    const Response = await axios.post('/api/Product/ADD', { Product })
-    if (Response.status === 201) {
-      return Response.data[0]
+    const response = await axios.post('/api/Product/ADD', { Product: product })
+    if (response.status === 201) {
+      return response.data
     } else {
-      console.log('NO DATA')
+      console.error('Failed to create product')
+      return null
     }
   } catch (error) {
-    // alert('DATA HAS BEEN INSERTED')
+    console.error('Error creating product:', error)
+    return null
   }
 }
