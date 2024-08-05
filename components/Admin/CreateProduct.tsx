@@ -105,11 +105,11 @@ export default function AddProduct() {
               value={product.stock}
               onChange={handleChange}
             />
-            <InputFields
+            {/* <InputFields
               Name="category"
               value={product.category}
               onChange={handleChange}
-            />
+            /> removing category for now  */}
             <InputFields
               Name="image_url"
               value={product.image_url}
