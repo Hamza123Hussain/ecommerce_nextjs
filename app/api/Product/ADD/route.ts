@@ -1,7 +1,11 @@
+import { cors, runMiddleware } from '@/utils/Cors'
 import { supabase } from '@/utils/Supabase'
 import { NextResponse } from 'next/server'
 
 export const POST = async (req: any) => {
+  // Run the CORS middleware
+  await runMiddleware(req, {}, cors)
+
   try {
     const payload = await req.json()
 
@@ -25,24 +29,12 @@ export const POST = async (req: any) => {
     if (data) {
       return NextResponse.json(data, {
         status: 201,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*', // Adjust this as needed
-          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        },
       })
     } else {
       return NextResponse.json(
         { error },
         {
           status: 404,
-          headers: {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*', // Adjust this as needed
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-          },
         }
       )
     }
@@ -52,12 +44,6 @@ export const POST = async (req: any) => {
       { error: 'Database error' },
       {
         status: 500,
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*', // Adjust this as needed
-          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        },
       }
     )
   }

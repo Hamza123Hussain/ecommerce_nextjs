@@ -6,7 +6,10 @@ const CartDetails = () => {
   const { total, tax, shipping, sum } = useAppContext()
   const Router = useRouter()
   return (
-    <div className="w-full lg:w-1/3  border-2 p-4  mb-2 rounded-lg">
+    <div
+      className="w-full lg:w-1/3 npm install cors
+ border-2 p-4  mb-2 rounded-lg"
+    >
       <h2 className="text-2xl font-bold mb-4 text-center lg:text-left">
         Order Summary
       </h2>

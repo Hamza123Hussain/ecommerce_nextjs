@@ -16,6 +16,7 @@
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.44.3",
     "axios": "^1.7.2",
+    "cors": "^2.8.5",
     "firebase": "^10.12.5",
     "framer-motion": "^11.3.8",
     "lucide-react": "^0.408.0",
@@ -28,6 +29,7 @@
     "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/firebase": "^3.2.1",
     "@types/node": "20.14.11",
     "@types/nodemailer": "^6.4.15",

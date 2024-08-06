@@ -1,7 +1,11 @@
+import { cors, runMiddleware } from '@/utils/Cors'
 import { supabase } from '@/utils/Supabase'
 import { NextResponse } from 'next/server'
 
-export const GET = async () => {
+export const GET = async (req: any) => {
+  // Run the CORS middleware
+  await runMiddleware(req, {}, cors)
+
   try {
     const { data, error } = await supabase.from('products').select('*')
     if (error) {
@@ -10,7 +14,7 @@ export const GET = async () => {
         status: 404,
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*', // Adjust this as needed
+          'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
           'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         },
@@ -21,12 +25,7 @@ export const GET = async () => {
       status: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control':
-          'no-store, no-cache, must-revalidate, proxy-revalidate',
-        Pragma: 'no-cache',
-        Expires: '0',
-        'Surrogate-Control': 'no-store',
-        'Access-Control-Allow-Origin': '*', // Adjust this as needed
+        'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
       },
@@ -37,7 +36,7 @@ export const GET = async () => {
       status: 500,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*', // Adjust this as needed
+        'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
       },
