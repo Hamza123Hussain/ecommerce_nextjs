@@ -21,12 +21,44 @@ export const POST = async (req: any) => {
         },
       ])
       .select()
+
     if (data) {
-      return NextResponse.json(data, { status: 201 })
+      return NextResponse.json(data, {
+        status: 201,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*', // Adjust this as needed
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        },
+      })
     } else {
-      return NextResponse.json({ error }, { status: 404 })
+      return NextResponse.json(
+        { error },
+        {
+          status: 404,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*', // Adjust this as needed
+            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          },
+        }
+      )
     }
   } catch (error) {
     console.log('DATABASE ERROR', error)
+    return NextResponse.json(
+      { error: 'Database error' },
+      {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*', // Adjust this as needed
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        },
+      }
+    )
   }
 }
