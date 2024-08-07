@@ -19,6 +19,7 @@ export const PUT = async (req: any) => {
           updated_at: new Date().toISOString(),
         },
       ])
+      .eq('id', payload?.Product.id)
       .select()
     if (data) {
       return NextResponse.json(true, { status: 201 })
