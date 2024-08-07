@@ -1,11 +1,7 @@
-import { cors, runMiddleware } from '@/utils/Cors'
 import { supabase } from '@/utils/Supabase'
 import { NextResponse } from 'next/server'
 
 export const GET = async (req: any) => {
-  // Run the CORS middleware
-  await runMiddleware(req, {}, cors)
-
   try {
     const { data, error } = await supabase.from('products').select('*')
     if (error) {
