@@ -28,7 +28,7 @@ const UserInput: React.FC<UserInputProps> = ({
         name={name}
         value={value}
         onChange={onChange}
-        className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 transition-transform duration-200"
+        className="p-3 border text-black border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 transition-transform duration-200"
         placeholder={placeholder}
         required
       />
