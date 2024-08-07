@@ -54,7 +54,7 @@ const AdminProduct = ({ product }: { product: Product }) => {
         </button>{' '}
         <button>
           <Pencil
-            onClick={() => Router.push(`UpdateProduct/${product.id}`)}
+            onClick={() => Router.push(`/Admin/UpdateProduct/${product.id}`)}
             className="text-blue-500"
             size={25}
           />
