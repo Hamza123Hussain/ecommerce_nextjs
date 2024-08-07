@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const GetAllUsers = async () => {
   try {
-    const Response = await axios.get(`/api/User/GetAll`)
+    const Response = await axios.get(`http://localhost:8000/api/Users`)
     if (Response.status == 201) {
       return Response.data
     }
