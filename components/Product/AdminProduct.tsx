@@ -19,45 +19,34 @@ const AdminProduct = ({ product }: { product: Product }) => {
   }
   return (
     <div
-      className="relative hover:shadow-md bg-gray-100 hover:shadow-gray-300 flex w-full max-w-xs flex-col overflow-hidden rounded-lg  shadow-md"
+      className="relative hover:shadow-md bg-white border-2 border-slate-200 hover:shadow-gray-300 flex w-full flex-col overflow-hidden rounded-lg shadow-md"
       key={product.id}
     >
       <div onClick={() => Router.push(`/Product/${product.id}`)}>
         <img
           src={product.image_url}
           alt={product.name}
-          className="rounded-t-lg  w-full h-[20vh] sm:h-[40vh]"
+          className="rounded-t-lg w-full h-[20vh] sm:h-[40vh]"
         />
-
-        <div className="mt-4 px-5 pb-5">
-          <h5 className="text-xl tracking-tight text-slate-900">
+        <div className="mt-2 px-2">
+          <h5 className="text-xs sm:text-lg tracking-tight text-slate-900">
             {product.name}
           </h5>
-
-          <div className="mt-2 mb-5 flex w-full ">
-            <span className="text-3xl font-bold text-slate-900">
+          <div className="mt-2 w-full flex justify-end pb-2">
+            <span className="text-xs sm:text-lg font-bold text-slate-900">
               Rs {product.price}
             </span>
           </div>
         </div>
-      </div>{' '}
-      <div
-        className=" flex justify-end gap-3 px-2 mb-1
-           items-center"
-      >
-        <button>
-          <Delete
-            onClick={() => deleteItem()}
-            className="text-red-600"
-            size={25}
-          />
-        </button>{' '}
-        <button>
-          <Pencil
-            onClick={() => Router.push(`/Admin/UpdateProduct/${product.id}`)}
-            className="text-blue-500"
-            size={25}
-          />
+      </div>
+      <div className="flex justify-end gap-3 px-2 mb-1 items-center">
+        <button onClick={deleteItem}>
+          <Delete className="text-red-600" size={25} />
+        </button>
+        <button
+          onClick={() => Router.push(`/Admin/UpdateProduct/${product.id}`)}
+        >
+          <Pencil className="text-blue-500" size={25} />
         </button>
       </div>
     </div>
