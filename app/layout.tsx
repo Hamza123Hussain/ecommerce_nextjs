@@ -21,7 +21,7 @@ export default function RootLayout({
     <ClerkProvider>
       <AppContextProvider>
         <html lang="en">
-          <body className=" bg-white">
+          <body className=" bg-white dark:bg-white">
             <div className="flex flex-col min-h-screen">
               <Header />
               <div className="flex-grow">
