@@ -4,7 +4,9 @@ import axios from 'axios'
 
 export const CreateProduct = async (product: Product) => {
   try {
-    const response = await axios.post('/api/Product/ADD', { Product: product })
+    const response = await axios.post('http://localhost:8000/api/Products', {
+      Product: product,
+    })
     if (response.status === 201) {
       return response.data
     } else {
