@@ -82,7 +82,7 @@ export default function UpdateFunction({ params }: { params: any }) {
   }, [])
 
   return (
-    <div className="flex flex-col gap-8 mt-10 justify-center items-center px-4 sm:px-6 lg:px-8">
+    <div className="flex flex-col gap-8 mt-10 justify-center items-center px-4 sm:px-6 lg:px-8 bg-white dark:bg-white">
       <h1 className="text-4xl md:text-5xl font-bold text-gray-800">
         {loading ? 'Loading...' : 'Update Product'}
       </h1>
@@ -93,14 +93,14 @@ export default function UpdateFunction({ params }: { params: any }) {
       ) : (
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6 space-y-6"
+          className="w-full max-w-4xl bg-white dark:bg-white shadow-lg rounded-lg p-6 space-y-6"
         >
           <div className="flex flex-col gap-4">
             <label className="text-xl font-semibold text-gray-700">
               Description:
             </label>
             <textarea
-              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-500 transition"
+              className="w-full border text-black border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-500 transition"
               name="description"
               value={product.description}
               onChange={handleChange}
@@ -108,7 +108,7 @@ export default function UpdateFunction({ params }: { params: any }) {
               rows={4}
             />
           </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 text-black">
             <InputFields
               Name="name"
               value={product.name}
