@@ -19,7 +19,7 @@ const UserOrder = ({ order }: { order: any }) => {
       </div>
       <div className="mb-4">
         <p className="text-xs font-semibold text-gray-500">Total Price:</p>
-        <p className="text-xl font-bold text-gray-800">Rs {order.totalprice}</p>
+        <p className="text-xl font-bold text-gray-800">Rs {order.total}</p>
       </div>
       <button
         onClick={() => Router.push(`/PostOrder/${order.id}`)}
