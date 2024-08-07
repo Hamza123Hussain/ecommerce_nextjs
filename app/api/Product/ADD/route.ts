@@ -1,11 +1,7 @@
-import { cors, runMiddleware } from '@/utils/Cors'
 import { supabase } from '@/utils/Supabase'
 import { NextResponse } from 'next/server'
 
 export const POST = async (req: any) => {
-  // Run the CORS middleware
-  await runMiddleware(req, {}, cors)
-
   try {
     const payload = await req.json()
 
