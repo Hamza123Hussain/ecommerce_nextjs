@@ -4,9 +4,12 @@ import axios from 'axios'
 
 export const CreateProduct = async (product: Product) => {
   try {
-    const response = await axios.post('http://localhost:8000/api/Products', {
-      Product: product,
-    })
+    const response = await axios.post(
+      'https://ecommerce-backend-ecru-six.vercel.app/api/Products',
+      {
+        Product: product,
+      }
+    )
     if (response.status === 201) {
       return response.data
     } else {

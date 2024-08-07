@@ -2,7 +2,9 @@ import axios from 'axios'
 
 export const GetAllUsers = async () => {
   try {
-    const Response = await axios.get(`http://localhost:8000/api/Users`)
+    const Response = await axios.get(
+      `https://ecommerce-backend-ecru-six.vercel.app/api/Users`
+    )
     if (Response.status == 201) {
       return Response.data
     }

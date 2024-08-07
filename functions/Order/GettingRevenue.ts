@@ -2,7 +2,9 @@ import axios from 'axios'
 
 export const GetALLRevenue = async () => {
   try {
-    const Response = await axios.get(`http://localhost:8000/api/Revenue`)
+    const Response = await axios.get(
+      `https://ecommerce-backend-ecru-six.vercel.app/api/Revenue`
+    )
     if (Response.status === 201) {
       return Response.data
     }

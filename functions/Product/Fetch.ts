@@ -3,7 +3,9 @@ import axios from 'axios'
 
 export const getdata = async () => {
   try {
-    const response = await axios.get('http://localhost:8000/api/Products')
+    const response = await axios.get(
+      'https://ecommerce-backend-ecru-six.vercel.app/api/Products'
+    )
     if (response.status === 200) {
       return response.data
     } else {
